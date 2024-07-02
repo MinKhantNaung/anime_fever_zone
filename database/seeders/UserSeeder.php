@@ -18,7 +18,7 @@ class UserSeeder extends Seeder
             'role' => 'blogger',
             'name' => 'blogger',
             'email' => 'blogger@gmail.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make('Naung2024@millioner'),
         ]);
     }
 }
