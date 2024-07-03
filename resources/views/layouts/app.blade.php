@@ -9,8 +9,10 @@
     <title>{{ $title ?? 'Anime Fever Zone' }}</title>
 
     <meta name="description" content="@yield('description')">
+    <meta name="robots" content="index, follow">
 
     <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+    <link rel="canonical" href="{{ url()->current() }}">
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
@@ -45,11 +47,11 @@
     <!-- Topic Nav -->
     <livewire:components.topic-nav />
 
-    <div class="min-h-screen">
+    <main class="min-h-screen">
 
         {{ $slot }}
 
-    </div>
+    </main>
 
     <x-footer />
 
