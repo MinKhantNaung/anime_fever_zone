@@ -11,6 +11,13 @@
     <meta name="description" content="@yield('description')">
     <meta name="robots" content="index, follow">
 
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:site_name" content="Anime Fever Zone" />
+    <meta property="og:url" content="{{ url()->current() }}" />
+    <meta property="article:author" content="Anime Fever Zone" />
+
+    @yield('meta-og')
+
     <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
     <link rel="canonical" href="{{ url()->current() }}">
     <!-- Fonts -->

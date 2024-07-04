@@ -1,5 +1,18 @@
-@section('description', 'Explore exciting content on Anime and more at Anime Fever Zone. Join our community and stay informed about
-the latest trends and discussions across a wide range of topics.')
+@section('description',
+    'Explore exciting content on Anime and more at Anime Fever Zone. Join our community and stay informed about
+    the latest trends and discussions across a wide range of topics.')
+
+@section('meta-og')
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Anime Fever Zone" />
+    <meta property="og:description"
+        content="Explore exciting content on Anime and more at Anime Fever Zone. Join our community and stay informed about
+the latest trends and discussions across a wide range of topics." />
+    <meta property="og:image" content="{{ asset('favicon.ico') }}" />
+    <meta property="og:image:secure_url" content="{{ asset('favicon.ico') }}" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+@endsection
 
 <div class="container mx-auto flex flex-wrap py-6">
 

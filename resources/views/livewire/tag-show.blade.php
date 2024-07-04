@@ -1,6 +1,18 @@
 @section('description', "Explore exciting content on " . ucfirst(str_replace('-', ' ', $slug)) . " and more at Anime Fever Zone. Join our community and stay informed about
     the latest trends and discussions across a wide range of topics.")
 
+@section('meta-og')
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Anime Fever Zone-{{ ucfirst($slug) }}" />
+    <meta property="og:description"
+        content="Explore exciting content on {{ ucfirst(str_replace('-', ' ', $slug)) }} and more at Anime Fever Zone. Join our community and stay informed about
+    the latest trends and discussions across a wide range of topics." />
+    <meta property="og:image" content="{{ $tag->media->url }}" />
+    <meta property="og:image:secure_url" content="{{ $tag->media->url }}" />
+    <meta property="og:image:width" content="630" />
+    <meta property="og:image:height" content="1200" />
+@endsection
+
 <div class="container mx-auto flex flex-wrap py-6">
 
     <!-- Posts Section -->
