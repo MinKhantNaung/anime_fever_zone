@@ -4,8 +4,7 @@
 /public/hot
 /public/storage
 /storage/*.key
-/vendor/*
-!/vendor/usamamuneerchaudhary/
+/vendor
 .env
 .env.backup
 .env.production
