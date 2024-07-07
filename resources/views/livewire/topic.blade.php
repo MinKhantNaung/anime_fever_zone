@@ -43,6 +43,17 @@
     <!-- Posts Section -->
     <section class="w-full md:w-2/3 flex flex-col items-center px-3 overflow-hidden">
 
+        {{-- Sitebunker Affilate Ad --}}
+        <div class="grid grid-cols-2">
+            <a target="_blank" href="https://client.sitebunker.net/aff.php?aff=965">
+                <img src="https://client.sitebunker.net/images/2019/03/magento.jpg" border="0">
+            </a>
+
+            <a target="_blank" href="https://client.sitebunker.net/aff.php?aff=965">
+                <img src="https://client.sitebunker.net/images/2019/03/Gazduire-reseller.jpg" border="0">
+            </a>
+        </div>
+
         <div class="w-full">
             <span class="bg-rose-500">.</span>
             <span class="text-2xl">Latest</span>
