@@ -2,7 +2,7 @@
     <div class="w-full container mx-auto flex flex-nowrap items-center justify-between">
 
         <nav>
-            <ul class="flex items-center justify-between font-bold text-sm text-white uppercase no-underline">
+            <ul class="flex items-center justify-between font-bold text-sm text-white pl-0 sm:pl-6 uppercase no-underline">
                 <li>
                     <a wire:navigate.hover href="{{ route('home') }}" class="hover:text-gray-200 hover:underline px-4">
                         <img src="{{ asset('favicon.ico') }}" alt="anime fever zone logo" class="w-9">
