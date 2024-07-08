@@ -25,9 +25,6 @@ class TagShow extends Component
 
         $this->featuredPosts = Post::with('media')
             ->select('id', 'heading', 'slug')
-            ->whereHas('tags', function ($query) {
-                $query->where('slug', $this->slug);
-            })
             ->where('is_publish', true)
             ->where('is_feature', true)
             ->take(5)
