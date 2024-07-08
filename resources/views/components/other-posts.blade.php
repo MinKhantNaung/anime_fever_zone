@@ -36,14 +36,6 @@
         <a target="_blank" href="https://client.sitebunker.net/aff.php?aff=965">
             <img src="https://client.sitebunker.net/images/2019/03/SPOILER_Prestashop-gazduire.jpg" border="0">
         </a>
-
-        <a target="_blank" href="https://client.sitebunker.net/aff.php?aff=965">
-            <img src="https://client.sitebunker.net/images/2019/03/magento.jpg" border="0">
-        </a>
-
-        <a target="_blank" href="https://client.sitebunker.net/aff.php?aff=965">
-            <img src="https://client.sitebunker.net/images/2019/03/Gazduire-reseller.jpg" border="0">
-        </a>
     </div>
 
 </aside>
