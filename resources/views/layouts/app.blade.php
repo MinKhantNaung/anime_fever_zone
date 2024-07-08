@@ -20,9 +20,6 @@
 
     <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
     <link rel="canonical" href="{{ url()->current() }}">
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.bunny.net">
-    <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
 
     <style>
         [x-cloak] {
@@ -42,7 +39,8 @@
     <!-- Text Header -->
     <header class="w-full container mx-auto">
         <div class="flex flex-col items-center py-12">
-            <a wire:navigate.hover href="{{ route('home') }}" class="font-bold text-gray-800 uppercase hover:text-gray-700 text-3xl sm:text-5xl">
+            <a wire:navigate.hover href="{{ route('home') }}"
+                class="font-bold text-gray-800 uppercase hover:text-gray-700 text-3xl sm:text-5xl">
                 Anime Fever Zone
             </a>
             <p class="text-lg text-gray-600 px-2">
