@@ -1,5 +1,8 @@
 import './bootstrap';
 
+import intersect from '@alpinejs/intersect'
+Alpine.plugin(intersect)
+
 import Swiper from 'swiper';
 import { Navigation, Pagination } from 'swiper/modules';
 // import Swiper and modules styles
