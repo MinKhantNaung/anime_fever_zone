@@ -21,12 +21,6 @@
     <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
     <link rel="canonical" href="{{ url()->current() }}">
 
-    <style>
-        [x-cloak] {
-            display: none !important;
-        }
-    </style>
-
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
