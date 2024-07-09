@@ -33,9 +33,11 @@
                 <h2 class="text-xl sm:text-2xl font-medium">Table Of Contents</h2>
                 <ul class="list-decimal list-inside text-blue-600 font-medium text-lg mt-5">
                     @foreach ($post->sections as $section)
-                        <li class="py-2">
-                            <a href="#{{ $section->heading }}">{{ $section->heading }}</a>
-                        </li>
+                        @if ($section->heading)
+                            <li class="py-2">
+                                <a href="#{{ $section->heading }}">{{ $section->heading }}</a>
+                            </li>
+                        @endif
                     @endforeach
                 </ul>
             </div>
