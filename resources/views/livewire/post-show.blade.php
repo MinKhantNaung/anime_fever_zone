@@ -36,10 +36,10 @@
             <div>
                 <h1 class="text-xl italic font-extrabold my-2">Related Topics</h1>
                 <div>
-                    <a wire:navigate.hover href="{{ route('topic', $post->topic->slug) }}"
+                    <a wire:navigate href="{{ route('topic', $post->topic->slug) }}"
                         class="font-bold text-xs uppercase bg-gray-300 hover:bg-gray-200 rounded p-2">{{ $post->topic->name }}</a>
                     @foreach ($post->tags as $tag)
-                        <a wire:navigate.hover href="{{ route('tag', $tag->slug) }}"
+                        <a wire:navigate href="{{ route('tag', $tag->slug) }}"
                             class="font-bold text-xs uppercase bg-gray-300 hover:bg-gray-200 rounded p-2">{{ $tag->name }}</a>
                     @endforeach
                 </div>
