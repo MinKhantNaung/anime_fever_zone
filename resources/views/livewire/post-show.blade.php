@@ -1,4 +1,4 @@
-@section('description', substr($post->body, 0, 150) . "...")
+@section('description', substr($post->body, 0, 150) . '...')
 
 @section('meta-og')
     <meta property="og:type" content="article" />
@@ -27,14 +27,25 @@
             <!-- Article Image -->
             <img src="{{ $post->media->url }}" alt="{{ $post->heading }}" class="w-full">
             <!-- Post Description -->
-            <p class="pb-3 pt-6 text-lg font-medium">{!! $post->body !!}</p>
+            <p class="pb-3 pt-6 text-lg leading-9">{!! $post->body !!}</p>
+
+            <div class="bg-gray-100 p-4 my-7">
+                <h2 class="text-xl sm:text-2xl font-medium">Table Of Contents</h2>
+                <ul class="list-decimal list-inside text-blue-600 font-medium text-lg mt-5">
+                    @foreach ($post->sections as $section)
+                        <li class="py-2">
+                            <a href="#{{ $section->heading }}">{{ $section->heading }}</a>
+                        </li>
+                    @endforeach
+                </ul>
+            </div>
 
             @foreach ($post->sections as $section)
                 <livewire:section.item wire:key="{{ $section->id }}" :section="$section" />
             @endforeach
 
             <div>
-                <h1 class="text-xl italic font-extrabold my-2">Related Topics</h1>
+                <h6 class="text-xl italic font-extrabold my-2">Related Topics</h6>
                 <div>
                     <a wire:navigate href="{{ route('topic', $post->topic->slug) }}"
                         class="font-bold text-xs uppercase bg-gray-300 hover:bg-gray-200 rounded p-2">{{ $post->topic->name }}</a>
@@ -45,17 +56,19 @@
                 </div>
             </div>
 
-            <livewire:comments :model="$post"/>
+            <livewire:comments :model="$post" />
 
             {{-- Subscriber Form --}}
             @if ($emailVerifyStatus)
                 <div class="w-full bg-gray-400 mt-5 rounded-lg py-5 px-4 text-xl font-extrabold">
                     <h1>Subscribe To Our Newletter!</h1>
-                    <input wire:model='email' type="email" class="mt-5 focus:ring-0 w-full text-lg" placeholder="Email Address">
+                    <input wire:model='email' type="email" class="mt-5 focus:ring-0 w-full text-lg"
+                        placeholder="Email Address">
                     @error('email')
                         <x-input-error messages="{{ $message }}" />
                     @enderror
-                    <button wire:loading.attr='disabled' wire:click.prevent='subscribe' class="btn btn-secondary text-lg mt-5">
+                    <button wire:loading.attr='disabled' wire:click.prevent='subscribe'
+                        class="btn btn-secondary text-lg mt-5">
                         Subscribe
                     </button>
                 </div>
