@@ -64,7 +64,7 @@ class PostShow extends Component
             ->where('id', '!=', $this->post->id)
             ->where('updated_at', '>=', Carbon::now()->subMonth())
             ->where('is_publish', true)
-            ->take(3)
+            ->take(5)
             ->get();
 
         $this->emailVerifyStatus = SiteSetting::first()->email_verify_status;

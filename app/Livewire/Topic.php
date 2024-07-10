@@ -16,6 +16,7 @@ class Topic extends Component
     {
         $this->featuredPosts = Post::with('media')
             ->select('id', 'heading', 'slug')
+            ->orderBy('updated_at', 'desc')
             ->where('is_publish', true)
             ->where('is_feature', true)
             ->take(5)
