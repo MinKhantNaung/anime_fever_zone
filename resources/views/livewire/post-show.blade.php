@@ -8,6 +8,9 @@
     <meta property="og:image:secure_url" content="{{ $post->media->url }}" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
+    @foreach ($post->tags as $tag)
+        <meta property="article:tag" content="{{ $tag->name }}" />
+    @endforeach
     <meta property="article:published_time" content="{{ $post->created_at->toIso8601String() }}" />
     <meta property="article:modified_time" content="{{ $post->updated_at->toIso8601String() }}" />
 @endsection

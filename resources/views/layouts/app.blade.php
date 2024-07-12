@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}"
+    prefix="og: http://ogp.me/ns# article: http://ogp.me/ns/article#">
 
 <head>
     <meta charset="utf-8">
