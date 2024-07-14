@@ -38,7 +38,7 @@
                     @foreach ($post->sections as $section)
                         @if ($section->heading)
                             <li class="py-2">
-                                <a href="#{{ $section->heading }}">{{ $section->heading }}</a>
+                                <a href="#{{ str_replace(' ', '-', $section->heading) }}">{{ $section->heading }}</a>
                             </li>
                         @endif
                     @endforeach
