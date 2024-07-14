@@ -13,6 +13,10 @@
     @endforeach
     <meta property="article:published_time" content="{{ $post->created_at->toIso8601String() }}" />
     <meta property="article:modified_time" content="{{ $post->updated_at->toIso8601String() }}" />
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{{ $post->heading }}">
+    <meta name="twitter:description" content="{{ substr($post->body, 0, 150) }}">
+    <meta name="twitter:image" content="{{ $post->media->url }}">
 @endsection
 
 <div class="container mx-auto flex flex-wrap py-6">
