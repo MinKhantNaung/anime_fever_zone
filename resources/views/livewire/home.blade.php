@@ -24,6 +24,12 @@ the latest trends and discussions across a wide range of topics." />
             <span class="text-2xl">Latest</span>
         </div>
 
+        {{-- Eleavers Ad --}}
+        <div class="w-full">
+            <script src="//servedby.eleavers.com/ads/ads.php?t=MzA0OTI7MjA2MzA7c3F1YXJlLnNxdWFyZV9ib3g=&index=1"></script>
+        </div>
+        {{-- Eleavers Ad --}}
+
         @foreach ($posts as $post)
             <div class="grid grid-cols-12 gap-1 bg-white shadow my-4">
                 <div class="col-span-12 lg:col-span-5">

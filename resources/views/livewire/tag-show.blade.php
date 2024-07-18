@@ -18,6 +18,12 @@
     <!-- Posts Section -->
     <section class="w-full md:w-2/3 flex flex-col items-center px-3 overflow-hidden">
 
+        {{-- Eleavers Ad --}}
+        <div class="w-full">
+            <script src="//servedby.eleavers.com/ads/ads.php?t=MzA0OTI7MjA2MzA7c3F1YXJlLnNxdWFyZV9ib3g=&index=1"></script>
+        </div>
+        {{-- Eleavers Ad --}}
+
         {{-- show tag --}}
         <div class="grid grid-cols-12 w-full my-3">
             <div class="hidden lg:block lg:col-span-4"></div>
@@ -38,6 +44,12 @@
             <span class="bg-rose-500">.</span>
             <span class="text-2xl">Latest</span>
         </div>
+
+        {{-- Eleavers Ad --}}
+        <div class="w-full">
+            <script src="//servedby.eleavers.com/ads/ads.php?t=MzA0OTI7MjA2MzA7c3F1YXJlLnNxdWFyZV9ib3g=&index=3"></script>
+        </div>
+        {{-- Eleavers Ad --}}
 
         @foreach ($posts as $post)
             <div class="grid grid-cols-12 gap-1 bg-white shadow my-4">

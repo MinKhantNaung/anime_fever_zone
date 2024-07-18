@@ -36,6 +36,12 @@
             <!-- Post Description -->
             <p class="pb-3 pt-6 text-lg font-medium text-gray-700 leading-9">{!! $post->body !!}</p>
 
+            {{-- Eleavers Ad --}}
+            <div class="w-full">
+                <script src="//servedby.eleavers.com/ads/ads.php?t=MzA0OTI7MjA2MzA7c3F1YXJlLnNxdWFyZV9ib3g=&index=1"></script>
+            </div>
+            {{-- Eleavers Ad --}}
+
             <div class="bg-gray-100 p-4 my-7">
                 <h2 class="text-xl sm:text-2xl font-medium">Table Of Contents</h2>
                 <ul class="list-decimal list-inside text-blue-600 font-medium text-lg mt-5">
