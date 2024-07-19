@@ -32,10 +32,12 @@
 
     <!-- Text Header -->
     <header class="w-full container mx-auto">
-        {{-- Eleavers Ad --}}
-        <script src="//servedby.eleavers.com/ads/ads.php?t=MzA0OTI7MjA2Mjk7aG9yaXpvbnRhbC5sZWFkZXJib2FyZA==&index=1"></script>
-        {{-- Eleavers Ad --}}
         <div class="flex flex-col items-center py-12">
+            {{-- Eleavers Ad --}}
+            <div class="w-full overflow-hidden p-4">
+                <script src="//servedby.eleavers.com/ads/ads.php?t=MzA0OTI7MjA2Mjk7aG9yaXpvbnRhbC5sZWFkZXJib2FyZA==&index=1"></script>
+            </div>
+            {{-- Eleavers Ad --}}
             <a wire:navigate href="{{ route('home') }}"
                 class="font-bold text-gray-800 uppercase hover:text-gray-700 text-3xl sm:text-5xl">
                 Anime Fever Zone

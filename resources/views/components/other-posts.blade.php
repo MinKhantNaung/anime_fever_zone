@@ -12,12 +12,6 @@
         </div>
     @endif
 
-    {{-- Eleavers Ad --}}
-    <div class="w-full">
-        <script src="//servedby.eleavers.com/ads/ads.php?t=MzA0OTI7MjA2MzA7c3F1YXJlLnNxdWFyZV9ib3g=&index=2"></script>
-    </div>
-    {{-- Eleavers Ad --}}
-
     @foreach ($featuredPosts as $post)
         <a wire:navigate href="{{ route('post', $post->slug) }}">
             <div class="grid grid-cols-12 bg-white shadow my-4 p-6">
@@ -32,5 +26,11 @@
             </div>
         </a>
     @endforeach
+
+    {{-- Eleavers Ad --}}
+    <div class="w-full">
+        <script src="//servedby.eleavers.com/ads/ads.php?t=MzA0OTI7MjA2MzA7c3F1YXJlLnNxdWFyZV9ib3g=&index=2"></script>
+    </div>
+    {{-- Eleavers Ad --}}
 
 </aside>

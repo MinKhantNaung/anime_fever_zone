@@ -20,7 +20,7 @@
 
         {{-- Eleavers Ad --}}
         <div class="w-full">
-            <script src="//servedby.eleavers.com/ads/ads.php?t=MzA0OTI7MjA2MzA7c3F1YXJlLnNxdWFyZV9ib3g=&index=1"></script>
+            <script src="//servedby.eleavers.com/ads/ads.php?t=MzA0OTI7MjA2Mjk7aG9yaXpvbnRhbC5sZWFkZXJib2FyZA==&index=2"></script>
         </div>
         {{-- Eleavers Ad --}}
 
@@ -44,12 +44,6 @@
             <span class="bg-rose-500">.</span>
             <span class="text-2xl">Latest</span>
         </div>
-
-        {{-- Eleavers Ad --}}
-        <div class="w-full">
-            <script src="//servedby.eleavers.com/ads/ads.php?t=MzA0OTI7MjA2MzA7c3F1YXJlLnNxdWFyZV9ib3g=&index=3"></script>
-        </div>
-        {{-- Eleavers Ad --}}
 
         @foreach ($posts as $post)
             <div class="grid grid-cols-12 gap-1 bg-white shadow my-4">
