@@ -293,6 +293,56 @@
 </div>
 
 @push('scripts')
+    {{-- PopAds --}}
+    <script type="text/javascript" data-cfasync="false">
+        /*<![CDATA[/* */
+        (function() {
+            var e = window,
+                j = "fc70225ec0d55b8908374d7aadb3b4ac",
+                x = [
+                    ["siteId", 804 - 243 + 165 + 5117489],
+                    ["minBid", 0],
+                    ["popundersPerIP", "0"],
+                    ["delayBetween", 0],
+                    ["default", false],
+                    ["defaultPerDay", 0],
+                    ["topmostLayer", "auto"]
+                ],
+                k = ["d3d3LmJldHRlcmFkc3lzdGVtLmNvbS9zenhQL2xmb3JjZS5taW4uanM=",
+                    "ZDJrazBvM2ZyN2VkMDEuY2xvdWRmcm9udC5uZXQvYm1BckQvaEZtL3ZhZnJhbWUtYXIubWluLmNzcw=="
+                ],
+                g = -1,
+                d, b, p = function() {
+                    clearTimeout(b);
+                    g++;
+                    if (k[g] && !(1747453942000 < (new Date).getTime() && 1 < g)) {
+                        d = e.document.createElement("script");
+                        d.type = "text/javascript";
+                        d.async = !0;
+                        var u = e.document.getElementsByTagName("script")[0];
+                        d.src = "https://" + atob(k[g]);
+                        d.crossOrigin = "anonymous";
+                        d.onerror = p;
+                        d.onload = function() {
+                            clearTimeout(b);
+                            e[j.slice(0, 16) + j.slice(0, 16)] || p()
+                        };
+                        b = setTimeout(p, 5E3);
+                        u.parentNode.insertBefore(d, u)
+                    }
+                };
+            if (!e[j]) {
+                try {
+                    Object.freeze(e[j] = x)
+                } catch (e) {}
+                p()
+            }
+        })();
+        /*]]>/* */
+    </script>
+
+    {{-- PopAds end --}}
+
     <script type="application/ld+json">
         {
           "@context": "https://schema.org",
