@@ -17,13 +17,6 @@
 
     <!-- Posts Section -->
     <section class="w-full md:w-2/3 flex flex-col items-center px-3 overflow-hidden">
-
-        {{-- Eleavers Ad --}}
-        <div class="w-full">
-            <script src="//servedby.eleavers.com/ads/ads.php?t=MzA0OTI7MjA2Mjk7aG9yaXpvbnRhbC5sZWFkZXJib2FyZA==&index=2"></script>
-        </div>
-        {{-- Eleavers Ad --}}
-
         {{-- show tag --}}
         <div class="grid grid-cols-12 w-full my-3">
             <div class="hidden lg:block lg:col-span-4"></div>

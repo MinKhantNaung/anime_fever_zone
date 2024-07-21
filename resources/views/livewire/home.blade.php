@@ -25,14 +25,6 @@ the latest trends and discussions across a wide range of topics." />
         </div>
 
         @foreach ($posts as $index => $post)
-            @if ($index == 1) 
-                {{-- Eleavers Ad --}}
-                    <div class="w-full">
-                        <script src="//servedby.eleavers.com/ads/ads.php?t=MzA0OTI7MjA2Mjk7aG9yaXpvbnRhbC5sZWFkZXJib2FyZA==&index=2"></script>
-                    </div>
-                {{-- Eleavers Ad --}}
-            @endif
-
             <div class="grid grid-cols-12 gap-1 bg-white shadow my-4">
                 <div class="col-span-12 lg:col-span-5">
                     <a wire:navigate href="{{ route('post', $post->slug) }}">
