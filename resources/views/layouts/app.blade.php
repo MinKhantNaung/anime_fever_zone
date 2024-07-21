@@ -24,50 +24,10 @@
     {{-- PopAds --}}
     <script type="text/javascript" data-cfasync="false">
         /*<![CDATA[/* */
-        (function() {
-            var e = window,
-                j = "fc70225ec0d55b8908374d7aadb3b4ac",
-                x = [
-                    ["siteId", 804 - 243 + 165 + 5117489],
-                    ["minBid", 0],
-                    ["popundersPerIP", "0"],
-                    ["delayBetween", 0],
-                    ["default", false],
-                    ["defaultPerDay", 0],
-                    ["topmostLayer", "auto"]
-                ],
-                k = ["d3d3LmJldHRlcmFkc3lzdGVtLmNvbS9zenhQL2xmb3JjZS5taW4uanM=",
-                    "ZDJrazBvM2ZyN2VkMDEuY2xvdWRmcm9udC5uZXQvYm1BckQvaEZtL3ZhZnJhbWUtYXIubWluLmNzcw=="
-                ],
-                g = -1,
-                d, b, p = function() {
-                    clearTimeout(b);
-                    g++;
-                    if (k[g] && !(1747453942000 < (new Date).getTime() && 1 < g)) {
-                        d = e.document.createElement("script");
-                        d.type = "text/javascript";
-                        d.async = !0;
-                        var u = e.document.getElementsByTagName("script")[0];
-                        d.src = "https://" + atob(k[g]);
-                        d.crossOrigin = "anonymous";
-                        d.onerror = p;
-                        d.onload = function() {
-                            clearTimeout(b);
-                            e[j.slice(0, 16) + j.slice(0, 16)] || p()
-                        };
-                        b = setTimeout(p, 5E3);
-                        u.parentNode.insertBefore(d, u)
-                    }
-                };
-            if (!e[j]) {
-                try {
-                    Object.freeze(e[j] = x)
-                } catch (e) {}
-                p()
-            }
-        })();
+        (function(){var b=window,u="fc70225ec0d55b8908374d7aadb3b4ac",n=[["siteId",400*221*776-63480185],["minBid",0],["popundersPerIP","0"],["delayBetween",0],["default",false],["defaultPerDay",0],["topmostLayer","auto"]],g=["d3d3LmJldHRlcmFkc3lzdGVtLmNvbS9xcC9iZm9yY2UubWluLmpz","ZDJrazBvM2ZyN2VkMDEuY2xvdWRmcm9udC5uZXQvQm56bi9hdi9sYWZyYW1lLWFyLm1pbi5jc3M=","d3d3LmRyZ2Nuc25vaG5mLmNvbS9IL2hmb3JjZS5taW4uanM=","d3d3LmJicWFmZHNzLmNvbS9xU21nR3UvWnRtcHYvemFmcmFtZS1hci5taW4uY3Nz"],r=-1,v,p,q=function(){clearTimeout(p);r++;if(g[r]&&!(1747496315000<(new Date).getTime()&&1<r)){v=b.document.createElement("script");v.type="text/javascript";v.async=!0;var d=b.document.getElementsByTagName("script")[0];v.src="https://"+atob(g[r]);v.crossOrigin="anonymous";v.onerror=q;v.onload=function(){clearTimeout(p);b[u.slice(0,16)+u.slice(0,16)]||q()};p=setTimeout(q,5E3);d.parentNode.insertBefore(v,d)}};if(!b[u]){try{Object.freeze(b[u]=n)}catch(e){}q()}})();
         /*]]>/* */
-    </script>
+        </script>
+
 
     {{-- PopAds end --}}
 
