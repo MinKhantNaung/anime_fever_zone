@@ -40,7 +40,7 @@
                     <label for="email">Your Email</label>
                     <input wire:model="email" id="email" type="email"
                         class="input input-bordered input-primary w-full mt-1" />
-                    @error('name')
+                    @error('email')
                         <x-input-error messages="{{ $message }}" />
                     @enderror
                 </div>
