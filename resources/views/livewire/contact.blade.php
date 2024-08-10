@@ -30,7 +30,14 @@
                 <div class="my-4">
                     <label for="name">Your Name</label>
                     <input wire:model="name" id="name" type="text"
-                        class="input input-bordered input-primary w-full mt-1" autofocus />
+                        class="input input-bordered input-primary w-full mt-1
+                        @error('name')
+                            border-rose-500
+                            focus:border-rose-500
+                            focus:ring-0
+                            focus:outline-rose-500
+                        @enderror"
+                        autofocus />
                     @error('name')
                         <x-input-error messages="{{ $message }}" />
                     @enderror
@@ -39,7 +46,13 @@
                 <div class="my-4">
                     <label for="email">Your Email</label>
                     <input wire:model="email" id="email" type="email"
-                        class="input input-bordered input-primary w-full mt-1" />
+                        class="input input-bordered input-primary w-full mt-1
+                        @error('email')
+                            border-rose-500
+                            focus:border-rose-500
+                            focus:ring-0
+                            focus:outline-rose-500
+                        @enderror" />
                     @error('email')
                         <x-input-error messages="{{ $message }}" />
                     @enderror
@@ -47,7 +60,14 @@
 
                 <div class="my-4">
                     <label for="category">Your Category</label>
-                    <select wire:model="category" id="category" class="select select-primary w-full mt-1">
+                    <select wire:model="category" id="category"
+                        class="select select-primary w-full mt-1
+                        @error('category')
+                            border-rose-500
+                            focus:border-rose-500
+                            focus:ring-0
+                            focus:outline-rose-500
+                        @enderror">
                         <option selected>Pick topic</option>
                         <option value="general">General Information, Feedback, Suggestions</option>
                         <option value="idea">Topic Ideas, Feedback, Corrections or Suggestions</option>
@@ -62,7 +82,14 @@
 
                 <div class="my-4">
                     <label for="message">Your Message</label>
-                    <textarea wire:model="message" id="message" class="textarea textarea-primary w-full mt-1"></textarea>
+                    <textarea wire:model="message" id="message"
+                        class="textarea textarea-primary w-full mt-1
+                        @error('message')
+                            border-rose-500
+                            focus:border-rose-500
+                            focus:ring-0
+                            focus:outline-rose-500
+                        @enderror"></textarea>
                     @error('message')
                         <x-input-error messages="{{ $message }}" />
                     @enderror
