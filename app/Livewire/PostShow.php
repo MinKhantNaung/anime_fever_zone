@@ -66,7 +66,7 @@ class PostShow extends Component
         $featuredPosts = Post::select('id', 'heading', 'slug')
             ->inRandomOrder()
             ->where('id', '!=', $this->post->id)
-            ->where('updated_at', '>=', Carbon::now()->subMonth())
+            ->where('is_feature', true)
             ->where('is_publish', true)
             ->take(5)
             ->get();
