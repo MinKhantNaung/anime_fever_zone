@@ -139,7 +139,7 @@ new class extends Component {
 
 
                     <div class="label mt-5">
-                        <span class="label-text text-lg text-[#9926f0]">Body (Description - Attach only internal links)</span>
+                        <span class="label-text text-lg text-[#9926f0]">Body (Description)</span>
                     </div>
                     <livewire:trix-editor wire:model='body'>
                         @error('body')
