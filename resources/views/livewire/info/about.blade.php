@@ -16,8 +16,13 @@
                 <p class="text-lg font-medium mt-5">
                     Hey there, fellow anime enthusiasts! I'm Min Khant Naung, the sole developer and writer behind Anime
                     Fever
-                    Zone (Tech - PHP 8.3.6, Laravel 11, Livewire 3.4, Alpine). This blog isn't just a project for me; it's a labor of love fueled by my deep passion for all
-                    things anime.
+                    Zone (Tech - PHP 8.3.6, Laravel 11, Livewire 3.4, Alpine). This blog isn't just a project for me; it's a
+                    labor of love fueled by my deep passion for all
+                    things anime. <br>
+                    I am committed to keeping the site up-to-date, regularly upgrading to the latest releases
+                    of PHP, Laravel, and other technologies to ensure the best experience for my visitors. This addition
+                    clearly communicates your dedication to maintaining and improving the site, reassuring visitors that
+                    they are accessing a well-supported and current platform.
                 </p>
             </div>
 
@@ -39,12 +44,14 @@
                     that have captured my heart.
                 </p>
                 <p class="text-lg font-medium mt-5">
-                    <span class="font-extrabold text-xl">Thoughts and Musings:</span> Join me as I delve into the latest trends, controversies, and discussions within
+                    <span class="font-extrabold text-xl">Thoughts and Musings:</span> Join me as I delve into the latest
+                    trends, controversies, and discussions within
                     the anime community. From thought-provoking editorials to lighthearted reflections, there's always
                     something new to explore.
                 </p>
                 <p class="text-lg font-medium mt-5">
-                    <span class="font-extrabold text-xl">Community Connection:</span> While it's just me behind the scenes, I still want to hear from you! Share your
+                    <span class="font-extrabold text-xl">Community Connection:</span> While it's just me behind the scenes,
+                    I still want to hear from you! Share your
                     thoughts and opinions in the comments section, or connect with me on social media to join the
                     conversation.
                 </p>
@@ -82,8 +89,8 @@
 
     </div>
 
-@push('scripts')
-    <script type="application/ld+json">
+    @push('scripts')
+        <script type="application/ld+json">
         {
           "@context": "https://schema.org",
           "@type": "BlogPosting",
@@ -97,4 +104,4 @@
           }
         }
         </script>
-@endpush
+    @endpush
