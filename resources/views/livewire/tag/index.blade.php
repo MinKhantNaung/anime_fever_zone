@@ -1,8 +1,9 @@
 <div class="container mx-auto flex flex-wrap py-6">
 
     <section class="w-full md:w-2/3 flex flex-col items-center px-3">
-        <button onclick="Livewire.dispatch('openModal', { component: 'tag.create' })" class="btn btn-secondary">+ Create
-            New</button>
+        <a href="{{ route('tags.create') }}" class="btn btn-secondary">
+            + Create New
+        </a>
 
         <div class="grid grid-cols-12 w-full my-3">
 
@@ -16,9 +17,9 @@
                     {{ $tag->name }}
                 </h1>
 
-                <p class="col-span-12 text-lg font-medium">
+                <div class="col-span-12 text-lg anime-content">
                     {!! $tag->body !!}
-                </p>
+                </div>
 
                 <div class="col-span-12 text-center">
                     <form wire:submit.prevent="deleteTag({{ $tag->id }})">

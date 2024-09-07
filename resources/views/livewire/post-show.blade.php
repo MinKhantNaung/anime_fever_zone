@@ -34,7 +34,7 @@
             <!-- Article Image -->
             <img src="{{ $post->media->url }}" alt="{{ $post->heading }}" class="w-full">
             <!-- Post Description -->
-            <p class="pb-3 pt-6 text-lg font-medium text-gray-700 leading-9">{!! $post->body !!}</p>
+            <p class="pb-3 pt-6 text-lg font-medium text-gray-700 leading-9 anime-content">{!! $post->body !!}</p>
 
             <div class="bg-gray-100 p-4 my-7">
                 <h2 class="text-xl sm:text-2xl font-medium">Table Of Contents</h2>

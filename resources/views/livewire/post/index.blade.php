@@ -44,7 +44,7 @@
                         </td>
                         <td class="text-wrap">{{ $post->heading }}</td>
                         <td class="text-wrap">{{ $post->slug }}</td>
-                        <td>{!! $post->body !!}</td>
+                        <td class="anime-content">{!! $post->body !!}</td>
                         <td>
                             @if ($post->is_publish == 1)
                                 <button wire:loading.attr="disabled" wire:click.prevent='sendMailToSubscribers({{ $post->id }})'

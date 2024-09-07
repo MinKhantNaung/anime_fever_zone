@@ -3,6 +3,8 @@
 use App\Livewire\Home;
 use App\Livewire\Term;
 use App\Livewire\Topic;
+use Livewire\Volt\Volt;
+use App\Livewire\Contact;
 use App\Livewire\Privacy;
 use App\Livewire\TagShow;
 use App\Livewire\PostShow;
@@ -13,7 +15,6 @@ use App\Livewire\Topic\Create;
 use Illuminate\Support\Facades\Route;
 use App\Livewire\Post\Index as PostIndex;
 use App\Http\Controllers\SubscriberController;
-use App\Livewire\Contact;
 use App\Livewire\Section\Index as SectionIndex;
 
 Route::get('/', Home::class)->name('home');
@@ -37,6 +38,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/topics', Create::class)->name('topics.create');
 
         Route::get('/blogger/tags', Index::class)->name('tags.index');
+        Volt::route('/blogger/tags/create', 'tags.create')->name('tags.create');
 
         Route::get('/blogger/posts', PostIndex::class)->name('posts.index');
         Route::get('/blogger/posts/{post}/sections', SectionIndex::class)->name('sections.index');

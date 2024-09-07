@@ -10,7 +10,7 @@
                     </a>
                 </li>
                 <li><a wire:navigate href="{{ route('home') }}"
-                        class="hover:text-gray-200 hover:underline px-4">Home</a></li>
+                        class="text-gray-100 hover:text-gray-200 hover:underline px-4">Home</a></li>
             </ul>
         </nav>
 
