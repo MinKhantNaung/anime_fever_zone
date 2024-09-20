@@ -4,6 +4,6 @@
 
 @layer base {
     .anime-content a {
-        @apply text-[#d122e3] hover:text-[#9926f0] transition-colors duration-150;
+        @apply text-[#9926f0] hover:text-[#d122e3] transition-colors duration-150;
     }
 }
