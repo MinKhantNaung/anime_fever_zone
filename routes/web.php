@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Route;
 use App\Livewire\Post\Index as PostIndex;
 use App\Http\Controllers\SubscriberController;
 use App\Livewire\Section\Create as SectionCreate;
+use App\Livewire\Section\Edit as SectionEdit;
 use App\Livewire\Section\Index as SectionIndex;
 use App\Livewire\Tag\Edit as TagEdit;
 
@@ -39,14 +40,17 @@ Route::middleware('auth')->group(function () {
     Route::middleware('isBlogger')->group(function () {
         Route::get('/topics', Create::class)->name('topics.create');
 
-        Route::get('/blogger/tags', Index::class)->name('tags.index');
-        Volt::route('/blogger/tags/create', 'tags.create')->name('tags.create');
-        Route::get('/blogger/tags/{tag}/edit', TagEdit::class)->name('tags.edit');
+        Route::prefix('/blogger')->group(function () {
+            Route::get('/tags', Index::class)->name('tags.index');
+            Volt::route('/tags/create', 'tags.create')->name('tags.create');
+            Route::get('/tags/{tag}/edit', TagEdit::class)->name('tags.edit');
 
-        Route::get('/blogger/posts', PostIndex::class)->name('posts.index');
-        Route::get('/blogger/posts/{post}/sections', SectionIndex::class)->name('sections.index');
-        Route::get('/blogger/posts/{post}/sections/create', SectionCreate::class)->name('sections.create');
+            Route::get('/posts', PostIndex::class)->name('posts.index');
+            Route::get('/posts/{post}/sections', SectionIndex::class)->name('sections.index');
+            Route::get('/posts/{post}/sections/create', SectionCreate::class)->name('sections.create');
+            Route::get('/posts/sections/{section}/edit', SectionEdit::class)->name('sections.edit');
+        });
     });
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

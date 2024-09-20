@@ -6,7 +6,6 @@ use App\Models\Media;
 use App\Models\Section;
 use App\Services\FileService;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Storage;
 use Livewire\WithFileUploads;
 use LivewireUI\Modal\ModalComponent;
 
@@ -20,9 +19,10 @@ class Edit extends ModalComponent
 
     public Section $section;
 
-    public static function modalMaxWidth(): string
+    public function mount()
     {
-        return '5xl';
+        $this->heading = $this->section->heading;
+        $this->body = $this->section->body;
     }
 
     public function updateSection()
@@ -95,12 +95,6 @@ class Edit extends ModalComponent
         } else {
             return 'image';
         }
-    }
-
-    public function mount()
-    {
-        $this->heading = $this->section->heading;
-        $this->body = $this->section->body;
     }
 
     public function render()

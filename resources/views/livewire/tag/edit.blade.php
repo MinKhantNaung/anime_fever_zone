@@ -10,7 +10,6 @@
         <main class="grid grid-cols-12 gap-3 h-full w-full overflow-hidden">
 
             {{-- Media --}}
-            {{-- left side --}}
             <aside class="col-span-12 m-auto items-center w-full overflow-scroll">
 
                 @if (!$media)
