@@ -21,9 +21,9 @@ class Create extends ModalComponent
 
     public Post $post;
 
-    public static function modalMaxWidth(): string
+    public function mount()
     {
-        return '5xl';
+        $this->body = '';
     }
 
     public function addSection()
@@ -67,9 +67,8 @@ class Create extends ModalComponent
                 'iconColor' => 'green'
             ]);
 
-            $this->reset();
-            $this->dispatch('close');
             $this->dispatch('section-reload');
+            return $this->redirectRoute('sections.index', $this->post->id, navigate: true);
         } catch (\Exception $e) {
             DB::rollBack();
 

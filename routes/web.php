@@ -15,6 +15,7 @@ use App\Livewire\Topic\Create;
 use Illuminate\Support\Facades\Route;
 use App\Livewire\Post\Index as PostIndex;
 use App\Http\Controllers\SubscriberController;
+use App\Livewire\Section\Create as SectionCreate;
 use App\Livewire\Section\Index as SectionIndex;
 use App\Livewire\Tag\Edit as TagEdit;
 
@@ -44,6 +45,7 @@ Route::middleware('auth')->group(function () {
 
         Route::get('/blogger/posts', PostIndex::class)->name('posts.index');
         Route::get('/blogger/posts/{post}/sections', SectionIndex::class)->name('sections.index');
+        Route::get('/blogger/posts/{post}/sections/create', SectionCreate::class)->name('sections.create');
     });
 });
 

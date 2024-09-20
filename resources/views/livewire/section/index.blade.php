@@ -64,11 +64,9 @@
             </div>
         </article>
 
-        <button
-            onclick="Livewire.dispatch('openModal', { component: 'section.create', arguments: { post: {{ $post->id }} } })"
-            class="btn btn-secondary ml-auto">+
+        <a href="{{ route('sections.create', $post->id) }}" class="btn btn-secondary ml-auto">+
             Add New Section
-        </button>
+        </a>
 
     </section>
 
