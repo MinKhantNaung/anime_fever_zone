@@ -20,11 +20,6 @@ class Edit extends ModalComponent
 
     public Tag $tag;
 
-    public static function modalMaxWidth(): string
-    {
-        return '5xl';
-    }
-
     public function updateTag()
     {
         // validate
@@ -63,15 +58,15 @@ class Edit extends ModalComponent
 
             DB::commit();
 
-            $this->reset();
-            $this->dispatch('close');
-            $this->dispatch('tag-reload');
-
             $this->dispatch('swal', [
                 'title' => 'Tag updated successfully !',
                 'icon' => 'success',
                 'iconColor' => 'green'
             ]);
+
+            $this->reset();
+            $this->dispatch('tag-reload');
+            return $this->redirectRoute('tags.index', navigate: true);
         } catch (\Exception $e) {
             DB::rollback();
 

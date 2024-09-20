@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Route;
 use App\Livewire\Post\Index as PostIndex;
 use App\Http\Controllers\SubscriberController;
 use App\Livewire\Section\Index as SectionIndex;
+use App\Livewire\Tag\Edit as TagEdit;
 
 Route::get('/', Home::class)->name('home');
 Route::get('/topic/{slug}', Topic::class)->name('topic');
@@ -39,6 +40,7 @@ Route::middleware('auth')->group(function () {
 
         Route::get('/blogger/tags', Index::class)->name('tags.index');
         Volt::route('/blogger/tags/create', 'tags.create')->name('tags.create');
+        Route::get('/blogger/tags/{tag}/edit', TagEdit::class)->name('tags.edit');
 
         Route::get('/blogger/posts', PostIndex::class)->name('posts.index');
         Route::get('/blogger/posts/{post}/sections', SectionIndex::class)->name('sections.index');

@@ -57,7 +57,6 @@ new class extends Component {
             ]);
 
             $this->reset();
-            $this->dispatch('close');
             $this->dispatch('tag-reload');
 
             return $this->redirectRoute('tags.index', navigate: true);
@@ -73,7 +72,7 @@ new class extends Component {
     }
 }; ?>
 
-<div class="bg-white lg:h-[500px] flex flex-col border gap-y-4 px-5 max-w-5xl mx-auto">
+<div class="bg-white flex flex-col border gap-y-4 px-5 max-w-5xl mx-auto">
 
     <header class="w-full py-2 border-b">
         <h1 class="font-bold text-center border-b-2 border-b-violet-600 py-8 text-3xl text-[#d122e3]">
