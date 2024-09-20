@@ -71,6 +71,6 @@
         </div>
     </div>
 
-    <p class="text-lg font-medium text-gray-700 leading-9 anime-content">{!! $section->body !!}</p>
+    <p class="text-lg font-medium text-gray-700 leading-9 anime-content">{!! setWireNavigate($section->body) !!}</p>
 
 </div>
