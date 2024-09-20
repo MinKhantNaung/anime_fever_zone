@@ -28,9 +28,9 @@
                 {{ $tag->name }}
             </h1>
 
-            <p class="col-span-12 text-lg font-medium text-gray-700 leading-9">
-                {!! $tag->body !!}
-            </p>
+            <div class="col-span-12 text-lg font-medium text-gray-700 leading-9 anime-content">
+                {!! setTargetBlank($tag->body) !!}
+            </div>
         </div>
 
         <div class="w-full">
