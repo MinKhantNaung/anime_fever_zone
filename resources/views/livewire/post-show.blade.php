@@ -38,7 +38,7 @@
 
             <div class="bg-gray-100 p-4 my-7">
                 <h2 class="text-xl sm:text-2xl font-medium">Table Of Contents</h2>
-                <ul class="list-decimal list-inside text-blue-600 font-medium text-lg mt-5">
+                <ul class="list-decimal list-inside text-[#9926f0] hover:text-[#d122e3] font-medium text-lg mt-5">
                     @foreach ($post->sections as $section)
                         @if ($section->heading)
                             <li class="py-2">
