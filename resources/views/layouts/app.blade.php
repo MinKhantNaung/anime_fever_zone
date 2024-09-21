@@ -19,8 +19,6 @@
     @yield('meta-og')
 
     <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
-    <link rel="stylesheet" href="{{ asset('assets/trix/trix.min.css') }}">
-    <script src="{{ asset('assets/trix/trix.umd.min.js') }}"></script>
 
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])

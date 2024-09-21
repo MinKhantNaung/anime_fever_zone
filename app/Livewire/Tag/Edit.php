@@ -64,8 +64,6 @@ class Edit extends ModalComponent
                 'iconColor' => 'green'
             ]);
 
-            $this->reset();
-            $this->dispatch('tag-reload');
             return $this->redirectRoute('tags.index', navigate: true);
         } catch (\Exception $e) {
             DB::rollback();

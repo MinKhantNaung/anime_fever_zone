@@ -1,3 +1,7 @@
+@section('meta-og')
+    <link rel="stylesheet" href="{{ asset('assets/trix/trix.min.css') }}">
+@endsection
+
 <div class="bg-white flex flex-col border gap-y-4 px-5 max-w-5xl mx-auto">
 
     <header class="w-full py-2 border-b">
@@ -89,11 +93,14 @@
         </main>
     </form>
 
+</div>
+
+@push('scripts')
+    <script src="{{ asset('assets/trix/trix.umd.min.js') }}"></script>
     <script>
         const trixEditor = document.getElementById('trix-editor-content');
         addEventListener('trix-blur', (event) => {
             @this.set('body', trixEditor.getAttribute('value'))
         })
     </script>
-
-</div>
+@endpush

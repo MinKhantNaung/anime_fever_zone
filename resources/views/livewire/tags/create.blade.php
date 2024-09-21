@@ -72,6 +72,11 @@ new class extends Component {
     }
 }; ?>
 
+@section('meta-og')
+    <link rel="stylesheet" href="{{ asset('assets/trix/trix.min.css') }}">
+    <script src="{{ asset('assets/trix/trix.umd.min.js') }}"></script>
+@endsection
+
 <div class="bg-white flex flex-col border gap-y-4 px-5 max-w-5xl mx-auto">
 
     <header class="w-full py-2 border-b">
