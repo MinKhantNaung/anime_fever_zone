@@ -3,14 +3,15 @@
 namespace App\Livewire\Post;
 
 use App\Models\Post;
-use App\Models\Media;
 use App\Models\Tag;
 use App\Models\Topic;
+use App\Services\AlertService;
 use App\Services\FileService;
+use App\Services\MediaService;
+use App\Services\PostService;
 use Livewire\WithFileUploads;
 use Illuminate\Support\Facades\DB;
 use LivewireUI\Modal\ModalComponent;
-use Illuminate\Support\Facades\Storage;
 
 class Create extends ModalComponent
 {
@@ -21,48 +22,50 @@ class Create extends ModalComponent
     public $heading;
     public $body;
     public $is_publish = false;
-
     public $selectedTags = null;
+
+    // Models, Services
+    protected $topic;
+    protected $tag;
+    protected $postService;
+    protected $mediaService;
+    protected $fileService;
+    protected $alertService;
+
+    public function boot(
+        Topic $topic,
+        Tag $tag,
+        PostService $postService,
+        MediaService $mediaService,
+        FileService $fileService,
+        AlertService $alertService
+    ) {
+        $this->topic = $topic;
+        $this->tag = $tag;
+        $this->postService = $postService;
+        $this->mediaService = $mediaService;
+        $this->fileService = $fileService;
+        $this->alertService = $alertService;
+    }
 
     public static function modalMaxWidth(): string
     {
         return '5xl';
     }
 
-
     public function createPost()
     {
-        $this->validate([
-            'media' => 'required|file|mimes:png,jpg,jpeg,svg,webp|max:5120',
-            'topic_id' => 'required|integer',
-            'heading' => 'required|string|max:255|unique:posts,heading',
-            'body' => 'required|string'
-        ]);
+        $validated = $this->validateRequests();
 
         DB::beginTransaction();
         try {
-            $post = Post::create([
-                'topic_id' => $this->topic_id,
-                'heading' => $this->heading,
-                'body' => $this->body,
-                'is_publish' => $this->is_publish
-            ]);
+            $post = $this->postService->store($validated);
 
-            // attach tags
-            if ($this->selectedTags != null) {
-                $post->tags()->attach($this->selectedTags);
-            }
+            $this->postService->attachTags($post, $this->selectedTags);
 
-            // add media
-            $url = FileService::storeFile($this->media);
+            $url = $this->fileService->storeFile($this->media);
 
-            // create media
-            Media::create([
-                'mediable_id' => $post->id,
-                'mediable_type' => Post::class,
-                'url' => $url,
-                'mime' => 'image'
-            ]);
+            $this->mediaService->store(Post::class, $post, $url, 'image');
 
             DB::commit();
 
@@ -70,29 +73,29 @@ class Create extends ModalComponent
             $this->dispatch('close');
             $this->dispatch('post-event');
 
-            $this->dispatch('swal', [
-                'title' => 'Post created successfully !',
-                'icon' => 'success',
-                'iconColor' => 'green'
-            ]);
-        } catch (\Exception $e) {
+            $this->alertService->alert($this, config('messages.post.create'), 'success');
+        } catch (\Throwable $e) {
             DB::rollBack();
 
-            $this->dispatch('swal', [
-                'title' => 'An unexpected error occurred. Please try again later.',
-                'icon' => 'error',
-                'iconColor' => 'red'
-            ]);
+            $this->alertService->alert($this, config('messages.common.error'), 'error');
         }
+    }
+
+    protected function validateRequests()
+    {
+        return $this->validate([
+            'media' => 'required|file|mimes:png,jpg,jpeg,svg,webp|max:5120',
+            'topic_id' => 'required|integer',
+            'heading' => 'required|string|max:255|unique:posts,heading',
+            'body' => 'required|string',
+            'is_publish' => 'required|boolean'
+        ]);
     }
 
     public function render()
     {
-        $topics = Topic::select('id', 'name')
-            ->get();
-
-        $tags = Tag::select('id', 'name')
-            ->get();
+        $topics = $this->topic->getAllByName();
+        $tags = $this->tag->getAllByName();
 
         return view('livewire.post.create', [
             'topics' => $topics,

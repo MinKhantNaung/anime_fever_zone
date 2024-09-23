@@ -36,4 +36,12 @@ class Tag extends Model
     {
         return $this->belongsToMany(Post::class, PostTag::class);
     }
+
+    /** Database Logic */
+    public function getAllByName()
+    {
+        return $this->query()
+            ->select('id', 'name')
+            ->get();
+    }
 }
