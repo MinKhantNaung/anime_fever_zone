@@ -3,10 +3,15 @@
 namespace App\Services;
 
 use App\Models\Post;
+use App\Services\SectionService;
 
 final class PostService
 {
-    public function __construct(protected Post $post) {}
+    public function __construct(
+        protected Post $post,
+        protected SectionService $sectionService,
+        protected MediaService $mediaService
+    ) {}
 
     public function store(array $validated)
     {
@@ -30,10 +35,34 @@ final class PostService
         ]);
     }
 
-    public function attachTags($postModel, $selectedTags)
+    public function destroy($post)
+    {
+        // delete related media
+        $media = $post->media;
+        $this->mediaService->destroy($media);
+
+        // delete its sections
+        $sections = $post->sections;
+        foreach ($sections as $section) {
+            $this->sectionService->destroy($section);
+        }
+
+        $post->tags()->detach();
+
+        $post->delete();
+    }
+
+    public function attachTags($post, $selectedTags)
     {
         if ($selectedTags != null) {
-            $postModel->tags()->attach($selectedTags);
+            $post->tags()->attach($selectedTags);
         }
+    }
+
+    public function toggleIsFeature($post)
+    {
+        $post->update([
+            'is_feature' => !$post->is_feature
+        ]);
     }
 }

@@ -111,14 +111,10 @@ class Edit extends ModalComponent
         // delete previous media
         $media = $this->post->media;
 
-        $media = $this->fileService->deleteFile($media);
-
-        $media->delete();
+        $this->mediaService->destroy($media);
 
         // add updated media
-        $url = $this->fileService->storeFile($this->media);
-
-        $this->mediaService->store(Post::class, $this->post, $url, 'image');
+        $this->mediaService->store(Post::class, $this->post, $newMedia, 'image');
     }
 
     public function render()

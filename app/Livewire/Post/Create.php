@@ -63,9 +63,7 @@ class Create extends ModalComponent
 
             $this->postService->attachTags($post, $this->selectedTags);
 
-            $url = $this->fileService->storeFile($this->media);
-
-            $this->mediaService->store(Post::class, $post, $url, 'image');
+            $this->mediaService->store(Post::class, $post, $validated['media'], 'image');
 
             DB::commit();
 

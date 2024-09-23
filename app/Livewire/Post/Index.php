@@ -6,9 +6,10 @@ use App\Models\Post;
 use App\Mail\PostMail;
 use Livewire\Component;
 use App\Models\Subscriber;
+use App\Services\AlertService;
 use Livewire\Attributes\On;
 use Livewire\WithPagination;
-use App\Services\FileService;
+use App\Services\PostService;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 
@@ -16,55 +17,32 @@ class Index extends Component
 {
     use WithPagination;
 
+    protected $post;
+    protected $postService;
+    protected $alertService;
+
+    public function boot(Post $post, PostService $postService, AlertService $alertService)
+    {
+        $this->post = $post;
+        $this->postService = $postService;
+        $this->alertService = $alertService;
+    }
+
     public function deletePost(Post $post)
     {
         DB::beginTransaction();
 
         try {
-            // delete related media
-            $media = $post->media;
-
-            $media = FileService::deleteFile($media);
-
-            $media->delete();
-
-            // delete its sections
-            $sections = $post->sections;
-
-            foreach ($sections as $section) {
-                // delete section's all media
-                $medias = $section->media;
-
-                foreach ($medias as $media) {
-                    $media = FileService::deleteFile($media);
-
-                    $media->delete();
-                }
-
-                $section->delete();
-            }
-
-            // Remove relationships between post and associated tags
-            $post->tags()->detach();
-
-            $post->delete();
+            $this->postService->destroy($post);
 
             DB::commit();
 
             $this->dispatch('post-event');
-            $this->dispatch('swal', [
-                'title' => 'Post deleted successfully !',
-                'icon' => 'success',
-                'iconColor' => 'green'
-            ]);
-        } catch (\Exception $e) {
+            $this->alertService->alert($this, config('messages.post.destroy'), 'success');
+        } catch (\Throwable $e) {
             DB::rollBack();
 
-            $this->dispatch('swal', [
-                'title' => 'An unexpected error occurred. Please try again later.',
-                'icon' => 'error',
-                'iconColor' => 'red'
-            ]);
+            $this->alertService->alert($this, config('messages.common.error'), 'error');
         }
     }
 
@@ -92,37 +70,24 @@ class Index extends Component
             Mail::to($subscriber->email)->send(new PostMail($subject, $body, $post->media->url));
         }
 
-        $this->dispatch('swal', [
-            'title' => 'Successfully sent new post link to subscribers',
-            'icon' => 'success',
-            'iconColor' => 'green'
-        ]);
+        $this->alertService->alert($this, config('messages.email.new_post_announce'), 'success');
     }
 
     public function toggleFeature(Post $post)
     {
-        $post->update([
-            'is_feature' => !$post->is_feature
-        ]);
+        $this->postService->toggleIsFeature($post);
 
         $this->dispatch('post-event');
-        $this->dispatch('swal', [
-            'title' => "Success",
-            'icon' => 'success',
-            'iconColor' => 'green'
-        ]);
+        $this->alertService->alert($this, config('messages.common.success'), 'success');
     }
 
     #[On('post-event')]
     public function render()
     {
-        $posts = Post::with('media', 'topic', 'tags', 'sections')
-            ->select('id', 'topic_id', 'heading', 'slug', 'body', 'is_publish', 'is_feature', 'created_at')
-            ->orderBy('id', 'desc')
-            ->paginate(5);
+        $posts = $this->post->getAllPerFive();
 
         return view('livewire.post.index', [
             'posts' => $posts
-        ])->title('Admin');
+        ]);
     }
 }

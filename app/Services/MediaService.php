@@ -8,8 +8,10 @@ final class MediaService
 {
     public function __construct(protected Media $media, protected FileService $fileService) {}
 
-    public function store($mainModelClass, $mainModel, $mediaUrl, $mime)
+    public function store($mainModelClass, $mainModel, $mediaFile, $mime)
     {
+        $mediaUrl = $this->fileService->storeFile($mediaFile);
+
         $media = $this->media->create([
             'mediable_id' => $mainModel->id,    // eg: $post->id
             'mediable_type' => $mainModelClass, // eg: Post::class
@@ -18,5 +20,12 @@ final class MediaService
         ]);
 
         return $media;
+    }
+
+    public function destroy($mediaModel)
+    {
+        $media = $this->fileService->deleteFile($mediaModel);
+
+        $media->delete();
     }
 }
