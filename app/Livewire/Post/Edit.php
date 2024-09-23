@@ -2,13 +2,14 @@
 
 namespace App\Livewire\Post;
 
-use App\Models\Media;
 use App\Models\Post;
 use App\Models\Tag;
 use App\Models\Topic;
+use App\Services\AlertService;
 use App\Services\FileService;
+use App\Services\MediaService;
+use App\Services\PostService;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Storage;
 use Livewire\WithFileUploads;
 use LivewireUI\Modal\ModalComponent;
 
@@ -21,83 +22,36 @@ class Edit extends ModalComponent
     public $heading;
     public $body;
     public $is_publish = false;
-
     public $selectedTags = null;
-
     public Post $post;
+
+    // Models, Services
+    protected $topic;
+    protected $tag;
+    protected $postService;
+    protected $mediaService;
+    protected $fileService;
+    protected $alertService;
+
+    public function boot(
+        Topic $topic,
+        Tag $tag,
+        PostService $postService,
+        MediaService $mediaService,
+        FileService $fileService,
+        AlertService $alertService
+    ) {
+        $this->topic = $topic;
+        $this->tag = $tag;
+        $this->postService = $postService;
+        $this->mediaService = $mediaService;
+        $this->fileService = $fileService;
+        $this->alertService = $alertService;
+    }
 
     public static function modalMaxWidth(): string
     {
         return '5xl';
-    }
-
-    public function updatePost()
-    {
-        // dd($this->selectedTags);
-        // validate
-        $this->validate([
-            'media' => 'nullable|file|mimes:png,jpg,jpeg,svg,webp|max:5120',
-            'topic_id' => 'required|integer',
-            'heading' => 'required|string|max:255|unique:posts,heading,' . $this->post->id,
-            'body' => 'required|string'
-        ]);
-
-        DB::beginTransaction();
-
-        try {
-            $this->post->update([
-                'topic_id' => $this->topic_id,
-                'heading' => $this->heading,
-                'body' => $this->body,
-                'is_publish' => $this->is_publish
-            ]);
-
-            // attach tags
-            $this->post->tags()->detach();
-
-            if ($this->selectedTags != null) {
-                $this->post->tags()->attach($this->selectedTags);
-            }
-
-            if ($this->media) {
-                // delete previous media
-                $media = $this->post->media;
-
-                $media = FileService::deleteFile($media);
-
-                $media->delete();
-
-                // add updated media
-                $url = FileService::storeFile($this->media);
-
-                Media::create([
-                    'mediable_id' => $this->post->id,
-                    'mediable_type' => Post::class,
-                    'url' => $url,
-                    'mime' => 'image'
-                ]);
-            }
-
-            DB::commit();
-
-            $this->reset();
-            $this->dispatch('close');
-            $this->dispatch('post-event');
-
-            $this->dispatch('swal', [
-                'title' => 'Post updated successfully !',
-                'icon' => 'success',
-                'iconColor' => 'green'
-            ]);
-        } catch (\Exception $e) {
-            DB::rollBack();
-
-            $this->dispatch('swal', [
-                'title' => 'An unexpected error occurred. Please try again later.',
-                'icon' => 'error',
-                'iconColor' => 'red'
-            ]);
-        }
     }
 
     public function mount()
@@ -109,13 +63,68 @@ class Edit extends ModalComponent
         $this->selectedTags = $this->post->tags()->pluck('tags.id')->toArray();
     }
 
+    public function updatePost()
+    {
+        // validate
+        $validated = $this->validateRequests();
+
+        DB::beginTransaction();
+
+        try {
+            $this->postService->update($this->post, $validated);
+
+            $this->post->tags()->detach();
+            $this->postService->attachTags($this->post, $this->selectedTags);
+
+            if ($validated['media']) {
+                $this->updateMedia($validated['media']);
+            }
+
+            DB::commit();
+
+            $this->reset();
+            $this->dispatch('close');
+            $this->dispatch('post-event');
+
+            $this->alertService->alert($this, config('messages.post.update'), 'success');
+        } catch (\Throwable $e) {
+            DB::rollBack();
+
+            $this->alertService->alert($this, config('messages.common.error'), 'error');
+        }
+    }
+
+    protected function validateRequests()
+    {
+        return $this->validate([
+            'media' => 'nullable|file|mimes:png,jpg,jpeg,svg,webp|max:5120',
+            'topic_id' => 'required|integer',
+            'heading' => 'required|string|max:255|unique:posts,heading,' . $this->post->id,
+            'body' => 'required|string',
+            'is_publish' => 'required|boolean',
+            'selectedTags' => 'nullable|array'
+        ]);
+    }
+
+    protected function updateMedia($newMedia)
+    {
+        // delete previous media
+        $media = $this->post->media;
+
+        $media = $this->fileService->deleteFile($media);
+
+        $media->delete();
+
+        // add updated media
+        $url = $this->fileService->storeFile($this->media);
+
+        $this->mediaService->store(Post::class, $this->post, $url, 'image');
+    }
+
     public function render()
     {
-        $topics = Topic::select('id', 'name')
-            ->get();
-
-        $tags = Tag::select('id', 'name')
-            ->get();
+        $topics = $this->topic->getAllByName();
+        $tags = $this->tag->getAllByName();
 
         return view('livewire.post.edit', [
             'topics' => $topics,

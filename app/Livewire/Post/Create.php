@@ -88,7 +88,8 @@ class Create extends ModalComponent
             'topic_id' => 'required|integer',
             'heading' => 'required|string|max:255|unique:posts,heading',
             'body' => 'required|string',
-            'is_publish' => 'required|boolean'
+            'is_publish' => 'required|boolean',
+            'selectedTags' => 'nullable|array'
         ]);
     }
 

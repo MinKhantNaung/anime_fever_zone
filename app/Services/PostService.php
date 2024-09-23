@@ -20,6 +20,16 @@ final class PostService
         return $post;
     }
 
+    public function update($post, array $validated)
+    {
+        $post->update([
+            'topic_id' => $validated['topic_id'],
+            'heading' => $validated['heading'],
+            'body' => $validated['body'],
+            'is_publish' => $validated['is_publish']
+        ]);
+    }
+
     public function attachTags($postModel, $selectedTags)
     {
         if ($selectedTags != null) {
