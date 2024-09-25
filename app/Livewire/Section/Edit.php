@@ -4,7 +4,10 @@ namespace App\Livewire\Section;
 
 use App\Models\Media;
 use App\Models\Section;
+use App\Services\AlertService;
 use App\Services\FileService;
+use App\Services\MediaService;
+use App\Services\SectionService;
 use Illuminate\Support\Facades\DB;
 use Livewire\WithFileUploads;
 use LivewireUI\Modal\ModalComponent;
@@ -19,6 +22,23 @@ class Edit extends ModalComponent
 
     public Section $section;
 
+    protected $sectionService;
+    protected $mediaService;
+    protected $fileService;
+    protected $alertService;
+
+    public function boot(
+        SectionService $sectionService,
+        MediaService $mediaService,
+        FileService $fileService,
+        AlertService $alertService
+    ) {
+        $this->sectionService = $sectionService;
+        $this->mediaService = $mediaService;
+        $this->fileService = $fileService;
+        $this->alertService = $alertService;
+    }
+
     public function mount()
     {
         $this->heading = $this->section->heading;
@@ -27,74 +47,49 @@ class Edit extends ModalComponent
 
     public function updateSection()
     {
-        $this->validate([
-            'media.*' => 'file|mimes:png,jpg,jpeg,svg,webp,mp4|max:512000',
-            'heading' => 'nullable|string|max:255',
-            'body' => 'required|string'
-        ]);
+        $validated = $this->validateRequests();
 
         DB::beginTransaction();
 
         try {
-            $this->section->update([
-                'heading' => $this->heading,
-                'body' => $this->body
-            ]);
+            $section = $this->sectionService->update($this->section, $validated);
 
             if (count($this->media) > 0) {
                 $prev_media = $this->section->media;
 
                 // delete previous media
                 foreach ($prev_media as $media) {
-                    $media = FileService::deleteFile($media);
-
-                    $media->delete();
+                    $this->mediaService->destroy($media);
                 }
 
                 foreach ($this->media as $media) {
                     // get mime type
-                    $mime = $this->getMime($media);
+                    $mime = $this->fileService->getMime($media);
 
-                    $url = FileService::storeFile($media);
-
-                    // create media
-                    Media::create([
-                        'mediable_id' => $this->section->id,
-                        'mediable_type' => Section::class,
-                        'url' => $url,
-                        'mime' => $mime
-                    ]);
+                    $this->mediaService->store(Section::class, $section, $media, $mime);
                 }
             }
 
             DB::commit();
 
             // success toast
-            $this->dispatch('swal', [
-                'title' => 'Section updated successfully !',
-                'icon' => 'success',
-                'iconColor' => 'green'
-            ]);
+            $this->alertService->alert($this, config('messages.section.update'), 'success');
 
             return $this->redirectRoute('sections.index', ['post' => $this->section->post_id], navigate: true);
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             DB::rollBack();
-
-            $this->dispatch('swal', [
-                'title' => 'An unexpected error occurred. Please try again later.',
-                'icon' => 'error',
-                'iconColor' => 'red'
-            ]);
+dd($e);
+            $this->alertService->alert($this, config('messages.common.error'), 'error');
         }
     }
 
-    public function getMime($media): string
+    protected function validateRequests()
     {
-        if (str()->contains($media->getMimeType(), 'video')) {
-            return 'video';
-        } else {
-            return 'image';
-        }
+        return $this->validate([
+            'media.*' => 'file|mimes:png,jpg,jpeg,svg,webp,mp4|max:512000',
+            'heading' => 'nullable|string|max:255',
+            'body' => 'required|string'
+        ]);
     }
 
     public function render()

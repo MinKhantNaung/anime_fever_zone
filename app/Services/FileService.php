@@ -30,4 +30,13 @@ class FileService
 
         return $url;
     }
+
+    public function getMime($media): string
+    {
+        if (str()->contains($media->getMimeType(), 'video')) {
+            return 'video';
+        } else {
+            return 'image';
+        }
+    }
 }

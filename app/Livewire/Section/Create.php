@@ -2,14 +2,15 @@
 
 namespace App\Livewire\Section;
 
-use App\Models\Media;
 use App\Models\Post;
 use App\Models\Section;
+use App\Services\AlertService;
 use App\Services\FileService;
+use App\Services\MediaService;
+use App\Services\SectionService;
 use Illuminate\Support\Facades\DB;
 use Livewire\WithFileUploads;
 use LivewireUI\Modal\ModalComponent;
-use Illuminate\Support\Facades\Storage;
 
 class Create extends ModalComponent
 {
@@ -21,6 +22,19 @@ class Create extends ModalComponent
 
     public Post $post;
 
+    protected $sectionService;
+    protected $mediaService;
+    protected $alertService;
+    protected $fileService;
+
+    public function boot(SectionService $sectionService, MediaService $mediaService, AlertService $alertService, FileService $fileService)
+    {
+        $this->sectionService = $sectionService;
+        $this->mediaService = $mediaService;
+        $this->alertService = $alertService;
+        $this->fileService = $fileService;
+    }
+
     public function mount()
     {
         $this->body = '';
@@ -28,65 +42,41 @@ class Create extends ModalComponent
 
     public function addSection()
     {
-        $this->validate([
-            'media.*' => 'file|mimes:png,jpg,jpeg,svg,webp,mp4|max:512000',
-            'heading' => 'nullable|string|max:225',
-            'body' => 'required|string'
-        ]);
+        $validated = $this->validateRequests();
 
         DB::beginTransaction();
 
         try {
-            $section = Section::create([
-                'post_id' => $this->post->id,
-                'heading' => $this->heading,
-                'body' => $this->body
-            ]);
+            $section = $this->sectionService->store($this->post->id, $validated);
 
             foreach ($this->media as $media) {
                 // get mime type
-                $mime = $this->getMime($media);
+                $mime = $this->fileService->getMime($media);
 
-                $url = FileService::storeFile($media);
-
-                // create media
-                Media::create([
-                    'mediable_id' => $section->id,
-                    'mediable_type' => Section::class,
-                    'url' => $url,
-                    'mime' => $mime
-                ]);
+                $this->mediaService->store(Section::class, $section, $media, $mime);
             }
 
             DB::commit();
 
-            // success toast
-            $this->dispatch('swal', [
-                'title' => 'Section added successfully !',
-                'icon' => 'success',
-                'iconColor' => 'green'
-            ]);
+            $this->alertService->alert($this, config('messages.section.create'), 'success');
 
             $this->dispatch('section-reload');
+
             return $this->redirectRoute('sections.index', $this->post->id, navigate: true);
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             DB::rollBack();
 
-            $this->dispatch('swal', [
-                'title' => 'An unexpected error occurred. Please try again later.',
-                'icon' => 'error',
-                'iconColor' => 'red'
-            ]);
+            $this->alertService->alert($this, config('messages.common.error'), 'error');
         }
     }
 
-    public function getMime($media): string
+    protected function validateRequests()
     {
-        if (str()->contains($media->getMimeType(), 'video')) {
-            return 'video';
-        } else {
-            return 'image';
-        }
+        return $this->validate([
+            'media.*' => 'file|mimes:png,jpg,jpeg,svg,webp,mp4|max:512000',
+            'heading' => 'nullable|string|max:225',
+            'body' => 'required|string'
+        ]);
     }
 
     public function render()

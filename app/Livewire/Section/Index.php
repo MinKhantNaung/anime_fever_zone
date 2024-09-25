@@ -4,7 +4,8 @@ namespace App\Livewire\Section;
 
 use App\Models\Post;
 use App\Models\Section;
-use App\Services\FileService;
+use App\Services\AlertService;
+use App\Services\SectionService;
 use Illuminate\Support\Facades\DB;
 use Livewire\Attributes\On;
 use Livewire\Component;
@@ -13,39 +14,13 @@ class Index extends Component
 {
     public Post $post;
 
-    public function removeSection(Section $section)
+    protected $sectionService;
+    protected $alertService;
+
+    public function boot(SectionService $sectionService, AlertService $alertService)
     {
-        DB::beginTransaction();
-
-        try {
-            $medias = $section->media;
-
-            foreach ($medias as $media) {
-                $media = FileService::deleteFile($media);
-
-                $media->delete();
-            }
-
-            $section->delete();
-
-            DB::commit();
-
-            $this->dispatch('section-reload');
-
-            $this->dispatch('swal', [
-                'title' => 'Section removed successfully !',
-                'icon' => 'success',
-                'iconColor' => 'green'
-            ]);
-        } catch (\Exception $e) {
-            DB::rollBack();
-
-            $this->dispatch('swal', [
-                'title' => 'An unexpected error occurred. Please try again later.',
-                'icon' => 'error',
-                'iconColor' => 'red'
-            ]);
-        }
+        $this->sectionService = $sectionService;
+        $this->alertService = $alertService;
     }
 
     #[On('section-reload')]
@@ -54,9 +29,27 @@ class Index extends Component
         $this->post->load('sections', 'media', 'topic', 'tags');
     }
 
+    public function removeSection(Section $section)
+    {
+        DB::beginTransaction();
+
+        try {
+            $this->sectionService->destroy($section);
+
+            DB::commit();
+
+            $this->dispatch('section-reload');
+
+            $this->alertService->alert($this, config('messages.section.destroy'), 'success');
+        } catch (\Exception $e) {
+            DB::rollBack();
+
+            $this->alertService->alert($this, config('messages.common.error'), 'error');
+        }
+    }
+
     public function render()
     {
-        return view('livewire.section.index')
-            ->title('Admin');
+        return view('livewire.section.index');
     }
 }

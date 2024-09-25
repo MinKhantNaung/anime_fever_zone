@@ -2,11 +2,35 @@
 
 namespace App\Services;
 
+use App\Models\Section;
+
 final class SectionService
 {
     public function __construct(
+        protected Section $section,
         protected MediaService $mediaService
     ) {}
+
+    public function store($postId, $validated)
+    {
+        $section = $this->section->create([
+            'post_id' => $postId,
+            'heading' => $validated['heading'],
+            'body' => $validated['body']
+        ]);
+
+        return $section;
+    }
+
+    public function update(Section $section, $validated)
+    {
+        $section->update([
+            'heading' => $validated['heading'],
+            'body' => $validated['body']
+        ]);
+
+        return $section;
+    }
 
     public function destroy($section)
     {
