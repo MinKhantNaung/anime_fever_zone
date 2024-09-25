@@ -4,6 +4,9 @@ use Livewire\Volt\Component;
 use App\Models\Tag;
 use App\Models\Media;
 use App\Services\FileService;
+use App\Services\TagService;
+use App\Services\MediaService;
+use App\Services\AlertService;
 use Livewire\WithFileUploads;
 use Illuminate\Support\Facades\DB;
 
@@ -14,6 +17,17 @@ new class extends Component {
     public $name;
     public $body;
 
+    protected $tagService;
+    protected $mediaService;
+    protected $alertService;
+
+    public function boot(TagService $tagService, MediaService $mediaService, AlertService $alertService)
+    {
+        $this->tagService = $tagService;
+        $this->mediaService = $mediaService;
+        $this->alertService = $alertService;
+    }
+
     public function mount()
     {
         $this->body = '';
@@ -22,39 +36,19 @@ new class extends Component {
     public function createTag()
     {
         // validate
-        $this->validate([
-            'media' => 'required|file|mimes:png,jpg,jpeg,svg,webp|max:5120',
-            'name' => 'required|string|max:225|unique:tags,name',
-            'body' => 'required|string',
-        ]);
+        $validated = $this->validateRequests();
 
         DB::beginTransaction();
 
         try {
-            $tag = Tag::create([
-                'name' => $this->name,
-                'body' => $this->body,
-            ]);
+            $tag = $this->tagService->store($validated);
 
             // add media
-            $url = FileService::storeFile($this->media);
-
-            // create media
-            Media::create([
-                'mediable_id' => $tag->id,
-                'mediable_type' => Tag::class,
-                'url' => $url,
-                'mime' => 'image',
-            ]);
+            $this->mediaService->store(Tag::class, $tag, $this->media, 'image');
 
             DB::commit();
 
-            // success toast
-            $this->dispatch('swal', [
-                'title' => 'Tag created successfully !',
-                'icon' => 'success',
-                'iconColor' => 'green',
-            ]);
+            $this->alertService->alert($this, config('messages.tag.create'), 'success');
 
             $this->reset();
             $this->dispatch('tag-reload');
@@ -63,12 +57,17 @@ new class extends Component {
         } catch (\Exception $e) {
             DB::rollback();
 
-            $this->dispatch('swal', [
-                'title' => 'An unexpected error occurred. Please try again later.',
-                'icon' => 'error',
-                'iconColor' => 'red',
-            ]);
+            $this->alertService->alert($this, config('messages.common.error'), 'error');
         }
+    }
+
+    protected function validateRequests()
+    {
+        return $this->validate([
+            'media' => 'required|file|mimes:png,jpg,jpeg,svg,webp|max:5120',
+            'name' => 'required|string|max:225|unique:tags,name',
+            'body' => 'required|string',
+        ]);
     }
 }; ?>
 

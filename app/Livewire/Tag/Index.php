@@ -3,50 +3,42 @@
 namespace App\Livewire\Tag;
 
 use App\Models\Tag;
+use App\Services\AlertService;
 use Livewire\Component;
 use Livewire\Attributes\On;
 use Livewire\WithPagination;
-use App\Services\FileService;
+use App\Services\TagService;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Storage;
 
 class Index extends Component
 {
     use WithPagination;
+
+    protected $tagService;
+    protected $alertService;
+
+    public function boot(TagService $tagService, AlertService $alertService)
+    {
+        $this->tagService = $tagService;
+        $this->alertService = $alertService;
+    }
 
     public function deleteTag(Tag $tag)
     {
         DB::beginTransaction();
 
         try {
-            $media = $tag->media;
-
-            $media = FileService::deleteFile($media);
-
-            $media->delete();
-
-            // Remove relationships between tag and associated post
-            $tag->posts()->detach();
-
-            $tag->delete();
+            $this->tagService->destroy($tag);
 
             DB::commit();
 
-            $this->dispatch('swal', [
-                'title' => 'Tag deleted successfully !',
-                'icon' => 'success',
-                'iconColor' => 'green'
-            ]);
+            $this->alertService->alert($this, config('messages.tag.destroy'), 'success');
 
             $this->dispatch('tag-reload');
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             DB::rollBack();
 
-            $this->dispatch('swal', [
-                'title' => 'An unexpected error occurred. Please try again later.',
-                'icon' => 'error',
-                'iconColor' => 'red'
-            ]);
+            $this->alertService->alert($this, config('messages.common.error'), 'error');
         }
     }
 
