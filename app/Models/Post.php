@@ -16,7 +16,14 @@ class Post extends Model
 {
     use HasFactory, Commentable;
 
-    protected $guarded = [];
+    protected $fillable = [
+        'topic_id',
+        'heading',
+        'slug',
+        'body',
+        'is_feature',
+        'is_publish'
+    ];
 
     protected $casts = [
         'is_publish' => 'boolean',
