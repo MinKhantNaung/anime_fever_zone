@@ -2,7 +2,8 @@
 
 namespace App\Livewire;
 
-use App\Models\Contact as ContactModel;
+use App\Services\AlertService;
+use App\Services\ContactService;
 use Livewire\Component;
 use Illuminate\Support\Facades\DB;
 
@@ -13,39 +14,43 @@ class Contact extends Component
     public $category;
     public $message;
 
+    protected $contactService;
+    protected $alertService;
+
+    public function boot(ContactService $contactService, AlertService $alertService)
+    {
+        $this->contactService = $contactService;
+        $this->alertService = $alertService;
+    }
+
     public function sendToContact()
     {
-        $this->validate([
+        $validated = $this->validateRequests();
+
+        DB::beginTransaction();
+        try {
+            $this->contactService->store($validated);
+
+            DB::commit();
+
+            $this->reset();
+
+            $this->alertService->alert($this, config('messages.contact.success'), 'success');
+        } catch (\Exception $e) {
+            DB::rollBack();
+
+            $this->alertService->alert($this, config('messages.common.error'), 'error');
+        }
+    }
+
+    protected function validateRequests()
+    {
+        return $this->validate([
             'name' => 'required|string|max:255',
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255'],
             'category' => 'required|in:general,idea,issue,ads,copy',
             'message' => 'required|string'
         ]);
-
-        DB::beginTransaction();
-        try {
-            ContactModel::create([
-                'name' => $this->name,
-                'email' => $this->email,
-                'category' => $this->category,
-                'message' => $this->message
-            ]);
-
-            DB::commit();
-            $this->reset();
-            $this->dispatch('swal', [
-                'title' => 'Your message sent successfully !',
-                'icon' => 'success',
-                'iconColor' => 'green'
-            ]);
-        } catch (\Exception $e) {
-            DB::rollBack();
-            $this->dispatch('swal', [
-                'title' => 'An unexpected error occurred. Please try again later.',
-                'icon' => 'error',
-                'iconColor' => 'red'
-            ]);
-        }
     }
 
     public function render()

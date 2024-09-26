@@ -11,7 +11,7 @@ final class SectionService
         protected MediaService $mediaService
     ) {}
 
-    public function store($postId, $validated)
+    public function store($postId, array $validated)
     {
         $section = $this->section->create([
             'post_id' => $postId,
@@ -22,7 +22,7 @@ final class SectionService
         return $section;
     }
 
-    public function update(Section $section, $validated)
+    public function update(Section $section, array $validated)
     {
         $section->update([
             'heading' => $validated['heading'],

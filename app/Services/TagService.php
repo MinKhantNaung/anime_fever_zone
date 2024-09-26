@@ -8,7 +8,7 @@ final class TagService
 {
     public function __construct(protected Tag $tag, protected MediaService $mediaService) {}
 
-    public function store($validated)
+    public function store(array $validated)
     {
         $tag = $this->tag->create([
             'name' => $validated['name'],
@@ -18,7 +18,7 @@ final class TagService
         return $tag;
     }
 
-    public function update(Tag $tag, $validated)
+    public function update(Tag $tag, array $validated)
     {
         $tag = $tag->update([
             'name' => $validated['name'],
