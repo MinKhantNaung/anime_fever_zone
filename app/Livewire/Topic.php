@@ -32,7 +32,7 @@ class Topic extends Component
                 $query->where('slug', $this->slug);
             })
             ->where('is_publish', true)
-            ->paginate(12);
+            ->paginate(10);
 
         return view('livewire.topic', [
             'posts' => $posts

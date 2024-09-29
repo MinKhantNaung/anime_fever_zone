@@ -32,7 +32,7 @@ class Home extends Component
             ->select('id', 'topic_id', 'heading', 'slug', 'body', 'updated_at')
             ->orderBy('updated_at', 'desc')
             ->where('is_publish', true)
-            ->paginate(12);
+            ->paginate(10);
 
         return view('livewire.home', [
             'posts' => $posts
