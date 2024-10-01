@@ -10,6 +10,7 @@
 
 <body>
     <div style="text-align: center">
+        <div>{{ $imagePath }}</div>
         <img src="{{ $imagePath }}" alt="anime_fever_zone_post" style="width: 100%">
     </div>
     <p style="font-size: 20px">{!! $body !!}</p>
