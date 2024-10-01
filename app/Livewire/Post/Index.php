@@ -50,7 +50,7 @@ class Index extends Component
     {
         // Send email
         $subject = 'Your Daily Dose of [Anime Fever Zone]: New Post Alert!';
-        $new_post_link = url($post->slug . '/post');
+        $new_post_link = url('/blog/' . $post->slug);
         $body = "<p style='font-weight: bolder; font-size: 25px;'>$post->heading</p>";
         $body .= "Click on the following link to read <br>";
 
