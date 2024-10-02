@@ -10,8 +10,7 @@
 
 <body>
     <div style="text-align: center">
-        <div>{{ $imagePath }}</div>
-        <img src="{{ $imagePath }}" alt="anime_fever_zone_post" style="width: 100%">
+        <img src="data:image/webp;base64,{{ base64_encode(file_get_contents($imagePath)) }}" alt="anime_fever_zone_post" style="width: 100%">
     </div>
     <p style="font-size: 20px">{!! $body !!}</p>
 </body>
