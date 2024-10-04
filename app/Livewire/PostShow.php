@@ -40,7 +40,7 @@ class PostShow extends Component
         $message .= '<a href="' . $verification_link . '">';
         $message .= $verification_link;
         $message .= '</a><br><br>';
-        $message .= 'If you received this email by mistake, simply delete it. You will not be subscribed if you do not  click the confirmation link above.';
+        $message .= 'If you received this email by mistake, simply delete it. You will not be subscribed if you do not click the confirmation link above.';
 
         Mail::to($this->email)->send(new WebsiteMail($subject, $message));
 
