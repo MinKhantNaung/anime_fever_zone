@@ -42,7 +42,7 @@ class PostShow extends Component
         $message .= '</a><br><br>';
         $message .= 'If you received this email by mistake, simply delete it. You will not be subscribed if you do not click the confirmation link above.';
 
-        Mail::to($this->email)->send(new WebsiteMail($subject, $message));
+        defer(fn () => Mail::to($this->email)->send(new WebsiteMail($subject, $message)));
 
         $this->dispatch('subscribed', [
             'title' => 'Thanks, please check your inbox to confirm subscription!',
