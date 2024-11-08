@@ -2,7 +2,6 @@
 
 namespace App\Livewire;
 
-use Carbon\Carbon;
 use App\Models\Tag;
 use App\Models\Post;
 use Livewire\Component;
