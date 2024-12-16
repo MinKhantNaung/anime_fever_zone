@@ -11,7 +11,7 @@
                 </p>
             </div>
             <!-- Article Image -->
-            <img src="{{ $post->media->url }}" alt="Image representing {{ $post->heading }}" class="w-full">
+            <img src="{{ $post->media->url }}" alt="Image representing {{ $post->heading }}" class="w-full" loading="lazy">
             <!-- Post Description -->
             <p class="pb-3 pt-6 text-lg font-medium">{!! $post->body !!}</p>
 
