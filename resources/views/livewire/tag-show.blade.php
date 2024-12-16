@@ -21,7 +21,7 @@
         <div class="grid grid-cols-12 w-full my-3">
             <div class="hidden lg:block lg:col-span-4"></div>
             <div class="col-span-12 lg:col-span-4">
-                <img src="{{ $tag->media->url }}" alt="{{ $tag->name }}" class="w-[100%]" loading="lazy">
+                <img src="{{ $tag->media->url }}" alt="{{ $tag->name }}" class="w-[100%]">
             </div>
 
             <h1 class="col-span-12 text-center font-bold text-2xl my-3">
@@ -42,7 +42,7 @@
             <div class="grid grid-cols-12 gap-1 bg-white shadow my-4">
                 <div class="col-span-12 lg:col-span-5">
                     <a wire:navigate href="{{ route('post', $post->slug) }}">
-                        <img src="{{ $post->media->url }}" class="w-full object-cover" loading="lazy">
+                        <img src="{{ $post->media->url }}" class="w-full object-cover">
                     </a>
                 </div>
 
