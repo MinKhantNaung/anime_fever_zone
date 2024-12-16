@@ -96,7 +96,7 @@
                 </div>
 
                 <div class="my-4 text-center">
-                    <button type="submit" class="btn btn-primary px-5">Send</button>
+                    <button type="submit" class="btn btn-secondary text-lg px-5">Send</button>
                 </div>
             </form>
 
