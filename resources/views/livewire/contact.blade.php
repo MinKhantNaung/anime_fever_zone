@@ -10,7 +10,7 @@
             <p class="text-lg mt-5">
                 Connect with our developer on LinkedIn.
             </p>
-            <a href="https://www.linkedin.com/in/min-khant-naung-22226a25a/" target="_blank"
+            <a href="https://www.linkedin.com/in/min-khant-naung-9b7a90342/" target="_blank"
                 class="text-lg font-extrabold flex items-center mb-10">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                     class="bi bi-linkedin mr-1" viewBox="0 0 16 16">
