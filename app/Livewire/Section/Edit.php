@@ -78,7 +78,7 @@ class Edit extends ModalComponent
             return $this->redirectRoute('sections.index', ['post' => $this->section->post_id], navigate: true);
         } catch (\Throwable $e) {
             DB::rollBack();
-dd($e);
+
             $this->alertService->alert($this, config('messages.common.error'), 'error');
         }
     }
