@@ -19,23 +19,19 @@
 }
 
 .glow-point {
-    position: absolute;
+    position: fixed;
     box-shadow: 0rem 0rem 1.2rem 0.6rem rgb(var(--glow-rgb));
     pointer-events: none;
-
-    overflow: hidden;
 }
 
 .star {
-    position: absolute;
+    position: fixed;
     z-index: 2;
     color: white;
     font-size: 1rem;
     animation-duration: 1500ms;
     animation-fill-mode: forwards;
     pointer-events: none;
-
-    overflow: hidden;
 }
 
 @keyframes fall-1 {

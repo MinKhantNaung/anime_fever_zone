@@ -38,13 +38,7 @@ const calcDistance = (a, b) => {
 const calcElapsedTime = (start, end) => end - start;
 
 const appendElement = element => document.body.appendChild(element),
-    removeElement = (element, delay) => {
-        setTimeout(() => {
-            if (document.body.contains(element)) {
-                document.body.removeChild(element);
-            }
-        }, delay);
-    };
+    removeElement = (element, delay) => setTimeout(() => document.body.removeChild(element), delay);
 
 const createStar = position => {
     const star = document.createElement("span"),
@@ -132,11 +126,7 @@ const adjustLastMousePosition = position => {
 };
 
 const handleOnMove = e => {
-    const scrollOffset = { x: window.scrollX, y: window.scrollY };
-    const mousePosition = {
-        x: e.clientX + scrollOffset.x,
-        y: e.clientY + scrollOffset.y
-    };
+    const mousePosition = { x: e.clientX, y: e.clientY }
 
     adjustLastMousePosition(mousePosition);
 
@@ -153,7 +143,7 @@ const handleOnMove = e => {
     createGlow(last.mousePosition, mousePosition);
 
     updateLastMousePosition(mousePosition);
-};
+}
 
 window.onmousemove = e => handleOnMove(e);
 
