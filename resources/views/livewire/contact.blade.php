@@ -36,8 +36,7 @@
                             focus:border-rose-500
                             focus:ring-0
                             focus:outline-rose-500
-                        @enderror"
-                        autofocus />
+                        @enderror" />
                     @error('name')
                         <x-input-error messages="{{ $message }}" />
                     @enderror
