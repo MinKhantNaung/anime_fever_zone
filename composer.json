@@ -12,6 +12,7 @@
         "laravel/tinker": "^2.8",
         "livewire/livewire": "^3.4",
         "livewire/volt": "^1.6",
+        "silviolleite/laravelpwa": "^2.0",
         "spatie/laravel-sitemap": "^7.0",
         "wire-elements/modal": "^2.0"
     },
