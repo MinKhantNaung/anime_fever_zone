@@ -21,7 +21,6 @@
     <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
 
     <!-- Scripts -->
-    @laravelPWA
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
