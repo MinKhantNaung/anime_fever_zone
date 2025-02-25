@@ -24,7 +24,7 @@ class Create extends Component
     {
         if ($this->editMode) {
             $this->validate([
-                'name' => 'required|string|max:255|unique:topics,name,' . $this->topic->id
+                'name' => ['required', 'string', 'max:255', 'unique:topics,name,' . $this->topic->id]
             ]);
 
             $this->topic->update([
@@ -42,7 +42,7 @@ class Create extends Component
             ]);
         } else {
             $this->validate([
-                'name' => 'required|string|max:255|unique:topics,name'
+                'name' => ['required', 'string', 'max:255', 'unique:topics']
             ]);
 
             Topic::create([
