@@ -65,6 +65,10 @@ class Create extends Component
     {
         $topic->delete();
 
+        $this->topic = null;
+        $this->name = null;
+        $this->editMode = false;
+
         $this->dispatch('topic-created');
 
         $this->dispatch('swal', [
