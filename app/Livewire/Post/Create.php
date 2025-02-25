@@ -88,6 +88,7 @@ class Create extends ModalComponent
             'body' => ['required', 'string'],
             'is_publish' => ['required', 'boolean'],
             'selectedTags' => ['nullable', 'array'],
+            'selectedTags.*' => ['integer', 'exists:tags,id']
         ]);
     }
 
