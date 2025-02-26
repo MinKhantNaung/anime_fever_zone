@@ -71,7 +71,7 @@ class Edit extends ModalComponent
     protected function validateRequests()
     {
         return $this->validate([
-            'media' => ['nullable', 'file', 'mimes:png,jpg,jpeg,svg,webp', 'max:5120'],
+            'media' => ['nullable', 'file', 'mimes:webp', 'max:5120'],
             'name' => ['required', 'string', 'max:255', 'unique:tags,name,' . $this->tag->id],
             'body' => ['required', 'string'],
         ]);

@@ -82,7 +82,7 @@ class Create extends ModalComponent
     protected function validateRequests()
     {
         return $this->validate([
-            'media' => ['required', 'file', 'mimes:png,jpg,jpeg,svg,webp', 'max:5120'],
+            'media' => ['required', 'file', 'image', 'mimes:webp', 'max:5120'],
             'topic_id' => ['required', 'integer', 'exists:topics,id'],
             'heading' => ['required', 'string', 'max:255', 'unique:posts,heading'],
             'body' => ['required', 'string'],
