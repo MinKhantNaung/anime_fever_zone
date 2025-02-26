@@ -64,7 +64,7 @@ new class extends Component {
     protected function validateRequests()
     {
         return $this->validate([
-            'media' => 'required|file|mimes:png,jpg,jpeg,svg,webp|max:5120',
+            'media' => 'required|file|mimes:webp|max:5120',
             'name' => 'required|string|max:225|unique:tags,name',
             'body' => 'required|string',
         ]);
@@ -123,6 +123,10 @@ new class extends Component {
                                 class="w-full h-full object-contain">
                         </div>
                     </div>
+
+                    @error('media')
+                        <x-input-error messages="{{ $message }}" />
+                    @enderror
                 @endif
 
             </aside>

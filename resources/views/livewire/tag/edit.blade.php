@@ -48,6 +48,10 @@
                                 class="w-full h-full object-contain">
                         </div>
                     </div>
+
+                    @error('media')
+                        <x-input-error messages="{{ $message }}" />
+                    @enderror
                 @endif
 
             </aside>
