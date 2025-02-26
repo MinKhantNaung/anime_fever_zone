@@ -21,7 +21,7 @@
                     {{-- Trigger Button --}}
                     <h1 class="text-center">16:9 aspect ratio, recommended like TV screen</h1>
                     <label for="custom-file-input" class="m-auto max-w-fit flex-col flex gap-3 cursor-pointer">
-                        <input wire:model.live='media' type="file" multiple accept=".jpg,.jpeg,.png,svg,webp"
+                        <input wire:model.live='media' type="file" multiple accept=".webp"
                             id="custom-file-input" class="sr-only">
 
                         <span class="m-auto">
@@ -50,6 +50,10 @@
                             </div>
                         @endforeach
                     </div>
+
+                    @error('media.*')
+                        <x-input-error messages="{{ $message }}" />
+                    @enderror
                 @endif
 
             </aside>

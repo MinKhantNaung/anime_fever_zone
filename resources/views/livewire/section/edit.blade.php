@@ -50,6 +50,10 @@
                             </div>
                         @endforeach
                     </div>
+
+                    @error('media.*')
+                        <x-input-error messages="{{ $message }}" />
+                    @enderror
                 @endif
 
             </aside>

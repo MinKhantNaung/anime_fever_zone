@@ -5,8 +5,9 @@ namespace App\Livewire;
 use App\Models\Post;
 use Livewire\Component;
 use App\Mail\WebsiteMail;
-use App\Models\SiteSetting;
 use App\Models\Subscriber;
+use App\Models\SiteSetting;
+use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Mail;
 
 class PostShow extends Component
@@ -20,7 +21,9 @@ class PostShow extends Component
     public function subscribe()
     {
         $this->validate([
-            'email' => 'required|string|email|unique:subscribers'
+            'email' => ['required', 'string', 'email', Rule::unique('subscribers')->where(function ($query) {
+                return $query->where('status', 'Active');
+            })]
         ]);
 
         $token = hash('sha256', time());

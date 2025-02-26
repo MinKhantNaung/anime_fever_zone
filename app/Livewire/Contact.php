@@ -46,10 +46,10 @@ class Contact extends Component
     protected function validateRequests()
     {
         return $this->validate([
-            'name' => 'required|string|max:255',
+            'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255'],
-            'category' => 'required|in:general,idea,issue,ads,copy',
-            'message' => 'required|string'
+            'category' => ['required', 'in:general,idea,issue,ads,copy'],
+            'message' => ['required', 'string', 'max:255'],
         ]);
     }
 
