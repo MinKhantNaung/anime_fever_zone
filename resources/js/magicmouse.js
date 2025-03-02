@@ -55,8 +55,6 @@ const createStar = position => {
     star.style.starAnimationDuration = ms(config.starAnimationDuration);
 
     appendElement(star);
-
-    removeElement(star, config.starAnimationDuration);
 }
 
 const createGlowPoint = position => {
