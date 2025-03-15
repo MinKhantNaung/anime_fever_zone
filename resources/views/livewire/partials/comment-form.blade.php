@@ -37,7 +37,6 @@
 
 <script>
     function detectAtSymbol() {
-        alert('yes')
         const textarea = document.getElementById('reply-comment');
         if (!textarea) {
             return;
