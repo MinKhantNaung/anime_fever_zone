@@ -9,6 +9,7 @@ use App\Models\Subscriber;
 use App\Models\SiteSetting;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Mail;
+use function Illuminate\Support\defer;
 
 class PostShow extends Component
 {
