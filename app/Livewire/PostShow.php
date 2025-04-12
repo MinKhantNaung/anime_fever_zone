@@ -46,6 +46,7 @@ class PostShow extends Component
 
         defer(fn () => Mail::to($this->email)->send(new WebsiteMail($subject, $message)));
 
+        $this->email = '';
         $this->dispatch('subscribed', [
             'title' => 'Thanks, please check your inbox to confirm subscription!',
             'icon' => 'success',
