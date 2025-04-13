@@ -281,10 +281,10 @@
         <div class="my-3">
             <h3 class="text-3xl font-extrabold">Contact Information</h3>
             <p class="text-lg font-medium mt-5">
-                If you have any questions regarding these terms and conditions, or any other queries, you may contact us
-                using the information below:
-                <br><br>
-                Email:<span class="text-primary"> dowhatyoulikeknm@gmail.com</span>
+                If you have any questions regarding these terms and conditions, or any other inquiries, feel free to
+                reach out to us through
+                <a wire:navigate href="{{ route('contact') }}"
+                    class="text-[#9926f0] hover:text-[#d122e3] transition-colors duration-150">this contact form</a>.
             </p>
         </div>
 
@@ -293,7 +293,6 @@
 </div>
 
 @push('scripts')
-
     <script type="application/ld+json">
         {
           "@context": "https://schema.org",

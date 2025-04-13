@@ -102,7 +102,11 @@
             <h3 class="text-3xl font-extrabold">Contact Us</h3>
             <p class="text-lg font-medium mt-5">
                 If you have any questions or concerns about this Privacy Policy or our data practices, please contact us
-                at dowhatyoulikeknm@gmail.com.
+                at
+                <a wire:navigate href="{{ route('contact') }}"
+                    class="text-[#9926f0] hover:text-[#d122e3] transition-colors duration-150">
+                    this contact form
+                </a>.
             </p>
         </div>
 
@@ -111,7 +115,6 @@
 </div>
 
 @push('scripts')
-
     <script type="application/ld+json">
         {
           "@context": "https://schema.org",
