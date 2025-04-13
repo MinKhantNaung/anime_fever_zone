@@ -15,6 +15,7 @@ class PostShow extends Component
 {
     public $slug;
     public $post;
+    public $featuredPosts;
 
     public $email;
     public bool $emailVerifyStatus;
@@ -61,12 +62,7 @@ class PostShow extends Component
             ->where('slug', $this->slug)
             ->first();
 
-        $this->emailVerifyStatus = SiteSetting::first()->email_verify_status;
-    }
-
-    public function render()
-    {
-        $featuredPosts = Post::select('id', 'heading', 'slug')
+        $this->featuredPosts = Post::select('id', 'heading', 'slug')
             ->inRandomOrder()
             ->where('id', '!=', $this->post->id)
             ->where('is_feature', true)
@@ -74,9 +70,12 @@ class PostShow extends Component
             ->take(5)
             ->get();
 
-        return view('livewire.post-show', [
-            'featuredPosts' => $featuredPosts
-        ])
+        $this->emailVerifyStatus = SiteSetting::first()->email_verify_status;
+    }
+
+    public function render()
+    {
+        return view('livewire.post-show')
             ->title(ucwords(str_replace('-', ' ', $this->slug)) . ' - Anime Fever Zone');
     }
 }
