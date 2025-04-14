@@ -62,11 +62,12 @@ class PostShow extends Component
             ->where('slug', $this->slug)
             ->first();
 
-        $this->featuredPosts = Post::select('id', 'heading', 'slug')
-            ->inRandomOrder()
-            ->where('id', '!=', $this->post->id)
+        $this->featuredPosts = Post::where('id', '!=', $this->post->id)
             ->where('is_feature', true)
             ->where('is_publish', true)
+            ->with('media')
+            ->inRandomOrder()
+            ->select('id', 'heading', 'slug')
             ->take(5)
             ->get();
 
