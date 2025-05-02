@@ -37,6 +37,11 @@ class Comment extends Component
         'editState.body' => 'Reply'
     ];
 
+    public function mount()
+    {
+        $this->comment->load('user', 'children');
+    }
+
     public function updatedIsEditing($isEditing): void
     {
         if (!$isEditing) {
@@ -97,13 +102,19 @@ class Comment extends Component
     public function selectUser($userName): void
     {
         if ($this->replyState['body']) {
-            $this->replyState['body'] = preg_replace('/@(\w+)$/', '@'.str_replace(' ', '_', Str::lower($userName)).' ',
-                $this->replyState['body']);
+            $this->replyState['body'] = preg_replace(
+                '/@(\w+)$/',
+                '@' . str_replace(' ', '_', Str::lower($userName)) . ' ',
+                $this->replyState['body']
+            );
 
             $this->users = [];
         } elseif ($this->editState['body']) {
-            $this->editState['body'] = preg_replace('/@(\w+)$/', '@'.str_replace(' ', '_', Str::lower($userName)).' ',
-                $this->editState['body']);
+            $this->editState['body'] = preg_replace(
+                '/@(\w+)$/',
+                '@' . str_replace(' ', '_', Str::lower($userName)) . ' ',
+                $this->editState['body']
+            );
             $this->users = [];
         }
     }
@@ -112,7 +123,7 @@ class Comment extends Component
     public function getUsers($searchTerm): void
     {
         if (!empty($searchTerm)) {
-            $this->users = User::where('name', 'like', '%'.$searchTerm.'%')->take(5)->get();
+            $this->users = User::where('name', 'like', '%' . $searchTerm . '%')->take(5)->get();
         } else {
             $this->users = [];
         }
