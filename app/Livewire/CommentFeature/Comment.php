@@ -32,6 +32,12 @@ class Comment extends Component
         'body' => ''
     ];
 
+    public function toggleReply()
+    {
+        $this->hasReplies = false;
+        $this->isReplying = !$this->isReplying;
+    }
+
     protected $validationAttributes = [
         'replyState.body' => 'Reply',
         'editState.body' => 'Reply'

@@ -1,7 +1,7 @@
 @if (config('commentify.comment_nesting') === true)
     @auth
         @if ($comment->isParent())
-            <button type="button" wire:click="$toggle('isReplying')"
+            <button type="button" wire:click="toggleReply"
                 class="flex items-center text-sm text-gray-500 hover:underline dark:text-gray-400">
                 <svg aria-hidden="true" class="mr-1 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                     xmlns="http://www.w3.org/2000/svg">
