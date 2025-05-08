@@ -99,7 +99,7 @@
 
         <article class="p-1 mb-1 ml-1 lg:ml-12 border-t border-gray-200 dark:border-gray-700 dark:bg-gray-900">
             @foreach ($comment->children as $child)
-                <livewire:comment-feature.comment :comment="$child" :key="$child->id" />
+                <livewire:comment-feature.comment :comment="$child" :isReplying="false" :hasReplies="false" :key="$child->id" />
             @endforeach
         </article>
     @endif
