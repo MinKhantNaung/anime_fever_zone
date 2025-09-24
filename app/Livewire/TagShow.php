@@ -40,7 +40,7 @@ class TagShow extends Component
                 $query->where('slug', $this->slug);
             })
             ->where('is_publish', true)
-            ->paginate(10);
+            ->simplePaginate(10);
 
         return view('livewire.tag-show', [
             'posts' => $posts
