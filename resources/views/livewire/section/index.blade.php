@@ -3,9 +3,9 @@
     <section class="w-full md:w-2/3 flex flex-col items-center px-3">
 
         <article class="flex flex-col my-4 w-full">
-            <h1 class="text-3xl sm:text-5xl font-black leading-tight text-gray-800">{{ $post->heading }}</h1>
+            <h1 class="text-3xl sm:text-5xl font-black leading-tight text-black">{{ $post->heading }}</h1>
             <div class="bg-white flex flex-col justify-start">
-                <p class="text-xs py-6 uppercase">
+                <p class="text-xs py-6 uppercase text-gray-500">
                     By <span class="font-bold mr-2">Anime Fever Zone</span>
                     Published {{ $post->created_at->diffForHumans() }}
                 </p>
@@ -13,13 +13,13 @@
             <!-- Article Image -->
             <img src="{{ $post->media->url }}" alt="Image representing {{ $post->heading }}" class="w-full">
             <!-- Post Description -->
-            <p class="pb-3 pt-6 text-lg font-medium">{!! $post->body !!}</p>
+            <p class="pb-3 pt-6 text-lg font-medium text-gray-700">{!! $post->body !!}</p>
 
             @if ($post->sections->count() > 0)
                 @foreach ($post->sections as $section)
                     <livewire:section.item wire:key="{{ $section->id }}" :section="$section" />
 
-                    <div class="text-center mt-3">
+                    <div class="text-center mt-3 text-black">
                         <form wire:submit.prevent="removeSection({{ $section->id }})">
 
                             @csrf
@@ -49,9 +49,9 @@
                 </div>
             @endif
 
-            <div>
-                <h1 class="text-xl italic font-extrabold mb-2">Related Topics</h1>
-                <div>
+            <div class="my-5">
+                <h1 class="text-xl italic font-extrabold mb-2 text-gray-800">Related Topics</h1>
+                <div class="text-gray-700">
                     <span
                         class="font-bold text-xs uppercase bg-gray-300 hover:bg-gray-200 rounded p-2">{{ $post->topic->name }}</span>
                     @foreach ($post->tags as $tag)

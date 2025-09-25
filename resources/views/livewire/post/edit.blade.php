@@ -9,7 +9,7 @@
                 </svg>
             </button>
 
-            <div class="text-lg font-bold">
+            <div class="text-lg font-bold text-black">
                 Update existing post
             </div>
 
@@ -103,7 +103,7 @@
 
             <div class="form-control">
                 <label class="label cursor-pointer">
-                    <span class="label-text">Publish</span>
+                    <span class="label-text text-black">Publish</span>
                     <input wire:model="is_publish" type="checkbox" class="checkbox checkbox-primary" />
                 </label>
             </div>

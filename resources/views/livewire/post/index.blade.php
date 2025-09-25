@@ -12,7 +12,7 @@
         <table class="table">
             <!-- head -->
             <thead>
-                <tr>
+                <tr class="text-black">
                     <th>Show As Features</th>
                     <th>No</th>
                     <th>Image</th>
@@ -26,7 +26,7 @@
                     <th>Action</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody class="text-black">
                 @foreach ($posts as $index => $post)
                     <tr>
                         <td>

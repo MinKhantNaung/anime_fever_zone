@@ -13,15 +13,15 @@
                     <img src="{{ $tag->media->url ?? '' }}" alt="Image representing {{ $tag->name }}" class="w-[100%]">
                 </div>
 
-                <h1 class="col-span-12 text-center font-bold text-2xl my-3">
+                <h1 class="col-span-12 text-center font-bold text-2xl my-3 text-black">
                     {{ $tag->name }}
                 </h1>
 
-                <div class="col-span-12 text-lg anime-content">
+                <div class="col-span-12 text-lg anime-content text-gray-700">
                     {!! $tag->body !!}
                 </div>
 
-                <div class="col-span-12 text-center">
+                <div class="col-span-12 text-center text-black">
                     <form wire:submit.prevent="deleteTag({{ $tag->id }})">
 
                         @csrf

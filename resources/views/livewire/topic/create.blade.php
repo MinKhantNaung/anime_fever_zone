@@ -2,7 +2,7 @@
 
     <div class="w-[320px] mx-auto text-center">
 
-        <h1>Topic</h1>
+        <h1 class="text-black">Topic</h1>
 
         <form wire:submit.prevent="createNew()">
             <label class="input input-bordered flex items-center gap-2">
@@ -27,7 +27,7 @@
         <table class="table">
             <!-- head -->
             <thead>
-                <tr>
+                <tr class="text-black">
                     <th>ID</th>
                     <th>Name</th>
                     <th>Slug</th>
@@ -36,7 +36,7 @@
             </thead>
             <tbody>
                 @foreach ($topics as $topic)
-                    <tr>
+                    <tr class="text-black">
                         <th>{{ $topic->id }}</th>
                         <td class="text-nowrap">{{ $topic->name }}</td>
                         <td class="text-nowrap">{{ $topic->slug }}</td>
