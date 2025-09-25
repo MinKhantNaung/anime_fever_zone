@@ -4,7 +4,7 @@
 
         <div class="grid grid-cols-12 my-3 w-full">
 
-            <h1 class="font-bold text-2xl my-3 col-span-12">Profile</h1>
+            <h1 class="font-bold text-2xl my-3 col-span-12 text-black">Profile</h1>
 
             <div class="col-span-12">
                 {{-- Trigger Button --}}
@@ -40,7 +40,7 @@
             </div>
 
             <div class="col-span-12">
-                <label class="text-xl">Name</label>
+                <label class="text-xl text-black">Name</label>
                 <input wire:model.live="name" type="text" placeholder="Type name"
                     class="input input-bordered input-primary w-full" />
                 @error('name')
@@ -49,7 +49,7 @@
             </div>
 
             <div class="col-span-12 mt-3">
-                <label class="text-xl">Email</label>
+                <label class="text-xl text-black">Email</label>
                 <input wire:model.live="email" type="email" placeholder="Type email"
                     class="input input-bordered input-primary w-full" />
                 @error('email')
@@ -66,7 +66,7 @@
                 <div class="col-span-12 md:col-span-6 mt-20">
                     <div class="form-control">
                         <label class="cursor-pointer label">
-                            <span class="label-text">Show Email Verification Feature</span>
+                            <span class="label-text text-black">Show Email Verification Feature</span>
                             <input type="checkbox" wire:model='checked' wire:change="isChecked"
                                 class="checkbox checkbox-secondary" />
                         </label>

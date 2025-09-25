@@ -3,12 +3,12 @@
     @if (request()->routeIs('post'))
         <div class="w-full">
             <span class="bg-rose-500">.</span>
-            <span class="text-2xl">You may also like</span>
+            <span class="text-2xl text-black">You may also like</span>
         </div>
     @else
         <div class="w-full">
             <span class="bg-rose-500">.</span>
-            <span class="text-2xl">Featured Posts</span>
+            <span class="text-2xl text-black">Featured Posts</span>
         </div>
     @endif
 
@@ -19,7 +19,7 @@
                     <img src="{{ $post->media->url }}" class="w-full object-cover" alt="Image representing {{ $post->heading }}">
                 </div>
                 <div class="col-span-12 xl:col-span-8">
-                    <p class="px-2 font-extrabold hover:underline">
+                    <p class="px-2 font-extrabold hover:underline text-black">
                         {{ $post->heading }}
                     </p>
                 </div>

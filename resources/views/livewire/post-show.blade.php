@@ -24,9 +24,9 @@
     <section class="w-full md:w-2/3 flex flex-col items-center px-3">
 
         <article class="flex flex-col my-4 w-full">
-            <h1 class="text-3xl sm:text-5xl font-black leading-tight text-gray-800 pb-2">{{ $post->heading }}</h1>
+            <h1 class="text-3xl sm:text-5xl font-black leading-tight text-black pb-2">{{ $post->heading }}</h1>
             <div class="bg-white flex flex-col justify-start">
-                <p class="text-xs py-6">
+                <p class="text-xs py-6 text-gray-500">
                     By <span class="font-bold mr-2">Anime Fever Zone</span>
                     Modified {{ $post->updated_at->diffForHumans() }}
                 </p>
@@ -37,7 +37,7 @@
             <p class="pb-3 pt-6 text-lg font-medium text-gray-700 leading-9 anime-content">{!! $post->body !!}</p>
 
             <div class="bg-gray-100 p-4 my-7">
-                <h2 class="text-xl sm:text-2xl font-medium">Table Of Contents</h2>
+                <h2 class="text-xl sm:text-2xl font-medium text-gray-800">Table Of Contents</h2>
                 <ul class="list-decimal list-inside text-[#9926f0] hover:text-[#d122e3] font-medium text-lg mt-5">
                     @foreach ($post->sections as $section)
                         @if ($section->heading)
@@ -53,9 +53,9 @@
                 <livewire:section.item wire:key="{{ $section->id }}" :section="$section" />
             @endforeach
 
-            <div>
-                <h6 class="text-xl italic font-extrabold my-2">Related Topics</h6>
-                <div>
+            <div class="my-5">
+                <h6 class="text-xl italic font-extrabold my-2 text-gray-800">Related Topics</h6>
+                <div class="text-gray-700">
                     <a wire:navigate href="{{ route('topic', $post->topic->slug) }}"
                         class="font-bold text-xs uppercase bg-gray-300 hover:bg-gray-200 rounded p-2">{{ $post->topic->name }}</a>
                     @foreach ($post->tags as $tag)

@@ -24,7 +24,7 @@
                 <img src="{{ $tag->media->url }}" alt="{{ $tag->name }}" class="w-[100%]">
             </div>
 
-            <h1 class="col-span-12 text-center font-bold text-2xl my-3">
+            <h1 class="col-span-12 text-center font-bold text-2xl my-3 text-black">
                 {{ $tag->name }}
             </h1>
 
@@ -35,7 +35,7 @@
 
         <div class="w-full">
             <span class="bg-rose-500">.</span>
-            <span class="text-2xl">Latest</span>
+            <span class="text-2xl text-black">Latest</span>
         </div>
 
         @foreach ($posts as $post)
@@ -57,15 +57,15 @@
                     </p>
 
                     <a wire:navigate href="{{ route('post', $post->slug) }}">
-                        <h1 class="font-black text-2xl capitalize my-2">
+                        <h1 class="font-black text-2xl capitalize my-2 text-black">
                             {{ $post->heading }}
                         </h1>
 
-                        <p class="font-bold hover:underline text-base">
+                        <p class="font-bold hover:underline text-base text-gray-700">
                             {!! Str::limit($post->body, 140) !!}
                         </p>
 
-                        <p class="text-xs mt-2">By Anime Fever Zone | {{ $post->updated_at->diffForHumans() }}</p>
+                        <p class="text-xs mt-2 text-gray-500">By Anime Fever Zone | {{ $post->updated_at->diffForHumans() }}</p>
                     </a>
                 </div>
             </div>

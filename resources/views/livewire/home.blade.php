@@ -21,7 +21,7 @@ the latest trends and discussions across a wide range of topics." />
 
         <div class="w-full">
             <span class="bg-rose-500">.</span>
-            <span class="text-2xl">Latest</span>
+            <span class="text-2xl text-black">Latest</span>
         </div>
 
         @foreach ($posts as $index => $post)
@@ -43,22 +43,22 @@ the latest trends and discussions across a wide range of topics." />
                     </p>
 
                     <a wire:navigate href="{{ route('post', $post->slug) }}">
-                        <h1 class="font-black text-2xl capitalize my-2">
+                        <h1 class="font-black text-2xl capitalize my-2 text-black">
                             {{ $post->heading }}
                         </h1>
 
-                        <p class="font-bold hover:underline text-base">
+                        <p class="font-bold hover:underline text-base text-gray-700">
                             {!! Str::limit($post->body, 140) !!}
                         </p>
 
-                        <p class="text-xs mt-2">By Anime Fever Zone | {{ $post->updated_at->diffForHumans() }}</p>
+                        <p class="text-xs mt-2 text-gray-500">By Anime Fever Zone | {{ $post->updated_at->diffForHumans() }}</p>
                     </a>
                 </div>
             </div>
         @endforeach
 
         @if ($posts->count() < 1)
-            <p class="mt-20 text-4xl">Currently, there are no posts available.</p>
+            <p class="mt-20 text-4xl text-black">Currently, there are no posts available.</p>
         @endif
 
         <div class="w-full my-5">
