@@ -70,7 +70,7 @@
             {{-- Subscriber Form --}}
             @if ($emailVerifyStatus)
                 <div class="w-full bg-gray-400 mt-5 rounded-lg py-5 px-4 text-xl font-extrabold">
-                    <h1>Subscribe To Our Newletter!</h1>
+                    <h1 class="text-black">Subscribe To Our Newletter!</h1>
 
                     <form wire:submit.prevent='subscribe'>
 
