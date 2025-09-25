@@ -7,13 +7,13 @@
         <section class="w-full md:w-2/3 flex flex-col px-3 overflow-hidden">
 
             <div class="my-3">
-                <h3 class="text-3xl font-extrabold">Welcome to Anime Fever Zone!</h3>
-                <p class="text-lg font-medium mt-5">Unleash Your Passion for Anime</p>
+                <h3 class="text-3xl font-extrabold text-black">Welcome to Anime Fever Zone!</h3>
+                <p class="text-lg font-medium mt-5 text-gray-700">Unleash Your Passion for Anime</p>
             </div>
 
             <div class="my-3">
-                <h3 class="text-3xl font-extrabold">Who I am:</h3>
-                <p class="text-lg font-medium mt-5">
+                <h3 class="text-3xl font-extrabold text-black">Who I am:</h3>
+                <p class="text-lg font-medium mt-5 text-gray-700">
                     Hey there, fellow anime enthusiasts! I'm Min Khant Naung, the sole developer and writer behind Anime
                     Fever
                     Zone (Tech - PHP 8+, Laravel (Always latest version), Livewire 3.6, Alpine). This blog isn't just a
@@ -28,8 +28,8 @@
             </div>
 
             <div class="my-3">
-                <h3 class="text-3xl font-extrabold">My Mission:</h3>
-                <p class="text-lg font-medium mt-5">
+                <h3 class="text-3xl font-extrabold text-black">My Mission:</h3>
+                <p class="text-lg font-medium mt-5 text-gray-700">
                     Here at Anime Fever Zone, my mission is simple: to share my enthusiasm for anime with fellow fans like
                     you. Through my personal insights, reviews, and analyses, I aim to create a space where we can come
                     together to celebrate and explore the captivating world of anime.
@@ -37,20 +37,20 @@
             </div>
 
             <div class="my-3">
-                <h3 class="text-3xl font-extrabold">What I Offer:</h3>
-                <p class="text-lg font-medium mt-5">
+                <h3 class="text-3xl font-extrabold text-black">What I Offer:</h3>
+                <p class="text-lg font-medium mt-5 text-gray-700">
                     <span class="font-extrabold text-xl">Personal Reviews:</span> Dive into my personal take on the latest
                     anime releases and timeless classics. From
                     dissecting plot twists to gushing over favorite characters, I'll take you on a journey through the shows
                     that have captured my heart.
                 </p>
-                <p class="text-lg font-medium mt-5">
+                <p class="text-lg font-medium mt-5 text-gray-700">
                     <span class="font-extrabold text-xl">Thoughts and Musings:</span> Join me as I delve into the latest
                     trends, controversies, and discussions within
                     the anime community. From thought-provoking editorials to lighthearted reflections, there's always
                     something new to explore.
                 </p>
-                <p class="text-lg font-medium mt-5">
+                <p class="text-lg font-medium mt-5 text-gray-700">
                     <span class="font-extrabold text-xl">Community Connection:</span> While it's just me behind the scenes,
                     I still want to hear from you! Share your
                     thoughts and opinions in the comments section, or connect with me on social media to join the
@@ -59,8 +59,8 @@
             </div>
 
             <div class="my-3">
-                <h3 class="text-3xl font-extrabold">Join Me:</h3>
-                <p class="text-lg font-medium mt-5">
+                <h3 class="text-3xl font-extrabold text-black">Join Me:</h3>
+                <p class="text-lg font-medium mt-5 text-gray-700">
                     Are you ready to dive deep into the world of anime with a fellow fan? Subscribe to Anime Fever Zone to
                     stay updated on my latest posts and musings. Whether you're looking for recommendations, analysis, or
                     just a friendly chat about your favorite shows, you'll find it here.
@@ -68,8 +68,8 @@
             </div>
 
             <div class="my-3">
-                <h3 class="text-3xl font-extrabold">Connect With Me:</h3>
-                <p class="text-lg font-medium mt-5">
+                <h3 class="text-3xl font-extrabold text-black">Connect With Me:</h3>
+                <p class="text-lg font-medium mt-5 text-gray-700">
                     Shoot me an email at <a wire:navigate href="{{ route('contact') }}"
                         class="text-[#9926f0] hover:text-[#d122e3] transition-colors duration-150">this contact form</a> if
                     you have any questions...
@@ -77,8 +77,8 @@
             </div>
 
             <div class="my-3">
-                <h3 class="text-3xl font-extrabold">Let's Explore Together:</h3>
-                <p class="text-lg font-medium mt-5">
+                <h3 class="text-3xl font-extrabold text-black">Let's Explore Together:</h3>
+                <p class="text-lg font-medium mt-5 text-gray-700">
                     Anime has a way of bringing people together, and I'm excited to embark on this journey with you. So grab
                     your favorite snack, cozy up with your plushies, and let's dive into the wonderful world of anime
                     together here at Anime Fever Zone.

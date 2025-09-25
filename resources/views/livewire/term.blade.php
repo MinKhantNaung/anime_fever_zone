@@ -5,8 +5,8 @@
     <section class="w-full md:w-2/3 flex flex-col px-3 overflow-hidden">
 
         <div class="my-3">
-            <h3 class="text-3xl font-extrabold">Terms and Conditions</h3>
-            <p class="text-lg font-medium mt-5">
+            <h3 class="text-3xl font-extrabold text-black">Terms and Conditions</h3>
+            <p class="text-lg font-medium mt-5 text-gray-700">
                 Welcome to Anime Fever Zone! These terms and conditions outline the rules and regulations for the use of
                 our website.
                 <br><br>
@@ -28,8 +28,8 @@
         </div>
 
         <div class="my-3">
-            <h3 class="text-3xl font-extrabold">Cookies</h3>
-            <p class="text-lg font-medium mt-5">
+            <h3 class="text-3xl font-extrabold text-black">Cookies</h3>
+            <p class="text-lg font-medium mt-5 text-gray-700">
                 We employ the use of cookies. By using Anime Fever Zone's website you consent to the use of cookies in
                 accordance with Anime Fever Zone's privacy policy.
                 <br><br>
@@ -40,8 +40,8 @@
         </div>
 
         <div class="my-3">
-            <h3 class="text-3xl font-extrabold">License</h3>
-            <p class="text-lg font-medium mt-5">
+            <h3 class="text-3xl font-extrabold text-black">License</h3>
+            <p class="text-lg font-medium mt-5 text-gray-700">
                 Unless otherwise stated, Anime Fever Zone and/or its licensors own the intellectual property rights for
                 all material on Anime Fever Zone. All intellectual property rights are reserved. You may view and/or
                 print pages from <a target="blank" href="{{ route('home') }}"
@@ -51,7 +51,7 @@
                 <br><br>
                 You must not:
                 <br><br>
-            <ul class="list-disc list-inside">
+            <ul class="list-disc list-inside text-gray-700">
                 <li>
                     Republish material from <a href="{{ route('home') }}" target="blank"
                         class="underline">https://animefeverzone.com</a>
@@ -66,13 +66,15 @@
                 </li>
             </ul>
             <br>
-            Redistribute content from Anime Fever Zone (unless the content is specifically made for redistribution).
+            <p class="text-gray-700">
+                Redistribute content from Anime Fever Zone (unless the content is specifically made for redistribution).
+            </p>
             </p>
         </div>
 
         <div class="my-3">
-            <h3 class="text-3xl font-extrabold">User Comments</h3>
-            <p class="text-lg font-medium mt-5">
+            <h3 class="text-3xl font-extrabold text-black">User Comments</h3>
+            <p class="text-lg font-medium mt-5 text-gray-700">
                 Certain parts of this website offer the opportunity for users to post and exchange opinions,
                 information, material and data ('Comments') in areas of the website. Anime Fever Zone does not screen,
                 edit, publish or review Comments prior to their appearance on the website and Comments do not reflect
@@ -88,7 +90,7 @@
                 <br><br>
                 You warrant and represent that:
                 <br><br>
-            <ul class="list-disc list-inside">
+            <ul class="list-disc list-inside text-gray-700">
                 <li>
                     You are entitled to post the Comments on our website and have all necessary licenses and consents to
                     do so;
@@ -107,17 +109,19 @@
                 </li>
             </ul>
             <br>
-            You hereby grant to Anime Fever Zone a non-exclusive royalty-free license to use, reproduce, edit and
-            authorize others to use, reproduce and edit any of your Comments in any and all forms, formats or media.
+            <p class="text-gray-700">
+                You hereby grant to Anime Fever Zone a non-exclusive royalty-free license to use, reproduce, edit and
+                authorize others to use, reproduce and edit any of your Comments in any and all forms, formats or media.
+            </p>
             </p>
         </div>
 
         <div class="my-3">
-            <h3 class="text-3xl font-extrabold">Hyperlinking to our Content</h3>
-            <p class="text-lg font-medium mt-5">
+            <h3 class="text-3xl font-extrabold text-black">Hyperlinking to our Content</h3>
+            <p class="text-lg font-medium mt-5 text-gray-700">
                 The following organizations may link to our Web site without prior written approval:
                 <br><br>
-            <ul class="list-disc list-inside">
+            <ul class="list-disc list-inside text-gray-700">
                 <li>
                     Government agencies;
                 </li>
@@ -137,15 +141,17 @@
                 </li>
             </ul>
             <br>
-            These organizations may link to our home page, to publications or to other Web site information so long as
-            the link: (a) is not in any way misleading; (b) does not falsely imply sponsorship, endorsement or approval
-            of the linking party and its products or services; and (c) fits within the context of the linking party's
-            site.
+            <p class="text-gray-700">
+                These organizations may link to our home page, to publications or to other Web site information so long as
+                the link: (a) is not in any way misleading; (b) does not falsely imply sponsorship, endorsement or approval
+                of the linking party and its products or services; and (c) fits within the context of the linking party's
+                site.
+                <br><br>
+                We may consider and approve in our sole discretion other link requests from the following types of
+                organizations:
+            </p>
             <br><br>
-            We may consider and approve in our sole discretion other link requests from the following types of
-            organizations:
-            <br><br>
-            <ul class="list-disc list-inside">
+            <ul class="list-disc list-inside text-gray-700">
                 <li>
                     commonly-known consumer and/or business information sources such as Chambers of Commerce, American
                     Automobile Association, AARP and Consumers Union;
@@ -170,7 +176,7 @@
                 </li>
             </ul>
             </p>
-            <p class="text-lg font-medium mt-5">
+            <p class="text-lg font-medium mt-5 text-gray-700">
                 We will approve link requests from these organizations if we determine that: (a) the link would not
                 reflect unfavorably on us or our accredited businesses (for example, trade associations or other
                 organizations representing inherently suspect types of business, such as work-at-home opportunities,
@@ -202,16 +208,16 @@
         </div>
 
         <div class="my-3">
-            <h3 class="text-3xl font-extrabold">Iframes</h3>
-            <p class="text-lg font-medium mt-5">
+            <h3 class="text-3xl font-extrabold text-black">Iframes</h3>
+            <p class="text-lg font-medium mt-5 text-gray-700">
                 Without prior approval and express written permission, you may not create frames around our Web pages or
                 use other techniques that alter in any way the visual presentation or appearance of our Web site.
             </p>
         </div>
 
         <div class="my-3">
-            <h3 class="text-3xl font-extrabold">Reservation of Rights</h3>
-            <p class="text-lg font-medium mt-5">
+            <h3 class="text-3xl font-extrabold text-black">Reservation of Rights</h3>
+            <p class="text-lg font-medium mt-5 text-gray-700">
                 We reserve the right at any time and in its sole discretion to request that you remove all links or any
                 particular link to our Web site. You agree to immediately remove all links to our Web site upon such
                 request. We also reserve the right to amend these terms and conditions and its linking policy at any
@@ -221,8 +227,8 @@
         </div>
 
         <div class="my-3">
-            <h3 class="text-3xl font-extrabold">Removal of links from our website</h3>
-            <p class="text-lg font-medium mt-5">
+            <h3 class="text-3xl font-extrabold text-black">Removal of links from our website</h3>
+            <p class="text-lg font-medium mt-5 text-gray-700">
                 If you find any link on our Web site or any linked web site objectionable for any reason, you may
                 contact us about this. We will consider requests to remove links but will have no obligation to do so or
                 to respond directly to you.
@@ -234,8 +240,8 @@
         </div>
 
         <div class="my-3">
-            <h3 class="text-3xl font-extrabold">Content Liability</h3>
-            <p class="text-lg font-medium mt-5">
+            <h3 class="text-3xl font-extrabold text-black">Content Liability</h3>
+            <p class="text-lg font-medium mt-5 text-gray-700">
                 We shall have no responsibility or liability for any content appearing on your Web site. You agree to
                 indemnify and defend us against all claims arising out of or based upon your Website. No link(s) may
                 appear on any page on your Web site or within any context containing content or materials that may be
@@ -245,14 +251,14 @@
         </div>
 
         <div class="my-3">
-            <h3 class="text-3xl font-extrabold">Disclaimer</h3>
-            <p class="text-lg font-medium mt-5">
+            <h3 class="text-3xl font-extrabold text-black">Disclaimer</h3>
+            <p class="text-lg font-medium mt-5 text-gray-700">
                 To the maximum extent permitted by applicable law, we exclude all representations, warranties and
                 conditions relating to our website and the use of this website (including, without limitation, any
                 warranties implied by law in respect of satisfactory quality, fitness for purpose and/or the use of
                 reasonable care and skill). Nothing in this disclaimer will:
                 <br><br>
-            <ul class="list-disc list-inside">
+            <ul class="list-disc list-inside text-gray-700">
                 <li>
                     limit or exclude our or your liability for death or personal injury resulting from negligence;
                 </li>
@@ -267,7 +273,7 @@
                 </li>
             </ul>
             </p>
-            <p class="text-lg font-medium mt-5">
+            <p class="text-lg font-medium mt-5 text-gray-700">
                 The limitations and exclusions of liability set out in this Section and elsewhere in this disclaimer:
                 (a) are subject to the preceding paragraph; and (b) govern all liabilities arising under the disclaimer
                 or in relation to the subject matter of this disclaimer, including liabilities arising in contract, in
@@ -279,8 +285,8 @@
         </div>
 
         <div class="my-3">
-            <h3 class="text-3xl font-extrabold">Contact Information</h3>
-            <p class="text-lg font-medium mt-5">
+            <h3 class="text-3xl font-extrabold text-black">Contact Information</h3>
+            <p class="text-lg font-medium mt-5 text-gray-700">
                 If you have any questions regarding these terms and conditions, or any other inquiries, feel free to
                 reach out to us through
                 <a wire:navigate href="{{ route('contact') }}"

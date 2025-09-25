@@ -2,7 +2,7 @@
     'Discover the ultimate destination for anime enthusiasts! Dive into insightful reviews, engaging
     discussions, and a vibrant community at Anime Fever Zone. Join us and unleash your passion for anime today!')
 
-    <div class="container mx-auto flex flex-wrap py-6">
+    <div class="container mx-auto flex flex-wrap py-6 text-black">
 
         <section class="w-full md:w-1/3 mx-auto flex flex-col px-3 overflow-hidden">
 
@@ -30,7 +30,7 @@
                 <div class="my-4">
                     <label for="name">Your Name</label>
                     <input wire:model="name" id="name" type="text"
-                        class="input input-bordered input-primary w-full mt-1
+                        class="input input-bordered input-primary dark:text-white w-full mt-1
                         @error('name')
                             border-rose-500
                             focus:border-rose-500
@@ -45,7 +45,7 @@
                 <div class="my-4">
                     <label for="email">Your Email</label>
                     <input wire:model="email" id="email" type="email"
-                        class="input input-bordered input-primary w-full mt-1
+                        class="input input-bordered input-primary dark:text-white w-full mt-1
                         @error('email')
                             border-rose-500
                             focus:border-rose-500
@@ -60,7 +60,7 @@
                 <div class="my-4">
                     <label for="category">Your Category</label>
                     <select wire:model="category" id="category"
-                        class="select select-primary w-full mt-1
+                        class="select select-primary dark:text-white w-full mt-1
                         @error('category')
                             border-rose-500
                             focus:border-rose-500
@@ -82,7 +82,7 @@
                 <div class="my-4">
                     <label for="message">Your Message</label>
                     <textarea wire:model="message" id="message"
-                        class="textarea textarea-primary w-full mt-1
+                        class="textarea textarea-primary dark:text-white w-full mt-1
                         @error('message')
                             border-rose-500
                             focus:border-rose-500
