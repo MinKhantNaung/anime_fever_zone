@@ -4,13 +4,14 @@
  * CSRF token as a header based on the value of the "XSRF" token cookie.
  */
 
-import axios from 'axios';
-import '@fortawesome/fontawesome-free/css/all.min.css';
+import axios from "axios";
+// FontAwesome is now optimized in app.css with font-display: swap
+// import '@fortawesome/fontawesome-free/css/all.min.css';
 window.axios = axios;
 
-window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+window.axios.defaults.headers.common["X-Requested-With"] = "XMLHttpRequest";
 
-import './magicmouse';
+import "./magicmouse";
 
 /**
  * Echo exposes an expressive API for subscribing to channels and listening

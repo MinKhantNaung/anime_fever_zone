@@ -9,6 +9,11 @@
 
         <meta name="robots" content="noindex, follow">
 
+        <!-- Font preloading for performance optimization -->
+        <link rel="preload" href="{{ asset('webfonts/fa-solid-900.woff2') }}" as="font" type="font/woff2" crossorigin>
+        <link rel="preload" href="{{ asset('webfonts/fa-regular-400.woff2') }}" as="font" type="font/woff2" crossorigin>
+        <link rel="preload" href="{{ asset('webfonts/fa-brands-400.woff2') }}" as="font" type="font/woff2" crossorigin>
+
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
