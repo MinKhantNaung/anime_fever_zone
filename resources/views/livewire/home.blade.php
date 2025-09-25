@@ -61,7 +61,7 @@ the latest trends and discussions across a wide range of topics." />
             <p class="mt-20 text-4xl">Currently, there are no posts available.</p>
         @endif
 
-        <div class="w-full">
+        <div class="w-full my-5">
             {{ $posts->links() }}
         </div>
 

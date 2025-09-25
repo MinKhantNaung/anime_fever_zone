@@ -1,4 +1,4 @@
-<aside class="w-full md:w-1/3 flex flex-col items-center px-3">
+<aside class="w-full md:w-1/3 flex flex-col items-center px-3 mt-5">
 
     @if (request()->routeIs('post'))
         <div class="w-full">
