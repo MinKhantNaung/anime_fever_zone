@@ -74,7 +74,7 @@ class Create extends ModalComponent
     {
         return $this->validate([
             'media' => ['nullable', 'array'],
-            'media.*' => ['file', 'mimes:webp,mp4', 'max:512000'],
+            'media.*' => ['file', 'mimes:webp,mp4', 'max:102400'],
             'heading' => ['nullable', 'string', 'max:255'],
             'body' => ['required', 'string'],
         ]);
