@@ -70,7 +70,7 @@
             <div class="my-3">
                 <h3 class="text-3xl font-extrabold text-black">Connect With Me:</h3>
                 <p class="text-lg font-medium mt-5 text-gray-700">
-                    Shoot me an email at <a wire:navigate href="{{ route('contact') }}"
+                    Shoot me an email at <a wire:navigate.hover href="{{ route('contact') }}"
                         class="text-[#9926f0] hover:text-[#d122e3] transition-colors duration-150">this contact form</a> if
                     you have any questions...
                 </p>

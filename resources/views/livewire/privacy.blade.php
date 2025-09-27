@@ -103,7 +103,7 @@
             <p class="text-lg font-medium mt-5 text-gray-700">
                 If you have any questions or concerns about this Privacy Policy or our data practices, please contact us
                 at
-                <a wire:navigate href="{{ route('contact') }}"
+                <a wire:navigate.hover href="{{ route('contact') }}"
                     class="text-[#9926f0] hover:text-[#d122e3] transition-colors duration-150">
                     this contact form
                 </a>.

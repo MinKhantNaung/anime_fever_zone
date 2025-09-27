@@ -15,7 +15,7 @@
                     'button' => 'Post comment',
                 ])
             @else
-                <a wire:navigate class="mt-2 text-sm" href="/login">Log in to comment!</a>
+                <a wire:navigate.hover class="mt-2 text-sm" href="/login">Log in to comment!</a>
             @endauth
 
             {{-- Showing Comments --}}

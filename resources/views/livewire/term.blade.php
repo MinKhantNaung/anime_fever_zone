@@ -289,7 +289,7 @@
             <p class="text-lg font-medium mt-5 text-gray-700">
                 If you have any questions regarding these terms and conditions, or any other inquiries, feel free to
                 reach out to us through
-                <a wire:navigate href="{{ route('contact') }}"
+                <a wire:navigate.hover href="{{ route('contact') }}"
                     class="text-[#9926f0] hover:text-[#d122e3] transition-colors duration-150">this contact form</a>.
             </p>
         </div>

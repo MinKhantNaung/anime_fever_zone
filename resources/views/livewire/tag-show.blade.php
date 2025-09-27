@@ -41,22 +41,22 @@
         @foreach ($posts as $post)
             <div class="grid grid-cols-12 gap-1 bg-white shadow my-4">
                 <div class="col-span-12 lg:col-span-5">
-                    <a wire:navigate href="{{ route('post', $post->slug) }}">
+                    <a wire:navigate.hover href="{{ route('post', $post->slug) }}">
                         <img src="{{ $post->media->url }}" class="w-full object-cover">
                     </a>
                 </div>
 
                 <div class="col-span-12 lg:col-span-7">
                     <p class="font-extrabold text-sm text-[#9926f0] uppercase">
-                        <a wire:navigate href="{{ route('topic', $post->topic->slug) }}" class="cursor-pointer">
+                        <a wire:navigate.hover href="{{ route('topic', $post->topic->slug) }}" class="cursor-pointer">
                             {{ $post->topic->name }}
                         </a>
                         @foreach ($post->tags as $tag)
-                            <a wire:navigate href="{{ route('tag', $tag->slug) }}">| {{ $tag->name }}</a>
+                            <a wire:navigate.hover href="{{ route('tag', $tag->slug) }}">| {{ $tag->name }}</a>
                         @endforeach
                     </p>
 
-                    <a wire:navigate href="{{ route('post', $post->slug) }}">
+                    <a wire:navigate.hover href="{{ route('post', $post->slug) }}">
                         <h1 class="font-black text-2xl capitalize my-2 text-black">
                             {{ $post->heading }}
                         </h1>

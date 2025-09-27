@@ -5,7 +5,7 @@ use Illuminate\Support\Str;
 if (!function_exists('setWireNavigate')) {
     function setWireNavigate($htmlContent)
     {
-        return preg_replace('/<a([^>]*)>/', '<a wire:navigate$1>', $htmlContent);
+        return preg_replace('/<a([^>]*)>/', '<a wire:navigate.hover$1>', $htmlContent);
     }
 }
 
