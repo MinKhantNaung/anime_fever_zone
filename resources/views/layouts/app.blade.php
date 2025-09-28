@@ -22,6 +22,9 @@
 
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+
+    <!-- Livewire styles -->
+    @livewireStyles
 </head>
 
 <body class="bg-white">
@@ -54,6 +57,8 @@
     <x-footer />
 
     @livewire('wire-elements-modal')
+
+    @livewireScripts(['defer' => true])
 
     <script>
         document.addEventListener('livewire:init', () => {
