@@ -20,6 +20,8 @@
 
     <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
 
+    <link rel="preconnect" href="https://animefeverzone.com">
+
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 

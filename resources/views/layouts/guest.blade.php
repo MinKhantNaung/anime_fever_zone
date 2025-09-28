@@ -9,6 +9,8 @@
 
         <meta name="robots" content="noindex, follow">
 
+        <link rel="preconnect" href="https://animefeverzone.com">
+
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
 
