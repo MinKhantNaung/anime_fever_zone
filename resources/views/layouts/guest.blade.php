@@ -19,6 +19,8 @@
 
         <livewire:components.nav-bar />
 
+        <livewire:offline />
+
         <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-5 bg-gray-100">
             <div>
                 <a wire:navigate.hover href="/">
