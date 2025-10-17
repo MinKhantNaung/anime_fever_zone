@@ -9,7 +9,7 @@ final class AlertService
         $viewModel->dispatch('swal', [
             'title' => $title,   // title
             'icon' => $iconType, // 'success' or 'error'
-            'iconColor' => $iconType == 'success' ? 'green' : 'red' // 'green' or 'red'
+            'iconColor' => $iconType == 'success' ? 'green' : 'red', // 'green' or 'red'
         ]);
     }
 
@@ -18,7 +18,7 @@ final class AlertService
         $viewModel->dispatch('subscribed', [
             'title' => $title,
             'icon' => $iconType,
-            'iconColor' => $iconType == 'success' ? 'green' : 'red' // 'green' or 'red'
+            'iconColor' => $iconType == 'success' ? 'green' : 'red', // 'green' or 'red'
         ]);
     }
 }

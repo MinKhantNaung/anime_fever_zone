@@ -2,15 +2,12 @@
 
 namespace App\Models\Presenters;
 
-use App\Models\User;
 use App\Models\Comment;
+use App\Models\User;
 use Illuminate\Support\HtmlString;
 
 final class CommentPresenter
 {
-    /**
-     * @var Comment
-     */
     public Comment $comment;
 
     public function __construct(Comment $comment)

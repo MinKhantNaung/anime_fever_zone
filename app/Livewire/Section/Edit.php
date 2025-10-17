@@ -17,14 +17,19 @@ class Edit extends ModalComponent
     use WithFileUploads;
 
     public $media = [];
+
     public $heading;
+
     public $body;
 
     public Section $section;
 
     protected $sectionService;
+
     protected $mediaService;
+
     protected $fileService;
+
     protected $alertService;
 
     public function boot(

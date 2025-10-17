@@ -17,14 +17,19 @@ class Create extends ModalComponent
     use WithFileUploads;
 
     public $media = [];
+
     public $heading;
+
     public $body;
 
     public Post $post;
 
     protected $sectionService;
+
     protected $mediaService;
+
     protected $alertService;
+
     protected $fileService;
 
     public function boot(SectionService $sectionService, MediaService $mediaService, AlertService $alertService, FileService $fileService)

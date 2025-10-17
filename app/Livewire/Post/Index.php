@@ -2,23 +2,25 @@
 
 namespace App\Livewire\Post;
 
-use App\Models\Post;
 use App\Mail\PostMail;
-use Livewire\Component;
+use App\Models\Post;
 use App\Models\Subscriber;
 use App\Services\AlertService;
-use Livewire\Attributes\On;
-use Livewire\WithPagination;
 use App\Services\PostService;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
+use Livewire\Attributes\On;
+use Livewire\Component;
+use Livewire\WithPagination;
 
 class Index extends Component
 {
     use WithPagination;
 
     protected $post;
+
     protected $postService;
+
     protected $alertService;
 
     public function boot(Post $post, PostService $postService, AlertService $alertService)
@@ -52,7 +54,7 @@ class Index extends Component
         $subject = 'Your Daily Dose of [Anime Fever Zone]: New Post Alert!';
         $new_post_link = url('/blog/' . $post->slug);
         $body = "<p style='font-weight: bolder; font-size: 25px;'>$post->heading</p>";
-        $body .= "Click on the following link to read <br>";
+        $body .= 'Click on the following link to read <br>';
 
         $body .= '<a href="' . $new_post_link . '">';
         $body .= $new_post_link;
@@ -87,7 +89,7 @@ class Index extends Component
         $posts = $this->post->getAllPerFive();
 
         return view('livewire.post.index', [
-            'posts' => $posts
+            'posts' => $posts,
         ]);
     }
 }

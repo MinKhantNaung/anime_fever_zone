@@ -3,14 +3,14 @@
 namespace App\Livewire\CommentFeature;
 
 use Illuminate\Support\Facades\Auth;
-use Livewire\Component;
 use Livewire\Attributes\On;
+use Livewire\Component;
 use Livewire\WithoutUrlPagination;
 use Livewire\WithPagination;
 
 class Comments extends Component
 {
-    use WithPagination, WithoutUrlPagination;
+    use WithoutUrlPagination, WithPagination;
 
     public $model;
 
@@ -21,15 +21,15 @@ class Comments extends Component
     protected $numberOfPaginatorsRendered = [];
 
     public $newCommentState = [
-        'body' => ''
+        'body' => '',
     ];
 
     protected $listeners = [
-        'refresh' => '$refresh'
+        'refresh' => '$refresh',
     ];
 
     protected $validationAttributes = [
-        'newCommentState.body' => 'comment'
+        'newCommentState.body' => 'comment',
     ];
 
     #[On('refreshComments')]
@@ -44,11 +44,12 @@ class Comments extends Component
 
         if ($comments->isEmpty() && $comments->currentPage() > 1) {
             $this->setPage($comments->lastPage());
+
             return $this->render();
         }
 
         return view('livewire.comment-feature.comments', [
-            'comments' => $comments
+            'comments' => $comments,
         ]);
     }
 
@@ -56,7 +57,7 @@ class Comments extends Component
     public function postComment(): void
     {
         $this->validate([
-            'newCommentState.body' => ['required']
+            'newCommentState.body' => ['required'],
         ]);
 
         $comment = $this->model->comments()->make($this->newCommentState);
@@ -64,7 +65,7 @@ class Comments extends Component
         $comment->save();
 
         $this->newCommentState = [
-            'body' => ''
+            'body' => '',
         ];
         $this->users = [];
         $this->showDropdown = false;

@@ -3,11 +3,11 @@
 namespace App\Livewire\CommentFeature;
 
 use App\Models\User;
-use Livewire\Component;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Livewire\Attributes\On;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Livewire\Component;
 
 class Comment extends Component
 {
@@ -18,7 +18,9 @@ class Comment extends Component
     public $users = [];
 
     public bool $isDeleted = false;
+
     public $isReplying = false;
+
     public $hasReplies = false;
 
     public $showOptions = false;
@@ -26,22 +28,22 @@ class Comment extends Component
     public $isEditing = false;
 
     public $replyState = [
-        'body' => ''
+        'body' => '',
     ];
 
     public $editState = [
-        'body' => ''
+        'body' => '',
     ];
 
     public function toggleReply()
     {
         $this->hasReplies = false;
-        $this->isReplying = !$this->isReplying;
+        $this->isReplying = ! $this->isReplying;
     }
 
     protected $validationAttributes = [
         'replyState.body' => 'Reply',
-        'editState.body' => 'Reply'
+        'editState.body' => 'Reply',
     ];
 
     public function mount()
@@ -51,11 +53,11 @@ class Comment extends Component
 
     public function updatedIsEditing($isEditing): void
     {
-        if (!$isEditing) {
+        if (! $isEditing) {
             return;
         }
         $this->editState = [
-            'body' => $this->comment->body
+            'body' => $this->comment->body,
         ];
     }
 
@@ -63,7 +65,7 @@ class Comment extends Component
     {
         $this->authorize('update', $this->comment);
         $this->validate([
-            'editState.body' => ['required', 'min:2']
+            'editState.body' => ['required', 'min:2'],
         ]);
         $this->comment->update($this->editState);
         $this->isEditing = false;
@@ -84,11 +86,11 @@ class Comment extends Component
     #[On('refresh')]
     public function postReply(): void
     {
-        if (!$this->comment->isParent()) {
+        if (! $this->comment->isParent()) {
             return;
         }
         $this->validate([
-            'replyState.body' => ['required']
+            'replyState.body' => ['required'],
         ]);
         $reply = $this->comment->children()->make($this->replyState);
         $reply->user()->associate(Auth::user());
@@ -96,17 +98,13 @@ class Comment extends Component
         $reply->save();
 
         $this->replyState = [
-            'body' => ''
+            'body' => '',
         ];
         $this->isReplying = false;
         $this->showOptions = false;
         $this->dispatch('refresh')->self();
     }
 
-    /**
-     * @param $userName
-     * @return void
-     */
     public function selectUser($userName): void
     {
         if ($this->replyState['body']) {
@@ -130,7 +128,7 @@ class Comment extends Component
     #[On('getUsers')]
     public function getUsers($searchTerm): void
     {
-        if (!empty($searchTerm)) {
+        if (! empty($searchTerm)) {
             $this->users = User::where('name', 'like', '%' . $searchTerm . '%')->take(5)->get();
         } else {
             $this->users = [];

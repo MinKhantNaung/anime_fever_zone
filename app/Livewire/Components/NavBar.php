@@ -2,9 +2,9 @@
 
 namespace App\Livewire\Components;
 
-use Livewire\Component;
-use Livewire\Attributes\On;
 use App\Livewire\Actions\Logout;
+use Livewire\Attributes\On;
+use Livewire\Component;
 
 class NavBar extends Component
 {

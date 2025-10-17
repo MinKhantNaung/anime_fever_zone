@@ -2,8 +2,8 @@
 
 namespace App\Livewire;
 
-use App\Models\Tag;
 use App\Models\Post;
+use App\Models\Tag;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -12,7 +12,9 @@ class TagShow extends Component
     use WithPagination;
 
     public $slug;
+
     public $tag;
+
     public $featuredPosts;
 
     public function mount()
@@ -43,7 +45,7 @@ class TagShow extends Component
             ->simplePaginate(10);
 
         return view('livewire.tag-show', [
-            'posts' => $posts
+            'posts' => $posts,
         ])->title(ucfirst($this->slug) . ' | Anime Fever Zone');
     }
 }

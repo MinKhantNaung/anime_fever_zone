@@ -4,17 +4,21 @@ namespace App\Livewire;
 
 use App\Services\AlertService;
 use App\Services\ContactService;
-use Livewire\Component;
 use Illuminate\Support\Facades\DB;
+use Livewire\Component;
 
 class Contact extends Component
 {
     public $name;
+
     public $email;
+
     public $category;
+
     public $message;
 
     protected $contactService;
+
     protected $alertService;
 
     public function boot(ContactService $contactService, AlertService $alertService)

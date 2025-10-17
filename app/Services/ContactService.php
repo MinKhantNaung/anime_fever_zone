@@ -14,7 +14,7 @@ final class ContactService
             'name' => $validated['name'],
             'email' => $validated['email'],
             'category' => $validated['category'],
-            'message' => $validated['message']
+            'message' => $validated['message'],
         ]);
 
         return $contact;

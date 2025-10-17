@@ -2,30 +2,35 @@
 
 namespace App\Livewire\Profile;
 
-use App\Models\User;
 use App\Models\Media;
-use Livewire\Component;
 use App\Models\SiteSetting;
+use App\Models\User;
 use App\Services\AlertService;
-use Livewire\Attributes\On;
-use App\Services\FileService;
 use App\Services\MediaService;
 use App\Services\SiteSettingService;
-use Livewire\WithFileUploads;
 use Illuminate\Validation\Rule;
+use Livewire\Attributes\On;
+use Livewire\Component;
+use Livewire\WithFileUploads;
 
 class Edit extends Component
 {
     use WithFileUploads;
 
     public $media;
+
     public $name;
+
     public $email;
+
     public bool $checked;
 
     protected $siteSetting;
+
     protected $siteSettingService;
+
     protected $mediaService;
+
     protected $alertService;
 
     public function boot(
@@ -59,7 +64,7 @@ class Edit extends Component
 
     public function saveProfile()
     {
-        $validated  = $this->validateRequests();
+        $validated = $this->validateRequests();
 
         $this->updateProfile($validated);
 
@@ -84,7 +89,7 @@ class Edit extends Component
     {
         auth()->user()->fill([
             'name' => $validated['name'],
-            'email' => $validated['email']
+            'email' => $validated['email'],
         ]);
 
         if (auth()->user()->isDirty('email')) {

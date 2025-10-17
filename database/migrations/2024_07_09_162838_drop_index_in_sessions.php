@@ -12,8 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('sessions', function (Blueprint $table) {
-            $table->dropIndex('sessions_user_id_index'); 
-            $table->index('user_id'); 
+            $table->dropIndex('sessions_user_id_index');
+            $table->index('user_id');
         });
     }
 

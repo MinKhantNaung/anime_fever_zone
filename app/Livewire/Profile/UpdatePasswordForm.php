@@ -3,16 +3,18 @@
 namespace App\Livewire\Profile;
 
 use App\Services\AlertService;
-use Livewire\Component;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules\Password;
 use Illuminate\Validation\ValidationException;
+use Livewire\Component;
 
 class UpdatePasswordForm extends Component
 {
     public string $current_password = '';
+
     public string $password = '';
+
     public string $password_confirmation = '';
 
     protected $alertService;

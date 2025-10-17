@@ -18,19 +18,30 @@ class Edit extends ModalComponent
     use WithFileUploads;
 
     public $media;
+
     public $topic_id;
+
     public $heading;
+
     public $body;
+
     public $is_publish = false;
+
     public $selectedTags = null;
+
     public Post $post;
 
     // Models, Services
     protected $topic;
+
     protected $tag;
+
     protected $postService;
+
     protected $mediaService;
+
     protected $fileService;
+
     protected $alertService;
 
     public function boot(
@@ -103,7 +114,7 @@ class Edit extends ModalComponent
             'body' => ['required', 'string'],
             'is_publish' => ['required', 'boolean'],
             'selectedTags' => ['nullable', 'array'],
-            'selectedTags.*' => ['integer', 'exists:tags,id']
+            'selectedTags.*' => ['integer', 'exists:tags,id'],
         ]);
     }
 
@@ -125,7 +136,7 @@ class Edit extends ModalComponent
 
         return view('livewire.post.edit', [
             'topics' => $topics,
-            'tags' => $tags
+            'tags' => $tags,
         ]);
     }
 }

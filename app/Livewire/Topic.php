@@ -37,7 +37,7 @@ class Topic extends Component
             ->simplePaginate(10);
 
         return view('livewire.topic', [
-            'posts' => $posts
+            'posts' => $posts,
         ])->title('Anime Fever Zone-' . ucfirst($this->slug));
     }
 }

@@ -4,17 +4,18 @@ namespace App\Livewire\Tag;
 
 use App\Models\Tag;
 use App\Services\AlertService;
-use Livewire\Component;
-use Livewire\Attributes\On;
-use Livewire\WithPagination;
 use App\Services\TagService;
 use Illuminate\Support\Facades\DB;
+use Livewire\Attributes\On;
+use Livewire\Component;
+use Livewire\WithPagination;
 
 class Index extends Component
 {
     use WithPagination;
 
     protected $tagService;
+
     protected $alertService;
 
     public function boot(TagService $tagService, AlertService $alertService)
@@ -51,8 +52,8 @@ class Index extends Component
             ->paginate(2);
 
         return view('livewire.tag.index', [
-            'tags' => $tags
+            'tags' => $tags,
         ])
-        ->title('Admin');
+            ->title('Admin');
     }
 }

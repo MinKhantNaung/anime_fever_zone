@@ -9,8 +9,8 @@ use App\Services\AlertService;
 use App\Services\FileService;
 use App\Services\MediaService;
 use App\Services\PostService;
-use Livewire\WithFileUploads;
 use Illuminate\Support\Facades\DB;
+use Livewire\WithFileUploads;
 use LivewireUI\Modal\ModalComponent;
 
 class Create extends ModalComponent
@@ -18,18 +18,28 @@ class Create extends ModalComponent
     use WithFileUploads;
 
     public $media;
+
     public $topic_id;
+
     public $heading;
+
     public $body;
+
     public $is_publish = false;
+
     public $selectedTags = null;
 
     // Models, Services
     protected $topic;
+
     protected $tag;
+
     protected $postService;
+
     protected $mediaService;
+
     protected $fileService;
+
     protected $alertService;
 
     public function boot(
@@ -88,7 +98,7 @@ class Create extends ModalComponent
             'body' => ['required', 'string'],
             'is_publish' => ['required', 'boolean'],
             'selectedTags' => ['nullable', 'array'],
-            'selectedTags.*' => ['integer', 'exists:tags,id']
+            'selectedTags.*' => ['integer', 'exists:tags,id'],
         ]);
     }
 
@@ -99,7 +109,7 @@ class Create extends ModalComponent
 
         return view('livewire.post.create', [
             'topics' => $topics,
-            'tags' => $tags
+            'tags' => $tags,
         ]);
     }
 }

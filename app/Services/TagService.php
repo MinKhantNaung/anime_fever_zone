@@ -22,7 +22,7 @@ final class TagService
     {
         $tag = $tag->update([
             'name' => $validated['name'],
-            'body' => $validated['body']
+            'body' => $validated['body'],
         ]);
     }
 

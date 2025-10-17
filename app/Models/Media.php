@@ -2,9 +2,9 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Media extends Model
 {
@@ -14,10 +14,10 @@ class Media extends Model
         'mediable_type',
         'mediable_id',
         'url',
-        'mime'
+        'mime',
     ];
 
-    public function mediable() : MorphTo
+    public function mediable(): MorphTo
     {
         return $this->morphTo();
     }

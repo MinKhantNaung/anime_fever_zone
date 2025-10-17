@@ -2,22 +2,26 @@
 
 namespace App\Livewire;
 
-use App\Models\Post;
-use Livewire\Component;
 use App\Mail\WebsiteMail;
-use App\Models\Subscriber;
+use App\Models\Post;
 use App\Models\SiteSetting;
-use Illuminate\Validation\Rule;
+use App\Models\Subscriber;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Validation\Rule;
+use Livewire\Component;
+
 use function Illuminate\Support\defer;
 
 class PostShow extends Component
 {
     public $slug;
+
     public $post;
+
     public $featuredPosts;
 
     public $email;
+
     public bool $emailVerifyStatus;
 
     public function subscribe()
@@ -25,7 +29,7 @@ class PostShow extends Component
         $this->validate([
             'email' => ['required', 'string', 'email', Rule::unique('subscribers')->where(function ($query) {
                 return $query->where('status', 'Active');
-            })]
+            })],
         ]);
 
         $token = hash('sha256', time());
@@ -33,7 +37,7 @@ class PostShow extends Component
         Subscriber::create([
             'email' => $this->email,
             'token' => $token,
-            'status' => 'Pending'
+            'status' => 'Pending',
         ]);
 
         // Send email
@@ -51,7 +55,7 @@ class PostShow extends Component
         $this->dispatch('subscribed', [
             'title' => 'Thanks, please check your inbox to confirm subscription!',
             'icon' => 'success',
-            'iconColor' => 'green'
+            'iconColor' => 'green',
         ]);
     }
 

@@ -2,20 +2,16 @@
 
 namespace App\Providers;
 
-use Livewire\Livewire;
+use App\Livewire\CommentFeature\Comments;
+use App\Livewire\CommentFeature\Like;
 use App\Models\Comment;
 use App\Policies\CommentPolicy;
 use Illuminate\Support\Facades\Gate;
-use App\Livewire\CommentFeature\Like;
 use Illuminate\Support\ServiceProvider;
-use App\Livewire\CommentFeature\Comments;
-use App\Providers\MarkdownServiceProvider;
+use Livewire\Livewire;
 
 class CommentifyServiceProvider extends ServiceProvider
 {
-    /**
-     * @return void
-     */
     public function register(): void
     {
         $this->app->bind(CommentPolicy::class, function ($app) {
@@ -25,9 +21,6 @@ class CommentifyServiceProvider extends ServiceProvider
         $this->app->register(MarkdownServiceProvider::class);
     }
 
-    /**
-     * @return void
-     */
     public function boot(): void
     {
         if ($this->app->runningInConsole()) {

@@ -3,9 +3,9 @@
 namespace App\Livewire;
 
 use App\Models\Post;
+use Livewire\Attributes\Title;
 use Livewire\Component;
 use Livewire\WithPagination;
-use Livewire\Attributes\Title;
 
 class Home extends Component
 {
@@ -34,7 +34,7 @@ class Home extends Component
             ->simplePaginate(10);
 
         return view('livewire.home', [
-            'posts' => $posts
+            'posts' => $posts,
         ]);
     }
 }

@@ -3,7 +3,6 @@
 namespace App\Mail;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
@@ -13,7 +12,12 @@ class PostMail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $subject, $body, $imagePath;
+    public $subject;
+
+    public $body;
+
+    public $imagePath;
+
     /**
      * Create a new message instance.
      */

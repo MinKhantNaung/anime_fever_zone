@@ -15,6 +15,7 @@ class Index extends Component
     public Post $post;
 
     protected $sectionService;
+
     protected $alertService;
 
     public function boot(SectionService $sectionService, AlertService $alertService)

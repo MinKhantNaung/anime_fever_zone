@@ -3,7 +3,6 @@
 namespace App\Services;
 
 use App\Models\Post;
-use App\Services\SectionService;
 
 final class PostService
 {
@@ -19,7 +18,7 @@ final class PostService
             'topic_id' => $validated['topic_id'],
             'heading' => $validated['heading'],
             'body' => $validated['body'],
-            'is_publish' => $validated['is_publish']
+            'is_publish' => $validated['is_publish'],
         ]);
 
         return $post;
@@ -31,7 +30,7 @@ final class PostService
             'topic_id' => $validated['topic_id'],
             'heading' => $validated['heading'],
             'body' => $validated['body'],
-            'is_publish' => $validated['is_publish']
+            'is_publish' => $validated['is_publish'],
         ]);
     }
 
@@ -62,7 +61,7 @@ final class PostService
     public function toggleIsFeature($post)
     {
         $post->update([
-            'is_feature' => !$post->is_feature
+            'is_feature' => ! $post->is_feature,
         ]);
     }
 }

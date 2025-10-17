@@ -16,7 +16,7 @@ final class MediaService
             'mediable_id' => $mainModel->id,    // eg: $post->id
             'mediable_type' => $mainModelClass, // eg: Post::class
             'url' => $mediaUrl,                 // eg: file url
-            'mime' => $mime                     // eg: 'image'
+            'mime' => $mime,                     // eg: 'image'
         ]);
 
         return $media;

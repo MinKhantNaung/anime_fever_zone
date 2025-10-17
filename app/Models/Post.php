@@ -3,17 +3,17 @@
 namespace App\Models;
 
 use App\Traits\Commentable;
-use Illuminate\Support\Str;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Support\Str;
 
 class Post extends Model
 {
-    use HasFactory, Commentable;
+    use Commentable, HasFactory;
 
     protected $fillable = [
         'topic_id',
@@ -21,7 +21,7 @@ class Post extends Model
         'slug',
         'body',
         'is_feature',
-        'is_publish'
+        'is_publish',
     ];
 
     protected $casts = [

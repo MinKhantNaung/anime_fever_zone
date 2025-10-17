@@ -3,12 +3,12 @@
 return [
     'common' => [
         'success' => 'Success.',
-        'error' => 'An unexpected error occurred. Please try again later.'
+        'error' => 'An unexpected error occurred. Please try again later.',
     ],
     'topic' => [
         'create' => 'Topic created successfully!',
         'update' => 'Topic updated successfully!',
-        'destroy' => 'Topic deleted successfully!'
+        'destroy' => 'Topic deleted successfully!',
     ],
     'tag' => [
         'create' => 'Tag created successfully!',
@@ -29,14 +29,14 @@ return [
         'update' => 'Profile updated successfully !',
     ],
     'password' => [
-        'update' => 'Password updated successfully !'
+        'update' => 'Password updated successfully !',
     ],
     'email' => [
         'verify_toggle' => 'Toggled email verification showing successfully !',
         'new_post_announce' => 'Successfully sent new post link to subscribers',
-        'subscriber_check' => 'Thanks, please check your inbox to confirm subscription!'
+        'subscriber_check' => 'Thanks, please check your inbox to confirm subscription!',
     ],
     'contact' => [
-        'success' => 'Your message sent successfully !'
-    ]
+        'success' => 'Your message sent successfully !',
+    ],
 ];

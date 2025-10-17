@@ -11,6 +11,7 @@ class Create extends Component
     public $name;
 
     public ?Topic $topic;
+
     public $editMode = false;
 
     public function updateEditMode(Topic $topic)
@@ -24,11 +25,11 @@ class Create extends Component
     {
         if ($this->editMode) {
             $this->validate([
-                'name' => ['required', 'string', 'max:255', 'unique:topics,name,' . $this->topic->id]
+                'name' => ['required', 'string', 'max:255', 'unique:topics,name,' . $this->topic->id],
             ]);
 
             $this->topic->update([
-                'name' => $this->name
+                'name' => $this->name,
             ]);
 
             $this->reset();
@@ -38,15 +39,15 @@ class Create extends Component
             $this->dispatch('swal', [
                 'title' => 'Topic updated successfully !',
                 'icon' => 'success',
-                'iconColor' => 'green'
+                'iconColor' => 'green',
             ]);
         } else {
             $this->validate([
-                'name' => ['required', 'string', 'max:255', 'unique:topics']
+                'name' => ['required', 'string', 'max:255', 'unique:topics'],
             ]);
 
             Topic::create([
-                'name' => $this->name
+                'name' => $this->name,
             ]);
 
             $this->reset();
@@ -56,7 +57,7 @@ class Create extends Component
             $this->dispatch('swal', [
                 'title' => 'Topic created successfully !',
                 'icon' => 'success',
-                'iconColor' => 'green'
+                'iconColor' => 'green',
             ]);
         }
     }
@@ -74,7 +75,7 @@ class Create extends Component
         $this->dispatch('swal', [
             'title' => 'Topic deleted successfully !',
             'icon' => 'success',
-            'iconColor' => 'green'
+            'iconColor' => 'green',
         ]);
     }
 
@@ -85,8 +86,8 @@ class Create extends Component
             ->get();
 
         return view('livewire.topic.create', [
-            'topics' => $topics
+            'topics' => $topics,
         ])
-        ->title('Admin');
+            ->title('Admin');
     }
 }

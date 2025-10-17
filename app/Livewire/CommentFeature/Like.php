@@ -3,12 +3,13 @@
 namespace App\Livewire\CommentFeature;
 
 use App\Models\Comment;
-use Livewire\Component;
 use Illuminate\Support\Facades\Auth;
+use Livewire\Component;
 
 class Like extends Component
 {
     public $comment;
+
     public $count;
 
     public function mount(Comment $comment): void

@@ -6,8 +6,8 @@ use App\Models\Tag;
 use App\Services\AlertService;
 use App\Services\MediaService;
 use App\Services\TagService;
-use Livewire\WithFileUploads;
 use Illuminate\Support\Facades\DB;
+use Livewire\WithFileUploads;
 use LivewireUI\Modal\ModalComponent;
 
 class Edit extends ModalComponent
@@ -15,13 +15,17 @@ class Edit extends ModalComponent
     use WithFileUploads;
 
     public $media;
+
     public $name;
+
     public $body;
 
     public Tag $tag;
 
     protected $tagService;
+
     protected $mediaService;
+
     protected $alertService;
 
     public function boot(TagService $tagService, MediaService $mediaService, AlertService $alertService)

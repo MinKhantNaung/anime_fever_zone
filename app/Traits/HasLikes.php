@@ -2,8 +2,8 @@
 
 namespace App\Traits;
 
-use App\Models\User;
 use App\Models\CommentLike;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Facades\Auth;
 

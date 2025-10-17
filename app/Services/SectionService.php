@@ -16,7 +16,7 @@ final class SectionService
         $section = $this->section->create([
             'post_id' => $postId,
             'heading' => $validated['heading'],
-            'body' => $validated['body']
+            'body' => $validated['body'],
         ]);
 
         return $section;
@@ -26,7 +26,7 @@ final class SectionService
     {
         $section->update([
             'heading' => $validated['heading'],
-            'body' => $validated['body']
+            'body' => $validated['body'],
         ]);
 
         return $section;

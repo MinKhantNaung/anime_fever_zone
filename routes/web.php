@@ -1,24 +1,24 @@
 <?php
 
-use App\Livewire\Home;
-use App\Livewire\Term;
-use App\Livewire\Topic;
-use Livewire\Volt\Volt;
-use App\Livewire\Contact;
-use App\Livewire\Privacy;
-use App\Livewire\TagShow;
-use App\Livewire\PostShow;
-use App\Livewire\Tag\Index;
-use App\Livewire\Info\About;
-use App\Livewire\Profile\Edit;
-use App\Livewire\Topic\Create;
-use Illuminate\Support\Facades\Route;
-use App\Livewire\Post\Index as PostIndex;
 use App\Http\Controllers\SubscriberController;
+use App\Livewire\Contact;
+use App\Livewire\Home;
+use App\Livewire\Info\About;
+use App\Livewire\Post\Index as PostIndex;
+use App\Livewire\PostShow;
+use App\Livewire\Privacy;
+use App\Livewire\Profile\Edit;
 use App\Livewire\Section\Create as SectionCreate;
 use App\Livewire\Section\Edit as SectionEdit;
 use App\Livewire\Section\Index as SectionIndex;
 use App\Livewire\Tag\Edit as TagEdit;
+use App\Livewire\Tag\Index;
+use App\Livewire\TagShow;
+use App\Livewire\Term;
+use App\Livewire\Topic;
+use App\Livewire\Topic\Create;
+use Illuminate\Support\Facades\Route;
+use Livewire\Volt\Volt;
 
 Route::get('/', Home::class)->name('home');
 Route::get('/topic/{slug}', Topic::class)->name('topic');
