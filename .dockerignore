@@ -1,0 +1,50 @@
+# Git
+.git
+.gitignore
+.gitattributes
+
+# Documentation
+*.md
+
+# IDE
+.idea
+.vscode
+*.swp
+*.swo
+*~
+
+# Dependencies
+vendor/
+node_modules/
+
+# Environment
+.env
+.env.*
+!.env.example
+
+# Storage and cache
+storage/
+bootstrap/cache/
+
+# Built assets
+public/build/
+public/hot
+public/storage
+
+# Testing
+tests/
+phpunit.xml
+.phpunit.result.cache
+
+# Docker compose files
+docker-compose.yml
+docker-compose.*.yml
+
+# Logs
+npm-debug.log
+yarn-error.log
+
+# OS
+.DS_Store
+Thumbs.db
+
