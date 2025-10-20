@@ -1,4 +1,4 @@
-FROM php:8.3-fpm
+FROM php:8.3-cli
 
 # -----------------------------------------------------
 # 1. System dependencies
@@ -30,10 +30,10 @@ RUN docker-php-ext-configure gd --with-freetype --with-jpeg \
     zip
 
 # -----------------------------------------------------
-# 3. Install and enable PECL extensions
+# 3. Install and enable PECL extensions (including Swoole)
 # -----------------------------------------------------
-RUN pecl install redis memcached \
-    && docker-php-ext-enable redis memcached
+RUN pecl install redis memcached swoole \
+    && docker-php-ext-enable redis memcached swoole
 
 # -----------------------------------------------------
 # 4. Install Composer
@@ -51,11 +51,16 @@ COPY ./docker/supervisor /etc/supervisor/conf.d
 WORKDIR /var/www
 
 # -----------------------------------------------------
-# 7. Optimize PHP-FPM configuration (optional but recommended)
+# 7. Optimize PHP configuration
 # -----------------------------------------------------
 RUN mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"
 
 # -----------------------------------------------------
-# 8. Start command
+# 8. Create supervisord directories
 # -----------------------------------------------------
-CMD ["php-fpm"]
+RUN mkdir -p /var/log/supervisor
+
+# -----------------------------------------------------
+# 9. Start command - Run supervisor to manage Octane
+# -----------------------------------------------------
+CMD ["supervisord", "-n", "-c", "/etc/supervisor/supervisord.conf"]

@@ -6,6 +6,7 @@ services:
         container_name: animefeverzone_app
         volumes:
             - ./:/var/www
+            - ./docker/supervisor/supervisord.conf:/etc/supervisor/supervisord.conf
         depends_on:
             - redis
             - mysql
@@ -53,23 +54,8 @@ services:
         networks:
             - laravel
 
-    supervisor:
-        build:
-            context: .
-            dockerfile: docker/php/Dockerfile
-        container_name: animefeverzone_supervisor
-        command: supervisord -n -c /etc/supervisor/supervisord.conf
-        volumes:
-            - ./:/var/www
-            - ./docker/supervisor:/etc/supervisor/conf.d
-        depends_on:
-            - app
-        networks:
-            - laravel
-
 networks:
     laravel:
-
 
 volumes:
     mysql_data:
