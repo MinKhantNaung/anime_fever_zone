@@ -208,7 +208,26 @@ RUN php artisan app:optimize-all
 - **View cache:** Blade compilation cached
 - **Event cache:** Event discovery cached
 
-### **4. Opcache Configuration**
+### **4. Custom PHP Configuration**
+```ini
+# Security
+disable_functions = system, exec, shell_exec, passthru, phpinfo, show_source, ...
+
+# File Upload Limits
+upload_max_filesize = 100M
+max_file_uploads = 100
+post_max_size = 110M
+
+# Execution Limits
+max_execution_time = 300
+max_input_time = 300
+memory_limit = 256M
+```
+- **Security:** Dangerous functions disabled
+- **Upload support:** 100MB files, 100 files per request
+- **Long-running:** 5 minutes execution time (for heavy tasks)
+
+### **5. Opcache Configuration**
 ```ini
 opcache.enable=1
 opcache.memory_consumption=256
@@ -218,7 +237,7 @@ opcache.validate_timestamps=0  # Never check for file changes
 - **Benefit:** 2-3x faster PHP execution
 - Scripts compiled and cached in memory
 
-### **5. Octane Workers**
+### **6. Octane Workers**
 ```ini
 command=php artisan octane:start --workers=4 --task-workers=6 --max-requests=1000
 ```
@@ -226,7 +245,7 @@ command=php artisan octane:start --workers=4 --task-workers=6 --max-requests=100
 - `--task-workers=6`: Concurrent tasks
 - `--max-requests=1000`: Restart workers after 1000 requests (prevents memory leaks)
 
-### **6. Non-Root User**
+### **7. Non-Root User**
 ```dockerfile
 USER www-data
 ```
