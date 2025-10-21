@@ -10,6 +10,13 @@ RUN apt-get update && apt-get install -y \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # -----------------------------------------------------
+# 1.5. Install Node.js and npm
+# -----------------------------------------------------
+RUN curl -fsSL https://deb.nodesource.com/setup_22.x | bash - \
+    && apt-get install -y nodejs \
+    && apt-get clean && rm -rf /var/lib/apt/lists/*
+
+# -----------------------------------------------------
 # 2. PHP extensions
 # -----------------------------------------------------
 RUN docker-php-ext-configure gd --with-freetype --with-jpeg \
@@ -32,7 +39,10 @@ RUN docker-php-ext-configure gd --with-freetype --with-jpeg \
 # -----------------------------------------------------
 # 3. Install and enable PECL extensions (including Swoole)
 # -----------------------------------------------------
-RUN pecl install redis memcached swoole \
+RUN pecl channel-update pecl.php.net \
+    && pecl install redis \
+    && pecl install memcached \
+    && pecl install swoole \
     && docker-php-ext-enable redis memcached swoole
 
 # -----------------------------------------------------

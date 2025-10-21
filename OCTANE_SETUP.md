@@ -1,6 +1,6 @@
 # Laravel Octane with Swoole - Docker Setup
 
-> **Note:** This is a manual setup. You'll need to run `composer install` before starting containers.
+> **Note:** This is a manual setup. You'll need to run `composer install` and `npm install` before starting containers.
 
 ## What Changed
 
@@ -10,6 +10,7 @@ Your Docker setup has been migrated from **PHP-FPM** to **Laravel Octane with Sw
 
 1. **Dockerfile** (`docker/php/Dockerfile`)
    - Changed base image from `php:8.3-fpm` to `php:8.3-cli`
+   - Installed Node.js 20.x and npm
    - Installed Swoole extension via PECL
    - Changed CMD to run `supervisord` instead of `php-fpm`
 
@@ -35,8 +36,12 @@ Your Docker setup has been migrated from **PHP-FPM** to **Laravel Octane with Sw
 # Install Composer dependencies (on host or in container)
 composer install
 
+# Install npm dependencies (on host or in container)
+npm install
+
 # Or inside container
 docker compose exec app composer install
+docker compose exec app npm install
 ```
 
 ### 2. Rebuild and Start Containers
@@ -78,6 +83,31 @@ supervisorctl status
 Your application is accessible at: **http://localhost:8081**
 
 Nginx proxies requests from port 80 (mapped to 8081) to Octane on port 8000.
+
+## Managing Dependencies & Assets
+
+### Install/Update Composer Packages
+
+```bash
+# Install new package
+docker compose exec app composer require vendor/package
+
+# Update dependencies
+docker compose exec app composer update
+```
+
+### Build Frontend Assets
+
+```bash
+# Install npm packages
+docker compose exec app npm install
+
+# Build for production
+docker compose exec app npm run build
+
+# Or for development with watch
+docker compose exec app npm run dev
+```
 
 ## Managing Octane
 
