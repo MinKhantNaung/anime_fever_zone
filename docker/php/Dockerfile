@@ -40,9 +40,12 @@ RUN docker-php-ext-configure gd --with-freetype --with-jpeg \
 # 3. Install and enable PECL extensions (including Swoole)
 # -----------------------------------------------------
 RUN pecl channel-update pecl.php.net \
-    && pecl install redis \
-    && pecl install memcached \
-    && pecl install swoole \
+    && pecl install --force redis-6.1.0 \
+    && pecl clear-cache \
+    && pecl install --force memcached-3.3.0 \
+    && pecl clear-cache \
+    && pecl install --force swoole-5.1.5 \
+    && pecl clear-cache \
     && docker-php-ext-enable redis memcached swoole
 
 # -----------------------------------------------------
@@ -63,7 +66,11 @@ WORKDIR /var/www
 # -----------------------------------------------------
 # 7. Optimize PHP configuration
 # -----------------------------------------------------
-RUN mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"
+RUN mv "$PHP_INI_DIR/php.ini-development" "$PHP_INI_DIR/php.ini"
+
+# 7.5. Development PHP tweaks
+RUN echo "opcache.enable=0" >> /usr/local/etc/php/conf.d/opcache.ini \
+    && echo "opcache.validate_timestamps=1" >> /usr/local/etc/php/conf.d/opcache.ini
 
 # -----------------------------------------------------
 # 8. Create supervisord directories
