@@ -102,9 +102,20 @@ RUN php artisan app:optimize-all
 # -----------------------------------------------------
 # 13. Set permissions
 # -----------------------------------------------------
-RUN chown -R www-data:www-data /var/www \
-    && chmod -R 755 /var/www/storage \
-    && chmod -R 755 /var/www/bootstrap/cache
+# 1. Set ownership to www-data:www-data for entire project
+RUN chown -R www-data:www-data /var/www
+
+# 2. Set directories to 755
+RUN find /var/www -type d -exec chmod 755 {} \;
+
+# 3. Set files to 644
+RUN find /var/www -type f -exec chmod 644 {} \;
+
+# 4. Make artisan executable
+RUN chmod +x /var/www/artisan
+
+# 5. Ensure storage and bootstrap/cache are writable (775)
+RUN chmod -R 775 /var/www/storage /var/www/bootstrap/cache
 
 # -----------------------------------------------------
 # 14. Production PHP configuration
