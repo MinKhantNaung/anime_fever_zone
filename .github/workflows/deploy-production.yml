@@ -39,11 +39,6 @@ jobs:
 
             echo "🚀 Starting deployment..."
 
-            # Pull latest code
-            echo "📥 Pulling latest code..."
-            git fetch origin main
-            git reset --hard origin/main
-
             # Backup current state
             echo "💾 Creating backup..."
             cp .env .env.backup.$(date +%Y%m%d_%H%M%S)
@@ -51,6 +46,16 @@ jobs:
             # Put application in maintenance mode
             echo "🔧 Enabling maintenance mode..."
             php artisan down || true
+
+            # Change ownership to deploy user for git/composer/npm operations
+            echo "🔐 Setting permissions for deployment..."
+            sudo chown -R $USER:$USER .
+
+            # Pull latest code
+            echo "📥 Pulling latest code..."
+            git fetch origin main
+            git reset --hard origin/main
+            git pull origin main
 
             # Install/Update dependencies
             echo "📦 Installing Composer dependencies..."
@@ -63,6 +68,17 @@ jobs:
             echo "🏗️  Building frontend assets..."
             npm run build
 
+            # Change ownership back to www-data
+            echo "🔐 Restoring www-data ownership..."
+            sudo chown -R www-data:www-data .
+
+            # Set proper permissions
+            echo "🔧 Setting proper permissions..."
+            sudo find . -type d -exec chmod 755 {} \;
+            sudo find . -type f -exec chmod 644 {} \;
+            sudo chmod +x artisan
+            sudo chmod -R 775 storage bootstrap/cache
+
             # Run database migrations
             echo "🗄️  Running database migrations..."
             php artisan migrate --force
@@ -71,13 +87,13 @@ jobs:
             echo "🧹 Optimizing application..."
             php artisan app:optimize-all
 
-            # Restart services
-            echo "🔄 Restarting Octane..."
-            sudo systemctl restart octane || php artisan octane:reload || true
-
             # Bring application back online
             echo "✅ Disabling maintenance mode..."
             php artisan up
+
+            # Reload Octane as www-data user
+            echo "🔄 Reloading Octane..."
+            sudo -u www-data php artisan octane:reload || sudo systemctl restart octane || true
 
             echo "🎉 Deployment completed successfully!"
           ENDSSH
