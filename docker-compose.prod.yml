@@ -5,13 +5,37 @@ services:
             dockerfile: docker/php/Dockerfile.prod
         container_name: animefeverzone_app_prod
         restart: unless-stopped
-        # NO VOLUMES - Everything baked into image
+        volumes:
+            # Share public directory with nginx for static files
+            - static_files:/var/www/public:ro
         depends_on:
             - redis
             - mysql
         environment:
             - APP_ENV=production
             - APP_DEBUG=false
+            - APP_KEY=${APP_KEY}
+            - APP_URL=${APP_URL:-https://animefeverzone.com}
+            - DB_CONNECTION=mysql
+            - DB_HOST=mysql
+            - DB_PORT=3306
+            - DB_DATABASE=${DB_DATABASE:-anime_fever_zone}
+            - DB_USERNAME=${DB_USERNAME:-animeuser}
+            - DB_PASSWORD=${DB_PASSWORD}
+            - REDIS_HOST=redis
+            - REDIS_PASSWORD=${REDIS_PASSWORD}
+            - REDIS_PORT=6379
+            - CACHE_DRIVER=redis
+            - SESSION_DRIVER=redis
+            - QUEUE_CONNECTION=redis
+            - MAIL_MAILER=${MAIL_MAILER:-smtp}
+            - MAIL_HOST=${MAIL_HOST}
+            - MAIL_PORT=${MAIL_PORT:-587}
+            - MAIL_USERNAME=${MAIL_USERNAME}
+            - MAIL_PASSWORD=${MAIL_PASSWORD}
+            - MAIL_ENCRYPTION=${MAIL_ENCRYPTION:-tls}
+            - MAIL_FROM_ADDRESS=${MAIL_FROM_ADDRESS}
+            - MAIL_FROM_NAME="${MAIL_FROM_NAME:-AnimeFeverZone}"
         networks:
             - laravel
         healthcheck:
@@ -51,12 +75,11 @@ services:
         container_name: animefeverzone_mysql_prod
         restart: unless-stopped
         environment:
-            MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD:-changeme}
+            MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
             MYSQL_DATABASE: ${DB_DATABASE:-anime_fever_zone}
             MYSQL_USER: ${DB_USERNAME:-animeuser}
-            MYSQL_PASSWORD: ${DB_PASSWORD:-changeme}
-        ports:
-            - "3306:3306"
+            MYSQL_PASSWORD: ${DB_PASSWORD}
+        # Ports removed for security - only accessible within Docker network
         volumes:
             - mysql_data:/var/lib/mysql
         networks:
@@ -72,15 +95,14 @@ services:
         image: redis:7-alpine
         container_name: animefeverzone_redis_prod
         restart: unless-stopped
-        ports:
-            - "6379:6379"
+        # Ports removed for security - only accessible within Docker network
         networks:
             - laravel
-        command: redis-server --appendonly yes --requirepass ${REDIS_PASSWORD:-changeme}
+        command: redis-server --appendonly yes --requirepass ${REDIS_PASSWORD}
         volumes:
             - redis_data:/data
         healthcheck:
-            test: ["CMD", "redis-cli", "ping"]
+            test: ["CMD", "redis-cli", "--raw", "incr", "ping"]
             interval: 30s
             timeout: 10s
             retries: 3
@@ -91,6 +113,8 @@ services:
         volumes:
             - certbot_conf:/etc/letsencrypt
             - certbot_www:/var/www/certbot
+        networks:
+            - laravel
         entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
         depends_on:
             - nginx
