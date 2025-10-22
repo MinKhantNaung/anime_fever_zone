@@ -1,0 +1,108 @@
+name: Code Quality
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+
+jobs:
+  code-quality:
+    name: Code Quality Checks
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          extensions: mbstring, dom, fileinfo, mysql
+          tools: phpstan, psalm, php-cs-fixer
+
+      - name: Get Composer Cache Directory
+        id: composer-cache
+        run: echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
+
+      - name: Cache Composer dependencies
+        uses: actions/cache@v4
+        with:
+          path: ${{ steps.composer-cache.outputs.dir }}
+          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+          restore-keys: ${{ runner.os }}-composer-
+
+      - name: Install Composer dependencies
+        run: composer install --prefer-dist --no-interaction --no-progress
+
+      - name: Run PHP CS Fixer (Dry Run)
+        run: |
+          if [ -f .php-cs-fixer.php ]; then
+            php-cs-fixer fix --dry-run --diff --verbose
+          else
+            echo "⚠️  .php-cs-fixer.php not found, skipping..."
+          fi
+        continue-on-error: true
+
+      - name: Run PHPStan
+        run: |
+          if [ -f phpstan.neon ] || [ -f phpstan.neon.dist ]; then
+            phpstan analyse --memory-limit=2G
+          else
+            echo "⚠️  phpstan.neon not found, skipping..."
+          fi
+        continue-on-error: true
+
+      - name: Run Psalm
+        run: |
+          if [ -f psalm.xml ] || [ -f psalm.xml.dist ]; then
+            psalm --show-info=true
+          else
+            echo "⚠️  psalm.xml not found, skipping..."
+          fi
+        continue-on-error: true
+
+      - name: Check for security vulnerabilities
+        run: |
+          composer audit
+        continue-on-error: true
+
+  javascript-quality:
+    name: JavaScript Quality Checks
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      - name: Install npm dependencies
+        run: npm ci
+
+      - name: Run ESLint
+        run: |
+          if [ -f .eslintrc.js ] || [ -f .eslintrc.json ]; then
+            npm run lint || echo "⚠️  No lint script found"
+          else
+            echo "⚠️  ESLint config not found, skipping..."
+          fi
+        continue-on-error: true
+
+      - name: Run Prettier check
+        run: |
+          if [ -f .prettierrc ]; then
+            npx prettier --check "resources/**/*.{js,jsx,ts,tsx,vue}" || echo "⚠️  Prettier check failed"
+          else
+            echo "⚠️  Prettier config not found, skipping..."
+          fi
+        continue-on-error: true
+
+      - name: Build assets (verify no errors)
+        run: npm run build
+

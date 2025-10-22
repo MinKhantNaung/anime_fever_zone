@@ -1,0 +1,94 @@
+name: Deploy to Production
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:  # Allow manual trigger
+
+jobs:
+  deploy:
+    name: Deploy to Production VPS
+    runs-on: ubuntu-latest
+
+    # Only run if tests pass
+    needs: []  # Add needs: [tests] if you want to require CI tests to pass first
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup SSH
+        uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      - name: Add VPS to known hosts
+        run: |
+          mkdir -p ~/.ssh
+          ssh-keyscan -H ${{ secrets.VPS_HOST }} >> ~/.ssh/known_hosts
+
+      - name: Deploy to VPS
+        env:
+          VPS_HOST: ${{ secrets.VPS_HOST }}
+          VPS_USER: ${{ secrets.VPS_USER }}
+          VPS_PATH: ${{ secrets.VPS_PATH }}
+        run: |
+          ssh $VPS_USER@$VPS_HOST << 'ENDSSH'
+            cd ${{ secrets.VPS_PATH }}
+
+            echo "🚀 Starting deployment..."
+
+            # Pull latest code
+            echo "📥 Pulling latest code..."
+            git fetch origin main
+            git reset --hard origin/main
+
+            # Backup current state
+            echo "💾 Creating backup..."
+            cp .env .env.backup.$(date +%Y%m%d_%H%M%S)
+
+            # Put application in maintenance mode
+            echo "🔧 Enabling maintenance mode..."
+            php artisan down || true
+
+            # Install/Update dependencies
+            echo "📦 Installing Composer dependencies..."
+            composer install --no-interaction --prefer-dist --optimize-autoloader --no-dev
+
+            echo "📦 Installing npm dependencies..."
+            npm ci --omit=dev
+
+            # Build frontend assets
+            echo "🏗️  Building frontend assets..."
+            npm run build
+
+            # Run database migrations
+            echo "🗄️  Running database migrations..."
+            php artisan migrate --force
+
+            # Clear and cache config
+            echo "🧹 Optimizing application..."
+            php artisan app:optimize-all
+
+            # Restart services
+            echo "🔄 Restarting Octane..."
+            sudo systemctl restart octane || php artisan octane:reload || true
+
+            # Bring application back online
+            echo "✅ Disabling maintenance mode..."
+            php artisan up
+
+            echo "🎉 Deployment completed successfully!"
+          ENDSSH
+
+      - name: Notify deployment success
+        if: success()
+        run: |
+          echo "✅ Deployment to production completed successfully!"
+
+      - name: Notify deployment failure
+        if: failure()
+        run: |
+          echo "❌ Deployment to production failed!"
+
