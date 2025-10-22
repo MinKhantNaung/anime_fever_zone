@@ -33,6 +33,12 @@ jobs:
           key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
           restore-keys: ${{ runner.os }}-composer-
 
+      - name: Prepare Laravel directories
+        run: |
+          mkdir -p bootstrap/cache
+          mkdir -p storage/framework/{sessions,views,cache}
+          chmod -R 775 storage bootstrap/cache
+
       - name: Install Composer dependencies
         run: composer install --prefer-dist --no-interaction --no-progress
 

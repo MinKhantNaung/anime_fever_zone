@@ -82,7 +82,15 @@ git push origin main
 ssh your-user@your-vps-ip
 cd /home/minkhantnaungroot/projects/animefeverzone
 
+# Enable maintenance mode
+php artisan down
+
+# Change ownership for deployment
+sudo chown -R $USER:$USER .
+
 # Pull latest
+git fetch origin main
+git reset --hard origin/main
 git pull origin main
 
 # Install dependencies
@@ -92,16 +100,28 @@ npm ci --omit=dev
 # Build assets
 npm run build
 
+# Restore www-data ownership
+sudo chown -R www-data:www-data .
+
+# Set proper permissions
+sudo find . -type d -exec chmod 755 {} \;
+sudo find . -type f -exec chmod 644 {} \;
+sudo chmod +x artisan
+sudo chmod -R 775 storage bootstrap/cache
+
 # Migrate database
 php artisan migrate --force
 
 # Optimize
 php artisan app:optimize-all
 
-# Restart Octane
-sudo systemctl restart octane
+# Disable maintenance mode
+php artisan up
+
+# Reload Octane as www-data
+sudo -u www-data php artisan octane:reload
 # OR
-php artisan octane:reload
+sudo systemctl restart octane
 ```
 
 ---
@@ -183,6 +203,9 @@ If something goes wrong:
 ssh your-user@your-vps-ip
 cd /home/minkhantnaungroot/projects/animefeverzone
 
+# Change ownership for rollback
+sudo chown -R $USER:$USER .
+
 # Check recent commits
 git log -5 --oneline
 
@@ -196,13 +219,24 @@ composer install --no-interaction --prefer-dist --optimize-autoloader --no-dev
 npm ci --omit=dev
 npm run build
 
+# Restore www-data ownership
+sudo chown -R www-data:www-data .
+
+# Set proper permissions
+sudo find . -type d -exec chmod 755 {} \;
+sudo find . -type f -exec chmod 644 {} \;
+sudo chmod +x artisan
+sudo chmod -R 775 storage bootstrap/cache
+
 # Migrate down if needed
 php artisan migrate:rollback --step=1
 
 # Optimize
 php artisan app:optimize-all
 
-# Restart
+# Restart Octane as www-data
+sudo -u www-data php artisan octane:reload
+# OR
 sudo systemctl restart octane
 ```
 
