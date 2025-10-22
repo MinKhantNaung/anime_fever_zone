@@ -29,7 +29,11 @@ services:
             - "80:80"
             - "443:443"
         volumes:
-            - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
+            # Nginx configuration with Certbot support
+            - ./docker/nginx/nginx.prod.conf:/etc/nginx/conf.d/default.conf:ro
+            # Certbot volumes for SSL certificates and challenges
+            - certbot_conf:/etc/letsencrypt:ro
+            - certbot_www:/var/www/certbot:ro
             # Mount only public directory for static files
             - static_files:/var/www/public:ro
         depends_on:
@@ -37,7 +41,7 @@ services:
         networks:
             - laravel
         healthcheck:
-            test: ["CMD", "curl", "-f", "http://localhost"]
+            test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost"]
             interval: 30s
             timeout: 10s
             retries: 3
@@ -81,6 +85,16 @@ services:
             timeout: 10s
             retries: 3
 
+    certbot:
+        image: certbot/certbot:latest
+        container_name: animefeverzone_certbot
+        volumes:
+            - certbot_conf:/etc/letsencrypt
+            - certbot_www:/var/www/certbot
+        entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
+        depends_on:
+            - nginx
+
 networks:
     laravel:
         driver: bridge
@@ -91,5 +105,9 @@ volumes:
     redis_data:
         driver: local
     static_files:
+        driver: local
+    certbot_conf:
+        driver: local
+    certbot_www:
         driver: local
 
