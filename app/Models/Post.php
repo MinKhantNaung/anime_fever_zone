@@ -32,11 +32,11 @@ class Post extends Model
     {
         parent::boot();
 
-        static::creating(function ($post) {
+        static::creating(function ($post): void {
             $post->slug = Str::slug($post->heading);
         });
 
-        static::updating(function ($post) {
+        static::updating(function ($post): void {
             $post->slug = Str::slug($post->heading);
         });
     }
@@ -116,7 +116,7 @@ class Post extends Model
     public function getPostsOfTag($tagSlug)
     {
         return $this->query()
-            ->whereHas('tags', function ($q) use ($tagSlug) {
+            ->whereHas('tags', function ($q) use ($tagSlug): void {
                 $q->where('slug', $tagSlug);
             })
             ->published()
@@ -127,7 +127,7 @@ class Post extends Model
     public function getPostsOfTopic($topicSlug)
     {
         return $this->query()
-            ->whereHas('topic', function ($q) use ($topicSlug) {
+            ->whereHas('topic', function ($q) use ($topicSlug): void {
                 $q->where('slug', $topicSlug);
             })
             ->published()

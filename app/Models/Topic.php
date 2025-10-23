@@ -20,11 +20,11 @@ class Topic extends Model
     {
         parent::boot();
 
-        static::creating(function ($topic) {
+        static::creating(function ($topic): void {
             $topic->slug = Str::slug($topic->name);
         });
 
-        static::updating(function ($topic) {
+        static::updating(function ($topic): void {
             $topic->slug = Str::slug($topic->name);
         });
     }

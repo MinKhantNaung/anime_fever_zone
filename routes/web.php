@@ -29,20 +29,20 @@ Route::get('/blog/{slug}', PostShow::class)->name('post');
 Route::get('/subscriber/verify/{token}/{email}', SubscriberController::class)->name('subscriber_verify');
 
 // info
-Route::middleware('cache.headers:public;max_age=2628000;etag')->group(function () {
+Route::middleware('cache.headers:public;max_age=2628000;etag')->group(function (): void {
     Route::get('/about', About::class)->name('about');
     Route::get('/privacy-policy', Privacy::class)->name('privacy');
     Route::get('/terms', Term::class)->name('term');
     Route::get('/contact/us', Contact::class)->name('contact');
 });
 
-Route::middleware('auth')->group(function () {
+Route::middleware('auth')->group(function (): void {
     Route::get('/profile', Edit::class)->name('profile.edit');
 
-    Route::middleware('isBlogger')->group(function () {
+    Route::middleware('isBlogger')->group(function (): void {
         Route::get('/topics', Create::class)->name('topics.create');
 
-        Route::prefix('/blogger')->group(function () {
+        Route::prefix('/blogger')->group(function (): void {
             Route::get('/tags', Index::class)->name('tags.index');
             Volt::route('/tags/create', 'tags.create')->name('tags.create');
             Route::get('/tags/{tag}/edit', TagEdit::class)->name('tags.edit');
