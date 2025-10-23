@@ -71,6 +71,14 @@ jobs:
             echo "🏗️  Building frontend assets..."
             npm run build
 
+            # Run database migrations (before ownership change)
+            echo "🗄️  Running database migrations..."
+            php artisan migrate --force
+
+            # Clear and cache config (before ownership change)
+            echo "🧹 Optimizing application..."
+            php artisan app:optimize-all
+
             # Change ownership back to www-data
             echo "🔐 Restoring www-data ownership..."
             sudo chown -R www-data:www-data .
@@ -81,14 +89,6 @@ jobs:
             sudo find . -type f -exec chmod 644 {} \;
             sudo chmod +x artisan
             sudo chmod -R 775 storage bootstrap/cache
-
-            # Run database migrations
-            echo "🗄️  Running database migrations..."
-            php artisan migrate --force
-
-            # Clear and cache config
-            echo "🧹 Optimizing application..."
-            php artisan app:optimize-all
 
             # Bring application back online
             echo "✅ Disabling maintenance mode..."
