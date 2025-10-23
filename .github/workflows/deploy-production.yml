@@ -36,9 +36,13 @@ jobs:
           VPS_HOST: ${{ secrets.VPS_HOST }}
           VPS_USER: ${{ secrets.VPS_USER }}
           VPS_PATH: ${{ secrets.VPS_PATH }}
+          SUDO_PASSWORD: ${{ secrets.SUDO_PASSWORD }}
         run: |
           ssh $VPS_USER@$VPS_HOST << 'ENDSSH'
             cd ${{ secrets.VPS_PATH }}
+
+            # Export sudo password for use in script
+            export SUDO_PASS='${{ secrets.SUDO_PASSWORD }}'
 
             echo "🚀 Starting deployment..."
 
@@ -52,7 +56,7 @@ jobs:
 
             # Change ownership to deploy user for git/composer/npm operations
             echo "🔐 Setting permissions for deployment..."
-            sudo chown -R $USER:$USER .
+            echo "$SUDO_PASS" | sudo -S chown -R $USER:$USER .
 
             # Pull latest code
             echo "📥 Pulling latest code..."
@@ -81,14 +85,14 @@ jobs:
 
             # Change ownership back to www-data
             echo "🔐 Restoring www-data ownership..."
-            sudo chown -R www-data:www-data .
+            echo "$SUDO_PASS" | sudo -S chown -R www-data:www-data .
 
             # Set proper permissions
             echo "🔧 Setting proper permissions..."
-            sudo find . -type d -exec chmod 755 {} \;
-            sudo find . -type f -exec chmod 644 {} \;
-            sudo chmod +x artisan
-            sudo chmod -R 775 storage bootstrap/cache
+            echo "$SUDO_PASS" | sudo -S find . -type d -exec chmod 755 {} \;
+            echo "$SUDO_PASS" | sudo -S find . -type f -exec chmod 644 {} \;
+            echo "$SUDO_PASS" | sudo -S chmod +x artisan
+            echo "$SUDO_PASS" | sudo -S chmod -R 775 storage bootstrap/cache
 
             # Bring application back online
             echo "✅ Disabling maintenance mode..."
@@ -96,7 +100,7 @@ jobs:
 
             # Reload Octane as www-data user
             echo "🔄 Reloading Octane..."
-            sudo -u www-data php artisan octane:reload || sudo systemctl restart octane || true
+            echo "$SUDO_PASS" | sudo -S -u www-data php artisan octane:reload || echo "$SUDO_PASS" | sudo -S systemctl restart octane || true
 
             echo "🎉 Deployment completed successfully!"
           ENDSSH
