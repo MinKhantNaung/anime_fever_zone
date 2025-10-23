@@ -42,6 +42,15 @@ jobs:
       - name: Install Composer dependencies
         run: composer install --prefer-dist --no-interaction --no-progress
 
+      - name: Run Laravel Pint (Check)
+        run: |
+          if [ -f vendor/bin/pint ]; then
+            ./vendor/bin/pint --test --verbose
+          else
+            echo "⚠️  Laravel Pint not installed, skipping..."
+          fi
+        continue-on-error: true
+
       - name: Run PHP CS Fixer (Dry Run)
         run: |
           if [ -f .php-cs-fixer.php ]; then
