@@ -100,7 +100,13 @@ npm ci --omit=dev
 # Build assets
 npm run build
 
-# Restore www-data ownership
+# Migrate database (before ownership change)
+php artisan migrate --force
+
+# Optimize (before ownership change)
+php artisan app:optimize-all
+
+# Restore www-data ownership (after all file operations)
 sudo chown -R www-data:www-data .
 
 # Set proper permissions
@@ -108,12 +114,6 @@ sudo find . -type d -exec chmod 755 {} \;
 sudo find . -type f -exec chmod 644 {} \;
 sudo chmod +x artisan
 sudo chmod -R 775 storage bootstrap/cache
-
-# Migrate database
-php artisan migrate --force
-
-# Optimize
-php artisan app:optimize-all
 
 # Disable maintenance mode
 php artisan up
@@ -219,7 +219,13 @@ composer install --no-interaction --prefer-dist --optimize-autoloader --no-dev
 npm ci --omit=dev
 npm run build
 
-# Restore www-data ownership
+# Migrate down if needed
+php artisan migrate:rollback --step=1
+
+# Optimize (before ownership change)
+php artisan app:optimize-all
+
+# Restore www-data ownership (after all file operations)
 sudo chown -R www-data:www-data .
 
 # Set proper permissions
@@ -227,12 +233,6 @@ sudo find . -type d -exec chmod 755 {} \;
 sudo find . -type f -exec chmod 644 {} \;
 sudo chmod +x artisan
 sudo chmod -R 775 storage bootstrap/cache
-
-# Migrate down if needed
-php artisan migrate:rollback --step=1
-
-# Optimize
-php artisan app:optimize-all
 
 # Restart Octane as www-data
 sudo -u www-data php artisan octane:reload
