@@ -41,7 +41,7 @@
         <div class="flex flex-col items-center py-12">
             <a wire:navigate.hover href="{{ route('home') }}"
                 class="font-bold text-gray-800 uppercase hover:text-gray-700 text-3xl sm:text-5xl">
-                Anime Fever Zone Testing
+                Anime Fever Zone
             </a>
             <p class="text-lg text-gray-600 px-2">
                 Embark on a Journey through the Anime Universe and Beyond! Dive into a World of Anime and More.

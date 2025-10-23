@@ -30,7 +30,7 @@ class Topic extends Component
         $posts = Post::with('media', 'topic', 'tags')
             ->select('id', 'topic_id', 'heading', 'slug', 'body', 'updated_at')
             ->orderBy('updated_at', 'desc')
-            ->whereHas('topic', function ($query) {
+            ->whereHas('topic', function ($query): void {
                 $query->where('slug', $this->slug);
             })
             ->where('is_publish', true)

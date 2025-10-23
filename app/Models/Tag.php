@@ -22,11 +22,11 @@ class Tag extends Model
     {
         parent::boot();
 
-        static::creating(function ($tag) {
+        static::creating(function ($tag): void {
             $tag->slug = Str::slug($tag->name);
         });
 
-        static::updating(function ($tag) {
+        static::updating(function ($tag): void {
             $tag->slug = Str::slug($tag->name);
         });
     }

@@ -2,10 +2,8 @@
 
 namespace Tests\Feature;
 
-use App\Models\SiteSetting;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Livewire\Livewire;
 use Livewire\Volt\Volt;
 use Tests\TestCase;
 

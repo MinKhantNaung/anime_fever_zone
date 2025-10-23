@@ -38,7 +38,7 @@ class TagShow extends Component
         $posts = Post::with('media', 'topic', 'tags')
             ->select('id', 'topic_id', 'heading', 'slug', 'body', 'updated_at')
             ->orderBy('updated_at', 'desc')
-            ->whereHas('tags', function ($query) {
+            ->whereHas('tags', function ($query): void {
                 $query->where('slug', $this->slug);
             })
             ->where('is_publish', true)
