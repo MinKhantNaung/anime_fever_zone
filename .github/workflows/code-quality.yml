@@ -20,7 +20,7 @@ jobs:
         with:
           php-version: '8.3'
           extensions: mbstring, dom, fileinfo, mysql
-          tools: phpstan, psalm, php-cs-fixer
+          tools: psalm
 
       - name: Get Composer Cache Directory
         id: composer-cache
@@ -51,21 +51,12 @@ jobs:
           fi
         continue-on-error: true
 
-      - name: Run PHP CS Fixer (Dry Run)
+      - name: Run Rector (Check)
         run: |
-          if [ -f .php-cs-fixer.php ]; then
-            php-cs-fixer fix --dry-run --diff --verbose
+          if [ -f vendor/bin/rector ]; then
+            ./vendor/bin/rector process --dry-run
           else
-            echo "⚠️  .php-cs-fixer.php not found, skipping..."
-          fi
-        continue-on-error: true
-
-      - name: Run PHPStan
-        run: |
-          if [ -f phpstan.neon ] || [ -f phpstan.neon.dist ]; then
-            phpstan analyse --memory-limit=2G
-          else
-            echo "⚠️  phpstan.neon not found, skipping..."
+            echo "⚠️  Rector not installed, skipping..."
           fi
         continue-on-error: true
 
