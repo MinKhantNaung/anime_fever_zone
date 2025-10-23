@@ -16,13 +16,6 @@ jobs:
       matrix:
         php-versions: ['8.3']
 
-    services:
-      redis:
-        image: redis:7-alpine
-        ports:
-          - 6379:6379
-        options: --health-cmd="redis-cli ping" --health-interval=10s --health-timeout=5s --health-retries=3
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -31,7 +24,7 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php-versions }}
-          extensions: mbstring, dom, fileinfo, sqlite3, redis, gd, zip, bcmath, soap, intl, exif, pcntl
+          extensions: mbstring, dom, fileinfo, sqlite3, gd, zip, bcmath, soap, intl, exif, pcntl
           coverage: xdebug
 
       - name: Get Composer Cache Directory
@@ -75,10 +68,8 @@ jobs:
         run: |
           echo "DB_CONNECTION=sqlite" >> .env
           echo "DB_DATABASE=:memory:" >> .env
-          echo "REDIS_HOST=127.0.0.1" >> .env
-          echo "REDIS_PORT=6379" >> .env
-          echo "CACHE_DRIVER=redis" >> .env
-          echo "SESSION_DRIVER=redis" >> .env
+          echo "CACHE_DRIVER=array" >> .env
+          echo "SESSION_DRIVER=array" >> .env
 
       - name: Run migrations
         run: php artisan migrate --force
