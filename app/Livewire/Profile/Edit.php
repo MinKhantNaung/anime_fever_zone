@@ -50,7 +50,7 @@ class Edit extends Component
     {
         $this->name = auth()->user()->name;
         $this->email = auth()->user()->email;
-        $this->checked = SiteSetting::first()->email_verify_status;
+        $this->checked = SiteSetting::first()?->email_verify_status ?? false;
     }
 
     public function isChecked()
