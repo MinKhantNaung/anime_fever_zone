@@ -46,6 +46,10 @@ jobs:
 
             echo "🚀 Starting deployment..."
 
+            # Change ownership to deploy user for git/composer/npm operations
+            echo "🔐 Setting permissions for deployment..."
+            echo "$SUDO_PASS" | sudo -S chown -R $USER:$USER .
+
             # Backup current state
             echo "💾 Creating backup..."
             cp .env .env.backup.$(date +%Y%m%d_%H%M%S)
@@ -53,10 +57,6 @@ jobs:
             # Put application in maintenance mode
             echo "🔧 Enabling maintenance mode..."
             php artisan down || true
-
-            # Change ownership to deploy user for git/composer/npm operations
-            echo "🔐 Setting permissions for deployment..."
-            echo "$SUDO_PASS" | sudo -S chown -R $USER:$USER .
 
             # Pull latest code
             echo "📥 Pulling latest code..."
@@ -83,6 +83,10 @@ jobs:
             echo "🧹 Optimizing application..."
             php artisan app:optimize-all
 
+            # Bring application back online
+            echo "✅ Disabling maintenance mode..."
+            php artisan up
+
             # Change ownership back to www-data
             echo "🔐 Restoring www-data ownership..."
             echo "$SUDO_PASS" | sudo -S chown -R www-data:www-data .
@@ -93,10 +97,6 @@ jobs:
             echo "$SUDO_PASS" | sudo -S find . -type f -exec chmod 644 {} \;
             echo "$SUDO_PASS" | sudo -S chmod +x artisan
             echo "$SUDO_PASS" | sudo -S chmod -R 775 storage bootstrap/cache
-
-            # Bring application back online
-            echo "✅ Disabling maintenance mode..."
-            php artisan up
 
             # Reload Octane as www-data user
             echo "🔄 Reloading Octane..."
