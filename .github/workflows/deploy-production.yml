@@ -71,11 +71,15 @@ jobs:
             echo "📦 Installing npm dependencies..."
             export NVM_DIR="$HOME/.nvm"
             [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-            npm ci --omit=dev
+            npm ci
 
             # Build frontend assets
             echo "🏗️  Building frontend assets..."
-            npx vite build
+            npm run build
+
+            echo "🧹 Cleaning up dev dependencies..."
+            rm -rf node_modules
+            npm ci --omit=dev
 
             # Run database migrations (before ownership change)
             echo "🗄️  Running database migrations..."
