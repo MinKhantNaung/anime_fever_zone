@@ -75,7 +75,7 @@ jobs:
 
             # Build frontend assets
             echo "🏗️  Building frontend assets..."
-            npm run build
+            npx vite build
 
             # Run database migrations (before ownership change)
             echo "🗄️  Running database migrations..."
