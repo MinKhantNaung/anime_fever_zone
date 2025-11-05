@@ -69,6 +69,8 @@ jobs:
             composer install --no-interaction --prefer-dist --optimize-autoloader --no-dev
 
             echo "📦 Installing npm dependencies..."
+            export NVM_DIR="$HOME/.nvm"
+            [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
             npm ci --omit=dev
 
             # Build frontend assets
