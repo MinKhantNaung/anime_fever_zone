@@ -39,6 +39,14 @@
     .anime-content a {
         @apply text-[#9926f0] hover:text-[#d122e3] transition-colors duration-150;
     }
+
+    ul {
+        @apply list-disc list-inside;
+    }
+
+    ol {
+        @apply list-decimal list-inside;
+    }
 }
 
 :root {
