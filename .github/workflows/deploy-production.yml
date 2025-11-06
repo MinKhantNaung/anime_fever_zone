@@ -50,10 +50,6 @@ jobs:
             echo "🔐 Setting permissions for deployment..."
             echo "$SUDO_PASS" | sudo -S chown -R $USER:$USER .
 
-            # Backup current state
-            echo "💾 Creating backup..."
-            cp .env .env.backup.$(date +%Y%m%d_%H%M%S)
-
             # Put application in maintenance mode
             echo "🔧 Enabling maintenance mode..."
             php artisan down || true
