@@ -18,7 +18,9 @@ use App\Livewire\Term;
 use App\Livewire\Topic;
 use App\Livewire\Topic\Create;
 use App\Livewire\Video\Create as VideoCreate;
+use App\Livewire\Video\Edit as VideoEdit;
 use App\Livewire\Video\Index as VideoIndex;
+use App\Livewire\Video\PublicIndex as VideoPublicIndex;
 use App\Livewire\Video\Show as VideoShow;
 use Illuminate\Support\Facades\Route;
 use Livewire\Volt\Volt;
@@ -27,7 +29,7 @@ Route::get('/', Home::class)->name('home');
 Route::get('/topic/{slug}', Topic::class)->name('topic');
 Route::get('/tag/{slug}', TagShow::class)->name('tag');
 Route::get('/blog/{slug}', PostShow::class)->name('post');
-Route::get('/videos', VideoIndex::class)->name('videos.index');
+Route::get('/videos', VideoPublicIndex::class)->name('videos.index');
 Route::get('/videos/{id}', VideoShow::class)->name('video.show');
 
 // Email Subscribe
@@ -57,7 +59,9 @@ Route::middleware('auth')->group(function (): void {
             Route::get('/posts/{post}/sections/create', SectionCreate::class)->name('sections.create');
             Route::get('/posts/sections/{section}/edit', SectionEdit::class)->name('sections.edit');
 
-            Route::get('/videos/create', VideoCreate::class)->name('videos.create');
+            Route::get('/videos', VideoIndex::class)->name('blogger.videos.index');
+            Route::get('/videos/create', VideoCreate::class)->name('blogger.videos.create');
+            Route::get('/videos/{video}/edit', VideoEdit::class)->name('blogger.videos.edit');
         });
     });
 });

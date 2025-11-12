@@ -23,6 +23,8 @@
                         class="hover:bg-gradient-to-r hover:from-[#9926f0] hover:to-[#d122e3] rounded py-2 px-4 mx-2 {{ request()->routeIs('tags.index') || request()->routeIs('tags.create') ? 'bg-[#9926f0] text-gray-100' : 'text-black' }}">Tags(Blogger)</a>
                     <a wire:navigate.hover href="{{ route('posts.index') }}"
                         class="hover:bg-gradient-to-r hover:from-[#9926f0] hover:to-[#d122e3] rounded py-2 px-4 mx-2 {{ request()->routeIs('posts.index') ? 'bg-[#9926f0] text-gray-100' : 'text-black' }}">Posts(Blogger)</a>
+                    <a wire:navigate.hover href="{{ route('blogger.videos.index') }}"
+                        class="hover:bg-gradient-to-r hover:from-[#9926f0] hover:to-[#d122e3] rounded py-2 px-4 mx-2 {{ request()->routeIs('blogger.videos.*') ? 'bg-[#9926f0] text-gray-100' : 'text-black' }}">Videos(Blogger)</a>
                 @endif
             @endauth
 

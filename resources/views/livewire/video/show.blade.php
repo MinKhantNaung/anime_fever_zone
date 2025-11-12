@@ -24,7 +24,7 @@
                         <span>Published {{ $video->created_at->diffForHumans() }}</span>
                     </div>
                     <div class="prose max-w-none">
-                        <p class="text-gray-700">{{ $video->title }}</p>
+                        <p class="text-gray-700">{{ $video->description }}</p>
                     </div>
                 </div>
             </div>

@@ -1,8 +1,8 @@
 <div class="container mx-auto flex flex-wrap py-6">
     <section class="w-full md:w-2/3 flex flex-col items-center px-3">
-        <h1 class="text-2xl font-bold mb-4 text-black">Add New Video</h1>
+        <h1 class="text-2xl font-bold mb-4 text-black">Edit Video</h1>
 
-        <form wire:submit.prevent="save" class="w-full max-w-2xl bg-white shadow-md rounded-lg p-6">
+        <form wire:submit.prevent="updateVideo" class="w-full max-w-2xl bg-white shadow-md rounded-lg p-6">
             <div class="mb-4">
                 <label class="block font-medium mb-2 text-black">Title</label>
                 <input type="text" wire:model="title" class="w-full border rounded p-2">
@@ -28,9 +28,10 @@
             </div>
 
             <div class="flex gap-3">
-                <button type="submit" class="btn btn-primary">Save Video</button>
+                <button type="submit" class="btn btn-primary">Update Video</button>
                 <a href="{{ route('blogger.videos.index') }}" class="btn btn-secondary">Cancel</a>
             </div>
         </form>
     </section>
 </div>
+

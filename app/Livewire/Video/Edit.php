@@ -2,16 +2,19 @@
 
 namespace App\Livewire\Video;
 
+use App\Models\Video;
 use App\Services\AlertService;
 use App\Services\VideoService;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 
-class Create extends Component
+class Edit extends Component
 {
     public $title;
     public $youtube_url;
     public $is_publish = false;
+
+    public Video $video;
 
     protected $videoService;
     protected $alertService;
@@ -20,6 +23,14 @@ class Create extends Component
     {
         $this->videoService = $videoService;
         $this->alertService = $alertService;
+    }
+
+    public function mount(Video $video)
+    {
+        $this->video = $video;
+        $this->title = $video->title;
+        $this->youtube_url = $video->youtube_url;
+        $this->is_publish = $video->is_publish;
     }
 
     protected function rules()
@@ -31,7 +42,7 @@ class Create extends Component
         ];
     }
 
-    public function save()
+    public function updateVideo()
     {
         $validated = $this->validate();
 
@@ -45,7 +56,7 @@ class Create extends Component
         DB::beginTransaction();
 
         try {
-            $this->videoService->store([
+            $this->videoService->update($this->video, [
                 'title' => $validated['title'],
                 'youtube_url' => $validated['youtube_url'],
                 'youtube_id' => $youtube_id,
@@ -54,9 +65,7 @@ class Create extends Component
 
             DB::commit();
 
-            $this->alertService->alert($this, 'Video created successfully', 'success');
-
-            $this->reset(['title', 'youtube_url', 'is_publish']);
+            $this->alertService->alert($this, 'Video updated successfully', 'success');
 
             return $this->redirectRoute('blogger.videos.index', navigate: true);
         } catch (\Throwable $e) {
@@ -78,6 +87,7 @@ class Create extends Component
 
     public function render()
     {
-        return view('livewire.video.create');
+        return view('livewire.video.edit');
     }
 }
+
