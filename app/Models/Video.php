@@ -8,6 +8,7 @@ final class Video extends Model
 {
     protected $fillable = [
         'title',
+        'description',
         'youtube_url',
         'youtube_id',
         'is_publish',

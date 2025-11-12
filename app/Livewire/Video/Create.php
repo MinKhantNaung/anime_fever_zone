@@ -10,6 +10,7 @@ use Livewire\Component;
 class Create extends Component
 {
     public $title;
+    public $description;
     public $youtube_url;
     public $is_publish = false;
 
@@ -26,6 +27,7 @@ class Create extends Component
     {
         return [
             'title' => ['required', 'string', 'max:255'],
+            'description' => ['nullable', 'string'],
             'youtube_url' => ['required', 'url'],
             'is_publish' => ['boolean'],
         ];
@@ -47,6 +49,7 @@ class Create extends Component
         try {
             $this->videoService->store([
                 'title' => $validated['title'],
+                'description' => $validated['description'] ?? null,
                 'youtube_url' => $validated['youtube_url'],
                 'youtube_id' => $youtube_id,
                 'is_publish' => $validated['is_publish'] ?? false,
@@ -56,7 +59,7 @@ class Create extends Component
 
             $this->alertService->alert($this, 'Video created successfully', 'success');
 
-            $this->reset(['title', 'youtube_url', 'is_publish']);
+            $this->reset(['title', 'description', 'youtube_url', 'is_publish']);
 
             return $this->redirectRoute('blogger.videos.index', navigate: true);
         } catch (\Throwable $e) {

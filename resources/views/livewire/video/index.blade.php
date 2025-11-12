@@ -14,6 +14,7 @@
                     <th>No</th>
                     <th>Thumbnail</th>
                     <th>Title</th>
+                    <th>Description</th>
                     <th>YouTube URL</th>
                     <th>YouTube ID</th>
                     <th>Publish</th>
@@ -28,6 +29,9 @@
                             <img src="{{ $video->getThumbnailUrl('hqdefault') }}" alt="{{ $video->title }}" class="w-full">
                         </td>
                         <td class="text-wrap">{{ $video->title }}</td>
+                        <td class="text-wrap max-w-xs">
+                            {{ $video->description ? Str::limit($video->description, 50) : '-' }}
+                        </td>
                         <td class="text-wrap">
                             <a href="{{ $video->youtube_url }}" target="_blank" class="text-blue-500 hover:underline">
                                 {{ Str::limit($video->youtube_url, 40) }}

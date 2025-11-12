@@ -11,6 +11,7 @@ use Livewire\Component;
 class Edit extends Component
 {
     public $title;
+    public $description;
     public $youtube_url;
     public $is_publish = false;
 
@@ -29,6 +30,7 @@ class Edit extends Component
     {
         $this->video = $video;
         $this->title = $video->title;
+        $this->description = $video->description;
         $this->youtube_url = $video->youtube_url;
         $this->is_publish = $video->is_publish;
     }
@@ -37,6 +39,7 @@ class Edit extends Component
     {
         return [
             'title' => ['required', 'string', 'max:255'],
+            'description' => ['nullable', 'string'],
             'youtube_url' => ['required', 'url'],
             'is_publish' => ['boolean'],
         ];
@@ -58,6 +61,7 @@ class Edit extends Component
         try {
             $this->videoService->update($this->video, [
                 'title' => $validated['title'],
+                'description' => $validated['description'] ?? null,
                 'youtube_url' => $validated['youtube_url'],
                 'youtube_id' => $youtube_id,
                 'is_publish' => $validated['is_publish'] ?? false,

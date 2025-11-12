@@ -12,6 +12,14 @@
             </div>
 
             <div class="mb-4">
+                <label class="block font-medium mb-2 text-black">Description</label>
+                <textarea wire:model="description" rows="4" class="w-full border rounded p-2" placeholder="Enter video description..."></textarea>
+                @error('description')
+                    <span class="text-red-500 text-sm">{{ $message }}</span>
+                @enderror
+            </div>
+
+            <div class="mb-4">
                 <label class="block font-medium mb-2 text-black">YouTube URL</label>
                 <input type="text" wire:model="youtube_url" class="w-full border rounded p-2"
                     placeholder="https://www.youtube.com/watch?v=XXXX">

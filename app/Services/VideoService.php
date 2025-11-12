@@ -12,6 +12,7 @@ final class VideoService
     {
         $video = $this->video->create([
             'title' => $validated['title'],
+            'description' => $validated['description'] ?? null,
             'youtube_url' => $validated['youtube_url'],
             'youtube_id' => $validated['youtube_id'],
             'is_publish' => $validated['is_publish'] ?? false,
@@ -24,6 +25,7 @@ final class VideoService
     {
         $video->update([
             'title' => $validated['title'],
+            'description' => $validated['description'] ?? null,
             'youtube_url' => $validated['youtube_url'],
             'youtube_id' => $validated['youtube_id'],
             'is_publish' => $validated['is_publish'] ?? false,
