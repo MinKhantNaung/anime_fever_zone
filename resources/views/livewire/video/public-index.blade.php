@@ -16,7 +16,7 @@
     @if ($videos->count() > 0)
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
             @foreach ($videos as $video)
-                <a wire:navigate.hover href="{{ route('video.show', $video->slug) }}"
+                <a href="{{ route('video.show', $video->slug) }}"
                    class="group bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300">
                     <div class="relative aspect-video overflow-hidden bg-gray-200">
                         <img

@@ -36,7 +36,7 @@
             @if ($relatedVideos->count() > 0)
                 <div class="space-y-4">
                     @foreach ($relatedVideos as $relatedVideo)
-                        <a wire:navigate.hover href="{{ route('video.show', $relatedVideo->slug) }}"
+                        <a href="{{ route('video.show', $relatedVideo->slug) }}"
                            class="flex gap-3 bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow group">
                             <div class="relative w-40 h-24 flex-shrink-0 bg-gray-200 overflow-hidden">
                                 <img
@@ -81,23 +81,40 @@
         }
     </style>
     <script>
-        function initializeVideoPlayer() {
+        document.addEventListener('DOMContentLoaded', function() {
             const videoId = 'video-player-{{ $video->id }}';
             const videoElement = document.getElementById(videoId);
 
             if (window.videojs && videoElement) {
-                // Check if player already exists and dispose it
-                const existingPlayer = window.videojs.getPlayer(videoId);
-                if (existingPlayer) {
-                    try {
-                        existingPlayer.dispose();
-                    } catch (e) {
-                        console.log('Player already disposed');
+                const player = window.videojs(videoId, {
+                    techOrder: ['youtube'],
+                    width: '100%',
+                    height: '100%',
+                    sources: [{
+                        type: 'video/youtube',
+                        src: '{{ $video->youtube_url }}'
+                    }],
+                    youtube: {
+                        ytControls: 2,
+                        modestbranding: 1,
+                        rel: 0
                     }
-                }
+                });
+            }
+        });
 
-                // Small delay to ensure DOM is ready
-                setTimeout(() => {
+        // Re-initialize when Livewire updates
+        document.addEventListener('livewire:init', () => {
+            Livewire.hook('morph.updated', () => {
+                const videoId = 'video-player-{{ $video->id }}';
+                const videoElement = document.getElementById(videoId);
+
+                if (window.videojs && videoElement) {
+                    const existingPlayer = window.videojs.getPlayer(videoId);
+                    if (existingPlayer) {
+                        existingPlayer.dispose();
+                    }
+
                     const player = window.videojs(videoId, {
                         techOrder: ['youtube'],
                         width: '100%',
@@ -112,29 +129,8 @@
                             rel: 0
                         }
                     });
-                }, 100);
-            }
-        }
-
-        // Initialize on DOM ready (for direct page loads)
-        if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', initializeVideoPlayer);
-        } else {
-            initializeVideoPlayer();
-        }
-
-        // Initialize after Livewire navigation
-        document.addEventListener('livewire:navigated', initializeVideoPlayer);
-
-        // Also handle morph updates (for component updates)
-        document.addEventListener('livewire:init', () => {
-            Livewire.hook('morph.updated', ({ el, component }) => {
-                const videoId = 'video-player-{{ $video->id }}';
-                if (el.querySelector && el.querySelector('#' + videoId)) {
-                    initializeVideoPlayer();
                 }
             });
         });
     </script>
 @endpush
-
