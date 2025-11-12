@@ -10,13 +10,14 @@ class Show extends Component
 {
     public Video $video;
 
-    public function mount($id)
+    public function mount($slug)
     {
         $this->video = Video::where('is_publish', true)
-            ->findOrFail($id);
+            ->where('slug', $slug)
+            ->firstOrFail();
     }
 
-    #[Title('{video.title} - Anime Fever Zone')]
+    #[Title('{$video->title} - Anime Fever Zone')]
     public function render()
     {
         // Get related videos (excluding current video)

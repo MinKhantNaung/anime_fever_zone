@@ -36,7 +36,7 @@
             @if ($relatedVideos->count() > 0)
                 <div class="space-y-4">
                     @foreach ($relatedVideos as $relatedVideo)
-                        <a wire:navigate.hover href="{{ route('video.show', $relatedVideo->id) }}"
+                        <a wire:navigate.hover href="{{ route('video.show', $relatedVideo->slug) }}"
                            class="flex gap-3 bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow group">
                             <div class="relative w-40 h-24 flex-shrink-0 bg-gray-200 overflow-hidden">
                                 <img

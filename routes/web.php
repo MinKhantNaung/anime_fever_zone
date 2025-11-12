@@ -30,7 +30,7 @@ Route::get('/topic/{slug}', Topic::class)->name('topic');
 Route::get('/tag/{slug}', TagShow::class)->name('tag');
 Route::get('/blog/{slug}', PostShow::class)->name('post');
 Route::get('/videos', VideoPublicIndex::class)->name('videos.index');
-Route::get('/videos/{id}', VideoShow::class)->name('video.show');
+Route::get('/videos/{slug}', VideoShow::class)->name('video.show');
 
 // Email Subscribe
 Route::get('/subscriber/verify/{token}/{email}', SubscriberController::class)->name('subscriber_verify');
