@@ -11,9 +11,15 @@ import 'swiper/css/pagination';
 
 import Swal from 'sweetalert2'
 
+// Video.js and videojs-youtube
+import videojs from 'video.js';
+import 'video.js/dist/video-js.css';
+import 'videojs-youtube';
+
 window.Swiper = Swiper;
 window.Navigation = Navigation;
 window.Pagination = Pagination;
 
 window.Swal = Swal;
+window.videojs = videojs;
 
