@@ -24,6 +24,7 @@ class ContentSecurityPolicy
                 "img-src 'self' data: https:; " .
                 "font-src 'self' https: data:; " .
                 "connect-src 'self' https:; " .
+                "frame-src 'self' https://www.youtube.com https://www.youtube-nocookie.com; " . // allow YouTube embeds
                 "frame-ancestors 'self'; " . // clickjacking protection
                 "base-uri 'self'; " .
                 "form-action 'self';";
