@@ -81,40 +81,23 @@
         }
     </style>
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
+        function initializeVideoPlayer() {
             const videoId = 'video-player-{{ $video->id }}';
             const videoElement = document.getElementById(videoId);
 
             if (window.videojs && videoElement) {
-                const player = window.videojs(videoId, {
-                    techOrder: ['youtube'],
-                    width: '100%',
-                    height: '100%',
-                    sources: [{
-                        type: 'video/youtube',
-                        src: '{{ $video->youtube_url }}'
-                    }],
-                    youtube: {
-                        ytControls: 2,
-                        modestbranding: 1,
-                        rel: 0
-                    }
-                });
-            }
-        });
-
-        // Re-initialize when Livewire updates
-        document.addEventListener('livewire:init', () => {
-            Livewire.hook('morph.updated', () => {
-                const videoId = 'video-player-{{ $video->id }}';
-                const videoElement = document.getElementById(videoId);
-
-                if (window.videojs && videoElement) {
-                    const existingPlayer = window.videojs.getPlayer(videoId);
-                    if (existingPlayer) {
+                // Check if player already exists and dispose it
+                const existingPlayer = window.videojs.getPlayer(videoId);
+                if (existingPlayer) {
+                    try {
                         existingPlayer.dispose();
+                    } catch (e) {
+                        console.log('Player already disposed');
                     }
+                }
 
+                // Small delay to ensure DOM is ready
+                setTimeout(() => {
                     const player = window.videojs(videoId, {
                         techOrder: ['youtube'],
                         width: '100%',
@@ -129,6 +112,26 @@
                             rel: 0
                         }
                     });
+                }, 100);
+            }
+        }
+
+        // Initialize on DOM ready (for direct page loads)
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initializeVideoPlayer);
+        } else {
+            initializeVideoPlayer();
+        }
+
+        // Initialize after Livewire navigation
+        document.addEventListener('livewire:navigated', initializeVideoPlayer);
+
+        // Also handle morph updates (for component updates)
+        document.addEventListener('livewire:init', () => {
+            Livewire.hook('morph.updated', ({ el, component }) => {
+                const videoId = 'video-player-{{ $video->id }}';
+                if (el.querySelector && el.querySelector('#' + videoId)) {
+                    initializeVideoPlayer();
                 }
             });
         });
