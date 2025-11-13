@@ -8,15 +8,24 @@
     <meta property="og:video" content="{{ $video->youtube_url }}" />
 @endsection
 
-<div class="container mx-auto px-3 py-6">
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+<div class="container mx-auto px-3 py-6" id="video-container">
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6" id="video-layout">
         <!-- Main Video Player -->
-        <div class="lg:col-span-2">
+        <div class="lg:col-span-2" id="video-main">
             <div class="bg-white rounded-lg shadow-md overflow-hidden">
-                <div class="bg-black relative w-full" style="padding-bottom: 56.25%;">
+                <div class="bg-black relative w-full" style="padding-bottom: 56.25%;" id="video-wrapper">
                     <video id="video-player-{{ $video->id }}" class="video-js vjs-default-skin vjs-big-play-centered"
                            controls preload="auto" data-setup='{}' style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;">
                     </video>
+                    <!-- Theater Mode Toggle Button -->
+                    <button id="theater-mode-toggle" class="absolute top-4 right-4 z-10 bg-black bg-opacity-70 hover:bg-opacity-90 text-white p-2 rounded transition-all" title="Theater mode">
+                        <svg id="theater-icon" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17V7m0 10a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h2a2 2 0 012 2m0 10a2 2 0 002 2h2a2 2 0 002-2M9 7a2 2 0 012-2h2a2 2 0 012 2m0 10V7m0 10a2 2 0 002 2h2a2 2 0 002-2V7a2 2 0 00-2-2h-2a2 2 0 00-2 2"></path>
+                        </svg>
+                        <svg id="normal-icon" class="w-5 h-5 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
                 </div>
                 <div class="p-6">
                     <h1 class="text-2xl md:text-3xl font-bold text-black mb-3">{{ $video->title }}</h1>
@@ -31,7 +40,7 @@
         </div>
 
         <!-- Related Videos Sidebar -->
-        <div class="lg:col-span-1">
+        <div class="lg:col-span-1" id="video-sidebar">
             <h2 class="text-xl font-bold text-black mb-4">Related Videos</h2>
             @if ($relatedVideos->count() > 0)
                 <div class="space-y-4">
@@ -79,9 +88,84 @@
             height: 100% !important;
             padding-top: 0 !important;
         }
+
+        /* Theater Mode Styles */
+        #video-container.theater-mode {
+            max-width: 100% !important;
+            padding-left: 0 !important;
+            padding-right: 0 !important;
+        }
+
+        #video-container.theater-mode #video-layout {
+            grid-template-columns: 1fr !important;
+        }
+
+        #video-container.theater-mode #video-main {
+            width: 100% !important;
+            max-width: 100% !important;
+        }
+
+        #video-container.theater-mode #video-sidebar {
+            display: none !important;
+        }
+
+        #video-container.theater-mode #video-wrapper {
+            border-radius: 0 !important;
+        }
+
+        #video-container.theater-mode .bg-white {
+            border-radius: 0 !important;
+        }
+
+        /* Theater mode button styling */
+        #theater-mode-toggle {
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        #video-wrapper:hover #theater-mode-toggle {
+            opacity: 1;
+        }
     </style>
     <script>
+        // Theater Mode Toggle
+        function initTheaterMode() {
+            const container = document.getElementById('video-container');
+            const toggleBtn = document.getElementById('theater-mode-toggle');
+            const theaterIcon = document.getElementById('theater-icon');
+            const normalIcon = document.getElementById('normal-icon');
+
+            // Load theater mode state from localStorage
+            const isTheaterMode = localStorage.getItem('theaterMode') === 'true';
+            if (isTheaterMode) {
+                container.classList.add('theater-mode');
+                theaterIcon.classList.add('hidden');
+                normalIcon.classList.remove('hidden');
+            }
+
+            toggleBtn.addEventListener('click', function() {
+                const isActive = container.classList.contains('theater-mode');
+
+                if (isActive) {
+                    // Exit theater mode
+                    container.classList.remove('theater-mode');
+                    theaterIcon.classList.remove('hidden');
+                    normalIcon.classList.add('hidden');
+                    localStorage.setItem('theaterMode', 'false');
+                } else {
+                    // Enter theater mode
+                    container.classList.add('theater-mode');
+                    theaterIcon.classList.add('hidden');
+                    normalIcon.classList.remove('hidden');
+                    localStorage.setItem('theaterMode', 'true');
+                }
+            });
+        }
+
         document.addEventListener('DOMContentLoaded', function() {
+            // Initialize theater mode
+            initTheaterMode();
+
             const videoId = 'video-player-{{ $video->id }}';
             const videoElement = document.getElementById(videoId);
 
@@ -106,6 +190,9 @@
         // Re-initialize when Livewire updates
         document.addEventListener('livewire:init', () => {
             Livewire.hook('morph.updated', () => {
+                // Re-initialize theater mode
+                initTheaterMode();
+
                 const videoId = 'video-player-{{ $video->id }}';
                 const videoElement = document.getElementById(videoId);
 
