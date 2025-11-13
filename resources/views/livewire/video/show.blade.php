@@ -176,21 +176,121 @@
         #video-wrapper:hover #theater-mode-toggle {
             opacity: 1;
         }
+
+        /* Mobile theater mode - horizontal/fullscreen */
+        @media (max-width: 1024px) {
+            #video-container.theater-mode {
+                position: fixed !important;
+                top: 0 !important;
+                left: 0 !important;
+                right: 0 !important;
+                bottom: 0 !important;
+                width: 100vw !important;
+                height: 100vh !important;
+                max-width: 100% !important;
+                padding: 0 !important;
+                margin: 0 !important;
+                z-index: 9999 !important;
+                background: #000 !important;
+                overflow: hidden !important;
+            }
+
+            #video-container.theater-mode #video-layout {
+                grid-template-columns: 1fr !important;
+                height: 100vh !important;
+                width: 100vw !important;
+                display: flex !important;
+                flex-direction: row !important;
+                align-items: center !important;
+                justify-content: center !important;
+                gap: 0 !important;
+            }
+
+            #video-container.theater-mode #video-main {
+                width: 100% !important;
+                max-width: 100% !important;
+                height: 100% !important;
+                flex: 1 !important;
+                display: flex !important;
+                flex-direction: row !important;
+                align-items: center !important;
+                justify-content: center !important;
+                min-height: 0 !important;
+            }
+
+            #video-container.theater-mode #video-main .bg-white {
+                height: 100% !important;
+                width: 100% !important;
+                display: flex !important;
+                flex-direction: row !important;
+                align-items: center !important;
+                justify-content: center !important;
+                border-radius: 0 !important;
+                background: #000 !important;
+            }
+
+            #video-container.theater-mode #video-wrapper {
+                border-radius: 0 !important;
+                width: 100% !important;
+                height: 100% !important;
+                padding-bottom: 0 !important;
+                aspect-ratio: 16 / 9 !important;
+                max-width: 100vw !important;
+                max-height: 100vh !important;
+                position: relative !important;
+                margin: 0 auto !important;
+            }
+
+            /* Optimize for landscape orientation on mobile */
+            @media (orientation: landscape) and (max-width: 1024px) {
+                #video-container.theater-mode #video-wrapper {
+                    width: 100vw !important;
+                    height: 56.25vw !important; /* 16:9 aspect ratio */
+                    max-height: 100vh !important;
+                }
+            }
+
+            #video-container.theater-mode #video-sidebar {
+                display: none !important;
+            }
+
+            #video-container.theater-mode #video-main .bg-white > div:last-child {
+                display: none !important;
+            }
+
+            /* Prevent body scroll when in theater mode on mobile */
+            body.theater-mode-active {
+                overflow: hidden !important;
+                position: fixed !important;
+                width: 100% !important;
+            }
+        }
     </style>
     <script>
+        // Check if device is mobile
+        function isMobileDevice() {
+            return window.innerWidth <= 1024;
+        }
+
         // Theater Mode Toggle
         function initTheaterMode() {
             const container = document.getElementById('video-container');
             const toggleBtn = document.getElementById('theater-mode-toggle');
             const theaterIcon = document.getElementById('theater-icon');
             const normalIcon = document.getElementById('normal-icon');
+            const isMobile = isMobileDevice();
 
-            // Load theater mode state from localStorage
-            const isTheaterMode = localStorage.getItem('theaterMode') === 'true';
-            if (isTheaterMode) {
-                container.classList.add('theater-mode');
-                theaterIcon.classList.add('hidden');
-                normalIcon.classList.remove('hidden');
+            // Load theater mode state from localStorage (only for desktop)
+            if (!isMobile) {
+                const isTheaterMode = localStorage.getItem('theaterMode') === 'true';
+                if (isTheaterMode) {
+                    container.classList.add('theater-mode');
+                    theaterIcon.classList.add('hidden');
+                    normalIcon.classList.remove('hidden');
+                }
+            } else {
+                // On mobile, don't restore theater mode from localStorage
+                container.classList.remove('theater-mode');
             }
 
             toggleBtn.addEventListener('click', function() {
@@ -201,13 +301,51 @@
                     container.classList.remove('theater-mode');
                     theaterIcon.classList.remove('hidden');
                     normalIcon.classList.add('hidden');
-                    localStorage.setItem('theaterMode', 'false');
+                    document.body.classList.remove('theater-mode-active');
+
+                    // Unlock orientation on mobile
+                    if (isMobile && screen.orientation && screen.orientation.unlock) {
+                        screen.orientation.unlock().catch(() => {});
+                    }
+
+                    if (!isMobile) {
+                        localStorage.setItem('theaterMode', 'false');
+                    }
                 } else {
                     // Enter theater mode
                     container.classList.add('theater-mode');
                     theaterIcon.classList.add('hidden');
                     normalIcon.classList.remove('hidden');
-                    localStorage.setItem('theaterMode', 'true');
+
+                    if (isMobile) {
+                        // On mobile, lock body scroll and request landscape orientation
+                        document.body.classList.add('theater-mode-active');
+
+                        // Request landscape orientation if supported
+                        if (screen.orientation && screen.orientation.lock) {
+                            screen.orientation.lock('landscape').catch(() => {
+                                // If lock fails, try alternative method
+                                if (screen.orientation && screen.orientation.lock) {
+                                    screen.orientation.lock('landscape-primary').catch(() => {});
+                                }
+                            });
+                        }
+                    } else {
+                        localStorage.setItem('theaterMode', 'true');
+                    }
+                }
+            });
+
+            // Handle window resize
+            window.addEventListener('resize', function() {
+                const nowMobile = isMobileDevice();
+
+                if (nowMobile && container.classList.contains('theater-mode')) {
+                    // Keep theater mode on mobile, just update body class
+                    document.body.classList.add('theater-mode-active');
+                } else if (!nowMobile && container.classList.contains('theater-mode')) {
+                    // On desktop, remove body class
+                    document.body.classList.remove('theater-mode-active');
                 }
             });
         }
