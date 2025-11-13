@@ -176,14 +176,82 @@
         #video-wrapper:hover #theater-mode-toggle {
             opacity: 1;
         }
+
+        /* Hide theater mode on mobile devices */
+        @media (max-width: 1024px) {
+            #theater-mode-toggle {
+                display: none !important;
+            }
+
+            #video-container.theater-mode {
+                max-width: 100% !important;
+                padding-left: 0.75rem !important;
+                padding-right: 0.75rem !important;
+                padding-top: 1.5rem !important;
+                padding-bottom: 1.5rem !important;
+                height: auto !important;
+                display: block !important;
+                flex-direction: unset !important;
+                overflow: visible !important;
+            }
+
+            #video-container.theater-mode #video-layout {
+                grid-template-columns: 1fr !important;
+                height: auto !important;
+                display: grid !important;
+                flex-direction: unset !important;
+                gap: 1.5rem !important;
+            }
+
+            #video-container.theater-mode #video-main {
+                width: 100% !important;
+                max-width: 100% !important;
+                flex: unset !important;
+                display: block !important;
+                flex-direction: unset !important;
+                min-height: unset !important;
+            }
+
+            #video-container.theater-mode #video-main .bg-white {
+                height: auto !important;
+                display: block !important;
+                flex-direction: unset !important;
+                border-radius: 0.5rem !important;
+            }
+
+            #video-container.theater-mode #video-wrapper {
+                border-radius: 0.5rem 0.5rem 0 0 !important;
+                flex: unset !important;
+                min-height: unset !important;
+                padding-bottom: 56.25% !important;
+                height: auto !important;
+                aspect-ratio: 16 / 9 !important;
+                max-height: none !important;
+                width: 100% !important;
+                position: relative !important;
+            }
+        }
     </style>
     <script>
+        // Check if device is mobile
+        function isMobileDevice() {
+            return window.innerWidth <= 1024;
+        }
+
         // Theater Mode Toggle
         function initTheaterMode() {
             const container = document.getElementById('video-container');
             const toggleBtn = document.getElementById('theater-mode-toggle');
             const theaterIcon = document.getElementById('theater-icon');
             const normalIcon = document.getElementById('normal-icon');
+
+            // Disable theater mode on mobile devices
+            if (isMobileDevice()) {
+                // Remove theater mode if it was previously enabled
+                container.classList.remove('theater-mode');
+                localStorage.setItem('theaterMode', 'false');
+                return;
+            }
 
             // Load theater mode state from localStorage
             const isTheaterMode = localStorage.getItem('theaterMode') === 'true';
@@ -194,6 +262,11 @@
             }
 
             toggleBtn.addEventListener('click', function() {
+                // Prevent theater mode on mobile
+                if (isMobileDevice()) {
+                    return;
+                }
+
                 const isActive = container.classList.contains('theater-mode');
 
                 if (isActive) {
@@ -208,6 +281,16 @@
                     theaterIcon.classList.add('hidden');
                     normalIcon.classList.remove('hidden');
                     localStorage.setItem('theaterMode', 'true');
+                }
+            });
+
+            // Handle window resize to disable theater mode if resized to mobile
+            window.addEventListener('resize', function() {
+                if (isMobileDevice() && container.classList.contains('theater-mode')) {
+                    container.classList.remove('theater-mode');
+                    theaterIcon.classList.remove('hidden');
+                    normalIcon.classList.add('hidden');
+                    localStorage.setItem('theaterMode', 'false');
                 }
             });
         }
