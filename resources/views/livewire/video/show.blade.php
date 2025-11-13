@@ -177,6 +177,22 @@
             opacity: 1;
         }
 
+        /* Remove padding on mobile for video container */
+        @media (max-width: 1024px) {
+            #video-container {
+                padding-left: 0 !important;
+                padding-right: 0 !important;
+            }
+
+            #video-container #video-main .bg-white {
+                border-radius: 0 !important;
+            }
+
+            #video-container #video-wrapper {
+                border-radius: 0 !important;
+            }
+        }
+
         /* Mobile theater mode - horizontal/fullscreen */
         @media (max-width: 1024px) {
             #video-container.theater-mode {
