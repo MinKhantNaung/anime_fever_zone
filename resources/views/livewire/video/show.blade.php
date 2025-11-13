@@ -191,6 +191,11 @@
             #video-container #video-wrapper {
                 border-radius: 0 !important;
             }
+
+            /* Hide theater mode button on mobile */
+            #theater-mode-toggle {
+                display: none !important;
+            }
         }
 
         /* Mobile theater mode - horizontal/fullscreen */
