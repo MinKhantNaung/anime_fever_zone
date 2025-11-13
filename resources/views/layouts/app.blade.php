@@ -38,7 +38,7 @@
 
     <!-- Text Header -->
     <header class="w-full container mx-auto">
-        <div class="flex flex-col items-center py-12">
+        <div class="flex flex-col items-center py-10">
             <a wire:navigate.hover href="{{ route('home') }}"
                 class="font-bold text-gray-800 uppercase hover:text-gray-700 text-3xl sm:text-5xl">
                 Anime Fever Zone

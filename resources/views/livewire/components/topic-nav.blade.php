@@ -12,19 +12,22 @@
 
             @foreach ($topics as $topic)
                 <a wire:navigate.hover href="{{ route('topic', $topic->slug) }}"
-                    class="hover:bg-gradient-to-r hover:from-[#9926f0] hover:to-[#d122e3] rounded py-2 px-4 mx-2 {{ request()->is('topic/' . $topic->slug) ? 'bg-[#9926f0] text-gray-100' : 'text-black' }}">{{ $topic->name }}</a>
+                    class="hover:bg-gradient-to-r hover:from-[#9926f0] hover:to-[#d122e3] rounded py-1 px-4 mx-2 {{ request()->is('topic/' . $topic->slug) ? 'bg-[#9926f0] text-gray-100' : 'text-black' }}">{{ $topic->name }}</a>
             @endforeach
+
+            <a wire:navigate.hover href="{{ route('videos.index') }}"
+                class="hover:bg-gradient-to-r hover:from-[#9926f0] hover:to-[#d122e3] rounded py-1 px-4 mx-2 {{ request()->is('videos') ? 'bg-[#9926f0] text-gray-100' : 'text-black' }}">Videos</a>
 
             @auth
                 @if (auth()->user()->role === 'blogger')
                     <a wire:navigate.hover href="{{ route('topics.create') }}"
-                        class="hover:bg-gradient-to-r hover:from-[#9926f0] hover:to-[#d122e3] rounded py-2 px-4 mx-2 {{ request()->routeIs('topics.create') ? 'bg-[#9926f0] text-gray-100' : 'text-black' }}">Topics(Blogger)</a>
+                        class="hover:bg-gradient-to-r hover:from-[#9926f0] hover:to-[#d122e3] rounded py-1 px-4 mx-2 {{ request()->routeIs('topics.create') ? 'bg-[#9926f0] text-gray-100' : 'text-black' }}">Topics(Blogger)</a>
                     <a wire:navigate.hover href="{{ route('tags.index') }}"
-                        class="hover:bg-gradient-to-r hover:from-[#9926f0] hover:to-[#d122e3] rounded py-2 px-4 mx-2 {{ request()->routeIs('tags.index') || request()->routeIs('tags.create') ? 'bg-[#9926f0] text-gray-100' : 'text-black' }}">Tags(Blogger)</a>
+                        class="hover:bg-gradient-to-r hover:from-[#9926f0] hover:to-[#d122e3] rounded py-1 px-4 mx-2 {{ request()->routeIs('tags.index') || request()->routeIs('tags.create') ? 'bg-[#9926f0] text-gray-100' : 'text-black' }}">Tags(Blogger)</a>
                     <a wire:navigate.hover href="{{ route('posts.index') }}"
-                        class="hover:bg-gradient-to-r hover:from-[#9926f0] hover:to-[#d122e3] rounded py-2 px-4 mx-2 {{ request()->routeIs('posts.index') ? 'bg-[#9926f0] text-gray-100' : 'text-black' }}">Posts(Blogger)</a>
+                        class="hover:bg-gradient-to-r hover:from-[#9926f0] hover:to-[#d122e3] rounded py-1 px-4 mx-2 {{ request()->routeIs('posts.index') ? 'bg-[#9926f0] text-gray-100' : 'text-black' }}">Posts(Blogger)</a>
                     <a wire:navigate.hover href="{{ route('blogger.videos.index') }}"
-                        class="hover:bg-gradient-to-r hover:from-[#9926f0] hover:to-[#d122e3] rounded py-2 px-4 mx-2 {{ request()->routeIs('blogger.videos.*') ? 'bg-[#9926f0] text-gray-100' : 'text-black' }}">Videos(Blogger)</a>
+                        class="hover:bg-gradient-to-r hover:from-[#9926f0] hover:to-[#d122e3] rounded py-1 px-4 mx-2 {{ request()->routeIs('blogger.videos.*') ? 'bg-[#9926f0] text-gray-100' : 'text-black' }}">Videos(Blogger)</a>
                 @endif
             @endauth
 
