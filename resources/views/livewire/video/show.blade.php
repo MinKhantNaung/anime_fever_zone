@@ -13,7 +13,7 @@
         <!-- Main Video Player -->
         <div class="lg:col-span-2" id="video-main">
             <div class="bg-white rounded-lg shadow-md overflow-hidden">
-                <div class="bg-black relative w-full" style="padding-bottom: 56.25%;" id="video-wrapper">
+                <div class="bg-black relative w-full" id="video-wrapper" style="padding-bottom: 56.25%;">
                     <video id="video-player-{{ $video->id }}" class="video-js vjs-default-skin vjs-big-play-centered"
                            controls preload="auto" data-setup='{}' style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;">
                     </video>
@@ -96,29 +96,75 @@
         /* Theater Mode Styles */
         #video-container.theater-mode {
             max-width: 100% !important;
-            padding-left: 1.5rem !important;
-            padding-right: 1.5rem !important;
+            padding-left: 0 !important;
+            padding-right: 0 !important;
+            padding-top: 0 !important;
+            padding-bottom: 0 !important;
+            height: 100vh !important;
+            display: flex !important;
+            flex-direction: column !important;
+            overflow: hidden !important;
         }
 
         #video-container.theater-mode #video-layout {
             grid-template-columns: 1fr !important;
+            height: 100% !important;
+            display: flex !important;
+            flex-direction: column !important;
+            gap: 0 !important;
         }
 
         #video-container.theater-mode #video-main {
             width: 100% !important;
             max-width: 100% !important;
+            flex: 1 !important;
+            display: flex !important;
+            flex-direction: column !important;
+            min-height: 0 !important;
+        }
+
+        #video-container.theater-mode #video-main .bg-white {
+            height: 100% !important;
+            display: flex !important;
+            flex-direction: column !important;
+            border-radius: 0 !important;
+        }
+
+        #video-container.theater-mode #video-wrapper {
+            border-radius: 0 !important;
+            flex: 1 1 auto !important;
+            min-height: 0 !important;
+            padding-bottom: 0 !important;
+            height: auto !important;
+            /* Maintain 16:9 aspect ratio, similar to YouTube's 853x480 */
+            aspect-ratio: 16 / 9 !important;
+            max-height: calc(100vh - 150px) !important;
+            width: 100% !important;
+            position: relative !important;
+        }
+
+        #video-container.theater-mode #video-wrapper video {
+            height: 100% !important;
+            width: 100% !important;
+        }
+
+        #video-container.theater-mode #video-wrapper .video-js {
+            height: 100% !important;
+            width: 100% !important;
+        }
+
+        #video-container.theater-mode #video-main .bg-white > div:last-child {
+            padding: 1rem 1.5rem !important;
         }
 
         #video-container.theater-mode #video-sidebar {
             display: none !important;
         }
 
-        #video-container.theater-mode #video-wrapper {
-            border-radius: 0 !important;
-        }
-
-        #video-container.theater-mode .bg-white {
-            border-radius: 0 !important;
+        #video-container.theater-mode .bg-white > div:last-child {
+            flex-shrink: 0 !important;
+            max-height: 200px !important;
+            overflow-y: auto !important;
         }
 
         /* Theater mode button styling */
