@@ -19,11 +19,15 @@
                     </video>
                     <!-- Theater Mode Toggle Button -->
                     <button id="theater-mode-toggle" class="absolute top-4 right-4 z-10 bg-black bg-opacity-70 hover:bg-opacity-90 text-white p-2 rounded transition-all" title="Theater mode">
-                        <svg id="theater-icon" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17V7m0 10a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h2a2 2 0 012 2m0 10a2 2 0 002 2h2a2 2 0 002-2M9 7a2 2 0 012-2h2a2 2 0 012 2m0 10V7m0 10a2 2 0 002 2h2a2 2 0 002-2V7a2 2 0 00-2-2h-2a2 2 0 00-2 2"></path>
+                        <!-- Theater mode icon (shows when NOT in theater mode - rectangle with vertical lines on sides) -->
+                        <svg id="theater-icon" class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M19 7H5c-1.1 0-2 .9-2 2v6c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V9c0-1.1-.9-2-2-2zm0 8H5V9h14v6z"/>
+                            <path d="M1 7h2v10H1zm20 0h2v10h-2z"/>
                         </svg>
-                        <svg id="normal-icon" class="w-5 h-5 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        <!-- Normal mode icon (shows when IN theater mode - rectangle with horizontal lines on top/bottom) -->
+                        <svg id="normal-icon" class="w-5 h-5 hidden" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M7 19V5c0-1.1.9-2 2-2h6c1.1 0 2 .9 2 2v14c0 1.1-.9 2-2 2H9c-1.1 0-2-.9-2-2zm8 0H9V5h6v14z"/>
+                            <path d="M7 1v2h10V1zm0 20v2h10v-2z"/>
                         </svg>
                     </button>
                 </div>
@@ -92,8 +96,8 @@
         /* Theater Mode Styles */
         #video-container.theater-mode {
             max-width: 100% !important;
-            padding-left: 0 !important;
-            padding-right: 0 !important;
+            padding-left: 1.5rem !important;
+            padding-right: 1.5rem !important;
         }
 
         #video-container.theater-mode #video-layout {
