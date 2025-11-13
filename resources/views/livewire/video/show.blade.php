@@ -8,15 +8,28 @@
     <meta property="og:video" content="{{ $video->youtube_url }}" />
 @endsection
 
-<div class="container mx-auto px-3 py-6">
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+<div class="container mx-auto px-3 py-6" id="video-container">
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6" id="video-layout">
         <!-- Main Video Player -->
-        <div class="lg:col-span-2">
+        <div class="lg:col-span-2" id="video-main">
             <div class="bg-white rounded-lg shadow-md overflow-hidden">
-                <div class="bg-black relative w-full" style="padding-bottom: 56.25%;">
+                <div class="bg-black relative w-full" id="video-wrapper" style="padding-bottom: 56.25%;">
                     <video id="video-player-{{ $video->id }}" class="video-js vjs-default-skin vjs-big-play-centered"
                            controls preload="auto" data-setup='{}' style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;">
                     </video>
+                    <!-- Theater Mode Toggle Button -->
+                    <button id="theater-mode-toggle" class="absolute top-4 right-4 z-10 bg-black bg-opacity-70 hover:bg-opacity-90 text-white p-2 rounded transition-all" title="Theater mode">
+                        <!-- Theater mode icon (shows when NOT in theater mode - rectangle with vertical lines on sides) -->
+                        <svg id="theater-icon" class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M19 7H5c-1.1 0-2 .9-2 2v6c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V9c0-1.1-.9-2-2-2zm0 8H5V9h14v6z"/>
+                            <path d="M1 7h2v10H1zm20 0h2v10h-2z"/>
+                        </svg>
+                        <!-- Normal mode icon (shows when IN theater mode - rectangle with horizontal lines on top/bottom) -->
+                        <svg id="normal-icon" class="w-5 h-5 hidden" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M7 19V5c0-1.1.9-2 2-2h6c1.1 0 2 .9 2 2v14c0 1.1-.9 2-2 2H9c-1.1 0-2-.9-2-2zm8 0H9V5h6v14z"/>
+                            <path d="M7 1v2h10V1zm0 20v2h10v-2z"/>
+                        </svg>
+                    </button>
                 </div>
                 <div class="p-6">
                     <h1 class="text-2xl md:text-3xl font-bold text-black mb-3">{{ $video->title }}</h1>
@@ -31,7 +44,7 @@
         </div>
 
         <!-- Related Videos Sidebar -->
-        <div class="lg:col-span-1">
+        <div class="lg:col-span-1" id="video-sidebar">
             <h2 class="text-xl font-bold text-black mb-4">Related Videos</h2>
             @if ($relatedVideos->count() > 0)
                 <div class="space-y-4">
@@ -79,9 +92,130 @@
             height: 100% !important;
             padding-top: 0 !important;
         }
+
+        /* Theater Mode Styles */
+        #video-container.theater-mode {
+            max-width: 100% !important;
+            padding-left: 0 !important;
+            padding-right: 0 !important;
+            padding-top: 0 !important;
+            padding-bottom: 0 !important;
+            height: 100vh !important;
+            display: flex !important;
+            flex-direction: column !important;
+            overflow: hidden !important;
+        }
+
+        #video-container.theater-mode #video-layout {
+            grid-template-columns: 1fr !important;
+            height: 100% !important;
+            display: flex !important;
+            flex-direction: column !important;
+            gap: 0 !important;
+        }
+
+        #video-container.theater-mode #video-main {
+            width: 100% !important;
+            max-width: 100% !important;
+            flex: 1 !important;
+            display: flex !important;
+            flex-direction: column !important;
+            min-height: 0 !important;
+        }
+
+        #video-container.theater-mode #video-main .bg-white {
+            height: 100% !important;
+            display: flex !important;
+            flex-direction: column !important;
+            border-radius: 0 !important;
+        }
+
+        #video-container.theater-mode #video-wrapper {
+            border-radius: 0 !important;
+            flex: 1 1 auto !important;
+            min-height: 0 !important;
+            padding-bottom: 0 !important;
+            height: auto !important;
+            /* Maintain 16:9 aspect ratio, similar to YouTube's 853x480 */
+            aspect-ratio: 16 / 9 !important;
+            max-height: calc(100vh - 150px) !important;
+            width: 100% !important;
+            position: relative !important;
+        }
+
+        #video-container.theater-mode #video-wrapper video {
+            height: 100% !important;
+            width: 100% !important;
+        }
+
+        #video-container.theater-mode #video-wrapper .video-js {
+            height: 100% !important;
+            width: 100% !important;
+        }
+
+        #video-container.theater-mode #video-main .bg-white > div:last-child {
+            padding: 1rem 1.5rem !important;
+        }
+
+        #video-container.theater-mode #video-sidebar {
+            display: none !important;
+        }
+
+        #video-container.theater-mode .bg-white > div:last-child {
+            flex-shrink: 0 !important;
+            max-height: 200px !important;
+            overflow-y: auto !important;
+        }
+
+        /* Theater mode button styling */
+        #theater-mode-toggle {
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        #video-wrapper:hover #theater-mode-toggle {
+            opacity: 1;
+        }
     </style>
     <script>
+        // Theater Mode Toggle
+        function initTheaterMode() {
+            const container = document.getElementById('video-container');
+            const toggleBtn = document.getElementById('theater-mode-toggle');
+            const theaterIcon = document.getElementById('theater-icon');
+            const normalIcon = document.getElementById('normal-icon');
+
+            // Load theater mode state from localStorage
+            const isTheaterMode = localStorage.getItem('theaterMode') === 'true';
+            if (isTheaterMode) {
+                container.classList.add('theater-mode');
+                theaterIcon.classList.add('hidden');
+                normalIcon.classList.remove('hidden');
+            }
+
+            toggleBtn.addEventListener('click', function() {
+                const isActive = container.classList.contains('theater-mode');
+
+                if (isActive) {
+                    // Exit theater mode
+                    container.classList.remove('theater-mode');
+                    theaterIcon.classList.remove('hidden');
+                    normalIcon.classList.add('hidden');
+                    localStorage.setItem('theaterMode', 'false');
+                } else {
+                    // Enter theater mode
+                    container.classList.add('theater-mode');
+                    theaterIcon.classList.add('hidden');
+                    normalIcon.classList.remove('hidden');
+                    localStorage.setItem('theaterMode', 'true');
+                }
+            });
+        }
+
         document.addEventListener('DOMContentLoaded', function() {
+            // Initialize theater mode
+            initTheaterMode();
+
             const videoId = 'video-player-{{ $video->id }}';
             const videoElement = document.getElementById(videoId);
 
@@ -106,6 +240,9 @@
         // Re-initialize when Livewire updates
         document.addEventListener('livewire:init', () => {
             Livewire.hook('morph.updated', () => {
+                // Re-initialize theater mode
+                initTheaterMode();
+
                 const videoId = 'video-player-{{ $video->id }}';
                 const videoElement = document.getElementById(videoId);
 

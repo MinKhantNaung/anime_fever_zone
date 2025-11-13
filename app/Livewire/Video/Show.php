@@ -17,7 +17,6 @@ class Show extends Component
             ->firstOrFail();
     }
 
-    #[Title('{$video->title} - Anime Fever Zone')]
     public function render()
     {
         // Get related videos (excluding current video)
@@ -29,7 +28,8 @@ class Show extends Component
 
         return view('livewire.video.show', [
             'relatedVideos' => $relatedVideos,
-        ]);
+        ])
+            ->title(ucwords(str_replace('-', ' ', $this->video->title)) . ' - Anime Fever Zone');
     }
 }
 
