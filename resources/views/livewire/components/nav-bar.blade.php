@@ -11,8 +11,6 @@
                 </li>
                 <li><a wire:navigate.hover href="{{ route('home') }}"
                         class="text-gray-100 hover:text-gray-200 hover:underline px-4">Home</a></li>
-                <li><a wire:navigate.hover href="{{ route('videos.index') }}"
-                        class="text-gray-100 hover:text-gray-200 hover:underline px-4">Videos</a></li>
             </ul>
         </nav>
 
