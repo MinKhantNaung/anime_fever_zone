@@ -4,6 +4,7 @@ namespace App\Livewire;
 
 use App\Models\Post;
 use App\Models\Tag;
+use App\Models\Video;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -16,6 +17,7 @@ class TagShow extends Component
     public $tag;
 
     public $featuredPosts;
+    public $videos;
 
     public function mount()
     {
@@ -30,6 +32,11 @@ class TagShow extends Component
             ->where('is_publish', true)
             ->where('is_feature', true)
             ->take(5)
+            ->get();
+
+        $this->videos = Video::where('is_publish', true)
+            ->orderBy('created_at', 'desc')
+            ->take(10)
             ->get();
     }
 

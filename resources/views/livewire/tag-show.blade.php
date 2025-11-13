@@ -17,6 +17,7 @@
 
     <!-- Posts Section -->
     <section class="w-full md:w-2/3 flex flex-col items-center px-3 overflow-hidden">
+
         {{-- show tag --}}
         <div class="grid grid-cols-12 w-full my-3">
             <div class="hidden lg:block lg:col-span-4"></div>
@@ -34,6 +35,9 @@
                 {!! setTargetBlank($tag->body) !!}
             </div>
         </div>
+
+        <!-- Videos Swiper Section -->
+        <x-video-swiper :videos="$videos" title="Videos" />
 
         <div class="w-full">
             <span class="bg-rose-500">.</span>

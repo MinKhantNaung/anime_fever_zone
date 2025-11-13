@@ -92,6 +92,9 @@
 
         </article>
 
+        <!-- Videos Swiper Section -->
+        <x-video-swiper :videos="$videos" title="Videos" />
+
     </section>
 
     <!-- other posts Section -->

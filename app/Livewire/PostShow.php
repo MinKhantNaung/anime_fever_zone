@@ -6,6 +6,7 @@ use App\Mail\WebsiteMail;
 use App\Models\Post;
 use App\Models\SiteSetting;
 use App\Models\Subscriber;
+use App\Models\Video;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Validation\Rule;
 use Livewire\Component;
@@ -19,6 +20,8 @@ class PostShow extends Component
     public $post;
 
     public $featuredPosts;
+
+    public $videos;
 
     public $email;
 
@@ -73,6 +76,11 @@ class PostShow extends Component
             ->inRandomOrder()
             ->select('id', 'heading', 'slug')
             ->take(5)
+            ->get();
+
+        $this->videos = Video::where('is_publish', true)
+            ->orderBy('created_at', 'desc')
+            ->take(10)
             ->get();
 
         $this->emailVerifyStatus = SiteSetting::first()->email_verify_status;

@@ -3,6 +3,7 @@
 namespace App\Livewire;
 
 use App\Models\Post;
+use App\Models\Video;
 use Livewire\Attributes\Title;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -12,6 +13,7 @@ class Home extends Component
     use WithPagination;
 
     public $featuredPosts;
+    public $videos;
 
     public function mount()
     {
@@ -21,6 +23,11 @@ class Home extends Component
             ->where('is_publish', true)
             ->where('is_feature', true)
             ->take(5)
+            ->get();
+
+        $this->videos = Video::where('is_publish', true)
+            ->orderBy('created_at', 'desc')
+            ->take(10)
             ->get();
     }
 

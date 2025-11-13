@@ -19,6 +19,9 @@ the latest trends and discussions across a wide range of topics." />
     <!-- Posts Section -->
     <section class="w-full md:w-2/3 flex flex-col items-center px-3 overflow-hidden">
 
+        <!-- Videos Swiper Section -->
+        <x-video-swiper :videos="$videos" title="Videos" />
+
         <div class="w-full">
             <span class="bg-rose-500">.</span>
             <span class="text-2xl text-black">Latest</span>
