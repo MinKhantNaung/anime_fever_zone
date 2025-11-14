@@ -94,7 +94,7 @@
 
 </div>
 
-@push('scripts')
+@section('meta-jsonld')
 
     <script type="application/ld+json">
     {
@@ -110,4 +110,4 @@
       }
     }
     </script>
-@endpush
+@endsection

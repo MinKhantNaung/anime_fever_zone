@@ -430,14 +430,20 @@
                     techOrder: ['youtube'],
                     width: '100%',
                     height: '100%',
+                    controls: true,
                     sources: [{
                         type: 'video/youtube',
                         src: '{{ $video->youtube_url }}'
                     }],
                     youtube: {
-                        ytControls: 2,
                         modestbranding: 1,
-                        rel: 0
+                        rel: 0,
+                        controls: 0, // hide YouTube controls
+                        showinfo: 0,
+                        iv_load_policy: 3, // hide annotations
+                        fs: 1,
+                        cc_load_policy: 1,
+                        cc_lang_pref: 'en'
                     }
                 });
             }
@@ -462,14 +468,20 @@
                         techOrder: ['youtube'],
                         width: '100%',
                         height: '100%',
+                        controls: true,
                         sources: [{
                             type: 'video/youtube',
                             src: '{{ $video->youtube_url }}'
                         }],
                         youtube: {
-                            ytControls: 2,
                             modestbranding: 1,
-                            rel: 0
+                            rel: 0,
+                            controls: 0, // hide YouTube controls
+                            showinfo: 0,
+                            iv_load_policy: 3, // hide annotations
+                            fs: 1,
+                            cc_load_policy: 1,
+                            cc_lang_pref: 'en'
                         }
                     });
                 }
@@ -477,3 +489,28 @@
         });
     </script>
 @endpush
+
+@section('meta-jsonld')
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "VideoObject",
+  "name": "{{ $video->title }}",
+  "description": "{{ Str::limit(strip_tags($video->description), 150) }}",
+  "thumbnailUrl": [
+    "{{ $video->getThumbnailUrl('maxresdefault') }}"
+  ],
+  "uploadDate": "{{ $video->created_at->toIso8601String() }}",
+  "embedUrl": "{{ $video->youtube_url }}",
+  "url": "{{ route('video.show', $video->slug) }}",
+  "publisher": {
+    "@type": "Organization",
+    "name": "Anime Fever Zone",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://animefeverzone.com/logo.png"
+    }
+  }
+}
+</script>
+@endsection
