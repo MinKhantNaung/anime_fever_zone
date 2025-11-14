@@ -16,7 +16,7 @@ class PublicIndex extends Component
     {
         $videos = Video::where('is_publish', true)
             ->orderBy('created_at', 'desc')
-            ->paginate(12);
+            ->simplePaginate(12);
 
         return view('livewire.video.public-index', [
             'videos' => $videos,

@@ -9,9 +9,9 @@
 @endsection
 
 <div class="container mx-auto px-3 py-6" id="video-container">
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6" id="video-layout">
-        <!-- Main Video Player -->
-        <div class="lg:col-span-2" id="video-main">
+    <div id="video-layout">
+        <!-- Main Video Player - Full Width -->
+        <div id="video-main" class="mb-6">
             <div class="bg-white rounded-lg shadow-md overflow-hidden">
                 <div class="bg-black relative w-full" id="video-wrapper" style="padding-bottom: 56.25%;">
                     <video id="video-player-{{ $video->id }}" class="video-js vjs-default-skin vjs-big-play-centered"
@@ -31,7 +31,14 @@
                         </svg>
                     </button>
                 </div>
-                <div class="p-6">
+            </div>
+        </div>
+
+        <!-- Title, Description and Related Videos Section -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <!-- Title and Description -->
+            <div class="lg:col-span-2">
+                <div class="bg-white rounded-lg shadow-md p-6">
                     <h1 class="text-2xl md:text-3xl font-bold text-black mb-3">{{ $video->title }}</h1>
                     <div class="flex items-center text-sm text-gray-500 mb-4">
                         <span>Published {{ $video->created_at->diffForHumans() }}</span>
@@ -41,45 +48,85 @@
                     </div>
                 </div>
             </div>
-        </div>
 
-        <!-- Related Videos Sidebar -->
-        <div class="lg:col-span-1" id="video-sidebar">
-            <h2 class="text-xl font-bold text-black mb-4">Related Videos</h2>
-            @if ($relatedVideos->count() > 0)
-                <div class="space-y-4">
-                    @foreach ($relatedVideos as $relatedVideo)
-                        <a href="{{ route('video.show', $relatedVideo->slug) }}"
-                           class="flex gap-3 bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow group">
-                            <div class="relative w-40 h-24 flex-shrink-0 bg-gray-200 overflow-hidden">
-                                <img
-                                    src="{{ $relatedVideo->getThumbnailUrl('hqdefault') }}"
-                                    alt="{{ $relatedVideo->title }}"
-                                    class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                                    loading="lazy"
-                                >
-                                <div class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-0 group-hover:bg-opacity-20 transition-all">
-                                    <svg class="w-6 h-6 text-white opacity-0 group-hover:opacity-100 transition-opacity" fill="currentColor" viewBox="0 0 24 24">
-                                        <path d="M8 5v14l11-7z"/>
-                                    </svg>
+            <!-- Trending Videos Sidebar -->
+            <div class="lg:col-span-1" id="video-sidebar">
+                <h2 class="text-xl font-bold text-black mb-4">TRENDING NOW</h2>
+                @if ($relatedVideos->count() > 0)
+                    <div class="space-y-4">
+                        @foreach ($relatedVideos as $relatedVideo)
+                            <a href="{{ route('video.show', $relatedVideo->slug) }}"
+                               class="flex gap-3 bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow group">
+                                <div class="relative w-40 h-24 flex-shrink-0 bg-gray-200 overflow-hidden">
+                                    <img
+                                        src="{{ $relatedVideo->getThumbnailUrl('hqdefault') }}"
+                                        alt="{{ $relatedVideo->title }}"
+                                        class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                                        loading="lazy"
+                                    >
+                                    <div class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-0 group-hover:bg-opacity-20 transition-all">
+                                        <svg class="w-6 h-6 text-white opacity-0 group-hover:opacity-100 transition-opacity" fill="currentColor" viewBox="0 0 24 24">
+                                            <path d="M8 5v14l11-7z"/>
+                                        </svg>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="flex-1 p-2">
-                                <h3 class="font-semibold text-sm text-black line-clamp-2 group-hover:text-red-600 transition-colors">
-                                    {{ $relatedVideo->title }}
-                                </h3>
-                                <p class="text-xs text-gray-500 mt-1">
-                                    {{ $relatedVideo->created_at->diffForHumans() }}
-                                </p>
-                            </div>
-                        </a>
-                    @endforeach
-                </div>
-            @else
-                <p class="text-gray-500">No related videos available.</p>
-            @endif
+                                <div class="flex-1 p-2">
+                                    <h3 class="font-semibold text-sm text-black line-clamp-2 group-hover:text-red-600 transition-colors">
+                                        {{ $relatedVideo->title }}
+                                    </h3>
+                                    <p class="text-xs text-gray-500 mt-1">
+                                        {{ $relatedVideo->created_at->diffForHumans() }}
+                                    </p>
+                                </div>
+                            </a>
+                        @endforeach
+                    </div>
+                @else
+                    <p class="text-gray-500">No trending videos available.</p>
+                @endif
+            </div>
         </div>
     </div>
+
+    <!-- Recommended Videos Section -->
+    @if ($recommendedVideos->count() > 0)
+        <div class="mt-8" id="recommended-videos-section">
+            <h2 class="text-2xl font-bold text-black mb-6">RECOMMENDED</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4">
+                @foreach ($recommendedVideos as $recommendedVideo)
+                    <a href="{{ route('video.show', $recommendedVideo->slug) }}"
+                       class="group bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-all duration-300">
+                        <div class="relative w-full bg-gray-200 overflow-hidden" style="padding-bottom: 56.25%;">
+                            <img
+                                src="{{ $recommendedVideo->getThumbnailUrl('hqdefault') }}"
+                                alt="{{ $recommendedVideo->title }}"
+                                class="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                                loading="lazy"
+                            >
+                            <div class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-0 group-hover:bg-opacity-30 transition-all duration-300">
+                                <svg class="w-12 h-12 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M8 5v14l11-7z"/>
+                                </svg>
+                            </div>
+                            <div class="absolute bottom-2 right-2 bg-black bg-opacity-75 text-white text-xs px-2 py-1 rounded">
+                                <svg class="w-4 h-4 inline-block mr-1" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/>
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="p-3">
+                            <h3 class="font-semibold text-sm text-black line-clamp-2 group-hover:text-red-600 transition-colors duration-200">
+                                {{ $recommendedVideo->title }}
+                            </h3>
+                            <p class="text-xs text-gray-500 mt-2">
+                                {{ $recommendedVideo->created_at->diffForHumans() }}
+                            </p>
+                        </div>
+                    </a>
+                @endforeach
+            </div>
+        </div>
+    @endif
 </div>
 
 @push('scripts')
@@ -107,7 +154,6 @@
         }
 
         #video-container.theater-mode #video-layout {
-            grid-template-columns: 1fr !important;
             height: 100% !important;
             display: flex !important;
             flex-direction: column !important;
@@ -121,6 +167,7 @@
             display: flex !important;
             flex-direction: column !important;
             min-height: 0 !important;
+            margin-bottom: 0 !important;
         }
 
         #video-container.theater-mode #video-main .bg-white {
@@ -153,18 +200,17 @@
             width: 100% !important;
         }
 
-        #video-container.theater-mode #video-main .bg-white > div:last-child {
-            padding: 1rem 1.5rem !important;
+        /* Hide title/description and related videos section in theater mode */
+        #video-container.theater-mode #video-layout > .grid {
+            display: none !important;
         }
 
         #video-container.theater-mode #video-sidebar {
             display: none !important;
         }
 
-        #video-container.theater-mode .bg-white > div:last-child {
-            flex-shrink: 0 !important;
-            max-height: 200px !important;
-            overflow-y: auto !important;
+        #video-container.theater-mode #recommended-videos-section {
+            display: none !important;
         }
 
         /* Theater mode button styling */
@@ -217,7 +263,6 @@
             }
 
             #video-container.theater-mode #video-layout {
-                grid-template-columns: 1fr !important;
                 height: 100vh !important;
                 width: 100vw !important;
                 display: flex !important;
@@ -225,6 +270,10 @@
                 align-items: center !important;
                 justify-content: center !important;
                 gap: 0 !important;
+            }
+
+            #video-container.theater-mode #video-layout > .grid {
+                display: none !important;
             }
 
             #video-container.theater-mode #video-main {
