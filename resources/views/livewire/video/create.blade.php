@@ -1,3 +1,7 @@
+@section('meta-og')
+    <link rel="stylesheet" href="{{ asset('assets/trix/trix.min.css') }}">
+@endsection
+
 <div class="container mx-auto flex flex-wrap py-6">
     <section class="w-full md:w-2/3 flex flex-col items-center px-3">
         <h1 class="text-2xl font-bold mb-4 text-black">Add New Video</h1>
@@ -13,7 +17,10 @@
 
             <div class="mb-4">
                 <label class="block font-medium mb-2 text-black">Description</label>
-                <textarea wire:model="description" rows="4" class="w-full border rounded p-2" placeholder="Enter video description..."></textarea>
+                <div wire:ignore>
+                    <input id="trix-editor-content" type="hidden" name="description" value="{{ $description }}">
+                    <trix-editor input="trix-editor-content" placeholder="Enter video description..."></trix-editor>
+                </div>
                 @error('description')
                     <span class="text-red-500 text-sm">{{ $message }}</span>
                 @enderror
@@ -49,3 +56,21 @@
         </form>
     </section>
 </div>
+
+@push('scripts')
+    <script src="{{ asset('assets/trix/trix.umd.min.js') }}"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const trixEditor = document.getElementById('trix-editor-content');
+            if (trixEditor) {
+                document.addEventListener('trix-blur', function(event) {
+                    @this.set('description', trixEditor.getAttribute('value'))
+                });
+
+                document.addEventListener('trix-change', function(event) {
+                    @this.set('description', trixEditor.getAttribute('value'))
+                });
+            }
+        });
+    </script>
+@endpush
