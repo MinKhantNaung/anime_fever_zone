@@ -18,6 +18,8 @@
 
     @yield('meta-og')
 
+    @yield('meta-jsonld')
+
     <link rel="canonical" href="{{ url()->current() }}">
 
     <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />

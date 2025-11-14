@@ -489,3 +489,28 @@
         });
     </script>
 @endpush
+
+@section('meta-jsonld')
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "VideoObject",
+  "name": "{{ $video->title }}",
+  "description": "{{ Str::limit(strip_tags($video->description), 150) }}",
+  "thumbnailUrl": [
+    "{{ $video->getThumbnailUrl('maxresdefault') }}"
+  ],
+  "uploadDate": "{{ $video->created_at->toIso8601String() }}",
+  "embedUrl": "{{ $video->youtube_url }}",
+  "url": "{{ route('video.show', $video->slug) }}",
+  "publisher": {
+    "@type": "Organization",
+    "name": "Anime Fever Zone",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://animefeverzone.com/logo.png"
+    }
+  }
+}
+</script>
+@endsection

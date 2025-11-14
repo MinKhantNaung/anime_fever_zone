@@ -75,7 +75,7 @@ the latest trends and discussions across a wide range of topics." />
     <!-- other posts Section -->
     <x-other-posts :featuredPosts="$featuredPosts" />
 
-    @push('scripts')
+    @section('meta-jsonld')
 
         <script type="application/ld+json">
         {
@@ -91,6 +91,6 @@ the latest trends and discussions across a wide range of topics." />
           }
         }
         </script>
-    @endpush
+    @endsection
 
 </div>

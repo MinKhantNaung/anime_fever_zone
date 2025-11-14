@@ -57,3 +57,19 @@
     @endif
 </div>
 
+@section('meta-jsonld')
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BlogPosting",
+      "headline": "Anime Fever Zone",
+      "image": "{{ asset('favicon.ico') }}",
+      "description": "Explore the latest news, reviews, and discussions on anime and other popular series at Anime Fever Zone. Stay up-to-date
+      with the hottest trends and join our vibrant community of anime enthusiasts.",
+      "author": {
+        "@type": "Person",
+        "name": "Anime Fever Zone"
+      }
+    }
+    </script>
+@endsection
