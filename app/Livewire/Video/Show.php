@@ -23,7 +23,7 @@ class Show extends Component
             ->where('is_trending', true)
             ->where('id', '!=', $this->video->id)
             ->orderBy('created_at', 'desc')
-            ->take(6)
+            ->take(4)
             ->get();
 
         // Get recommended videos to show below the video (excluding current video)
