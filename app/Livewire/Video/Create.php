@@ -11,7 +11,7 @@ class Create extends Component
 {
     public $title;
 
-    public $description;
+    public $description = '';
 
     public $youtube_url;
 
