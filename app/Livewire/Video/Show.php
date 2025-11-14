@@ -29,7 +29,7 @@ class Show extends Component
         // Get recommended videos to show below the video (excluding current video)
         $recommendedVideos = Video::where('is_publish', true)
             ->where('id', '!=', $this->video->id)
-            ->orderBy('created_at', 'desc')
+            ->inRandomOrder()
             ->take(4)
             ->get();
 
