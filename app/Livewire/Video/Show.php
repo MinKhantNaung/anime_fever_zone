@@ -30,7 +30,7 @@ class Show extends Component
         $recommendedVideos = Video::where('is_publish', true)
             ->where('id', '!=', $this->video->id)
             ->orderBy('created_at', 'desc')
-            ->take(12)
+            ->take(4)
             ->get();
 
         return view('livewire.video.show', [

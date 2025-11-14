@@ -15,19 +15,24 @@
             <div class="bg-white rounded-lg shadow-md overflow-hidden">
                 <div class="bg-black relative w-full" id="video-wrapper" style="padding-bottom: 56.25%;">
                     <video id="video-player-{{ $video->id }}" class="video-js vjs-default-skin vjs-big-play-centered"
-                           controls preload="auto" data-setup='{}' style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;">
+                        controls preload="auto" data-setup='{}'
+                        style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;">
                     </video>
                     <!-- Theater Mode Toggle Button -->
-                    <button id="theater-mode-toggle" class="absolute top-4 right-4 z-10 bg-black bg-opacity-70 hover:bg-opacity-90 text-white p-2 rounded transition-all" title="Theater mode">
+                    <button id="theater-mode-toggle"
+                        class="absolute top-4 right-4 z-10 bg-black bg-opacity-70 hover:bg-opacity-90 text-white p-2 rounded transition-all"
+                        title="Theater mode">
                         <!-- Theater mode icon (shows when NOT in theater mode - rectangle with vertical lines on sides) -->
                         <svg id="theater-icon" class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M19 7H5c-1.1 0-2 .9-2 2v6c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V9c0-1.1-.9-2-2-2zm0 8H5V9h14v6z"/>
-                            <path d="M1 7h2v10H1zm20 0h2v10h-2z"/>
+                            <path
+                                d="M19 7H5c-1.1 0-2 .9-2 2v6c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V9c0-1.1-.9-2-2-2zm0 8H5V9h14v6z" />
+                            <path d="M1 7h2v10H1zm20 0h2v10h-2z" />
                         </svg>
                         <!-- Normal mode icon (shows when IN theater mode - rectangle with horizontal lines on top/bottom) -->
                         <svg id="normal-icon" class="w-5 h-5 hidden" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M7 19V5c0-1.1.9-2 2-2h6c1.1 0 2 .9 2 2v14c0 1.1-.9 2-2 2H9c-1.1 0-2-.9-2-2zm8 0H9V5h6v14z"/>
-                            <path d="M7 1v2h10V1zm0 20v2h10v-2z"/>
+                            <path
+                                d="M7 19V5c0-1.1.9-2 2-2h6c1.1 0 2 .9 2 2v14c0 1.1-.9 2-2 2H9c-1.1 0-2-.9-2-2zm8 0H9V5h6v14z" />
+                            <path d="M7 1v2h10V1zm0 20v2h10v-2z" />
                         </svg>
                     </button>
                 </div>
@@ -56,22 +61,23 @@
                     <div class="space-y-4">
                         @foreach ($relatedVideos as $relatedVideo)
                             <a href="{{ route('video.show', $relatedVideo->slug) }}"
-                               class="flex gap-3 bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow group">
+                                class="flex gap-3 bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow group">
                                 <div class="relative w-40 h-24 flex-shrink-0 bg-gray-200 overflow-hidden">
-                                    <img
-                                        src="{{ $relatedVideo->getThumbnailUrl('hqdefault') }}"
+                                    <img src="{{ $relatedVideo->getThumbnailUrl('hqdefault') }}"
                                         alt="{{ $relatedVideo->title }}"
                                         class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                                        loading="lazy"
-                                    >
-                                    <div class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-0 group-hover:bg-opacity-20 transition-all">
-                                        <svg class="w-6 h-6 text-white opacity-0 group-hover:opacity-100 transition-opacity" fill="currentColor" viewBox="0 0 24 24">
-                                            <path d="M8 5v14l11-7z"/>
+                                        loading="lazy">
+                                    <div
+                                        class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-0 group-hover:bg-opacity-20 transition-all">
+                                        <svg class="w-6 h-6 text-white opacity-0 group-hover:opacity-100 transition-opacity"
+                                            fill="currentColor" viewBox="0 0 24 24">
+                                            <path d="M8 5v14l11-7z" />
                                         </svg>
                                     </div>
                                 </div>
                                 <div class="flex-1 p-2">
-                                    <h3 class="font-semibold text-sm text-black line-clamp-2 group-hover:text-red-600 transition-colors">
+                                    <h3
+                                        class="font-semibold text-sm text-black line-clamp-2 group-hover:text-red-600 transition-colors">
                                         {{ $relatedVideo->title }}
                                     </h3>
                                     <p class="text-xs text-gray-500 mt-1">
@@ -88,43 +94,34 @@
         </div>
     </div>
 
-    <!-- Recommended Videos Section -->
+    <!-- Recommended Videos Section - CBR Style -->
     @if ($recommendedVideos->count() > 0)
         <div class="mt-8" id="recommended-videos-section">
-            <h2 class="text-2xl font-bold text-black mb-6">RECOMMENDED</h2>
-            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4">
+            <h2 class="text-2xl font-bold text-black mb-4">RECOMMENDED</h2>
+            <div class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-4">
                 @foreach ($recommendedVideos as $recommendedVideo)
                     <a href="{{ route('video.show', $recommendedVideo->slug) }}"
-                       class="group bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-all duration-300">
-                        <div class="relative w-full bg-gray-200 overflow-hidden" style="padding-bottom: 56.25%;">
-                            <img
-                                src="{{ $recommendedVideo->getThumbnailUrl('hqdefault') }}"
-                                alt="{{ $recommendedVideo->title }}"
-                                class="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
-                                loading="lazy"
-                            >
-                            <div class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-0 group-hover:bg-opacity-30 transition-all duration-300">
-                                <svg class="w-12 h-12 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300" fill="currentColor" viewBox="0 0 24 24">
-                                    <path d="M8 5v14l11-7z"/>
-                                </svg>
-                            </div>
-                            <div class="absolute bottom-2 right-2 bg-black bg-opacity-75 text-white text-xs px-2 py-1 rounded">
-                                <svg class="w-4 h-4 inline-block mr-1" fill="currentColor" viewBox="0 0 24 24">
-                                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/>
-                                </svg>
-                            </div>
-                        </div>
-                        <div class="p-3">
-                            <h3 class="font-semibold text-sm text-black line-clamp-2 group-hover:text-red-600 transition-colors duration-200">
+                        class="group relative block w-full rounded-lg overflow-hidden" style="aspect-ratio: 3/4;">
+
+                        <img src="{{ $recommendedVideo->getThumbnailUrl('maxresdefault') }}"
+                            alt="{{ $recommendedVideo->title }}"
+                            class="absolute inset-0 w-full h-full object-cover object-center" loading="lazy"
+                            decoding="async">
+
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent"></div>
+
+                        <div class="absolute bottom-0 left-0 right-0 p-3">
+                            <p class="text-white text-sm mb-1.5 opacity-90 font-medium">
+                                {{ $recommendedVideo->created_at->format('M d, Y') }}
+                            </p>
+                            <h3 class="text-white text-lg font-bold line-clamp-2 drop-shadow-lg group-hover:underline">
                                 {{ $recommendedVideo->title }}
                             </h3>
-                            <p class="text-xs text-gray-500 mt-2">
-                                {{ $recommendedVideo->created_at->diffForHumans() }}
-                            </p>
                         </div>
                     </a>
                 @endforeach
             </div>
+
         </div>
     @endif
 </div>
@@ -201,7 +198,7 @@
         }
 
         /* Hide title/description and related videos section in theater mode */
-        #video-container.theater-mode #video-layout > .grid {
+        #video-container.theater-mode #video-layout>.grid {
             display: none !important;
         }
 
@@ -272,7 +269,7 @@
                 gap: 0 !important;
             }
 
-            #video-container.theater-mode #video-layout > .grid {
+            #video-container.theater-mode #video-layout>.grid {
                 display: none !important;
             }
 
@@ -315,7 +312,8 @@
             @media (orientation: landscape) and (max-width: 1024px) {
                 #video-container.theater-mode #video-wrapper {
                     width: 100vw !important;
-                    height: 56.25vw !important; /* 16:9 aspect ratio */
+                    height: 56.25vw !important;
+                    /* 16:9 aspect ratio */
                     max-height: 100vh !important;
                 }
             }
@@ -324,7 +322,7 @@
                 display: none !important;
             }
 
-            #video-container.theater-mode #video-main .bg-white > div:last-child {
+            #video-container.theater-mode #video-main .bg-white>div:last-child {
                 display: none !important;
             }
 
