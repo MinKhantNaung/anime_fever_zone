@@ -17,6 +17,7 @@ class TagShow extends Component
     public $tag;
 
     public $featuredPosts;
+
     public $videos;
 
     public function mount()

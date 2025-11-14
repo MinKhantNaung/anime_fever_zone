@@ -10,11 +10,17 @@ use Livewire\Component;
 class Create extends Component
 {
     public $title;
+
     public $description;
+
     public $youtube_url;
+
     public $is_publish = false;
 
+    public $is_trending = false;
+
     protected $videoService;
+
     protected $alertService;
 
     public function boot(VideoService $videoService, AlertService $alertService)
@@ -30,6 +36,7 @@ class Create extends Component
             'description' => ['nullable', 'string'],
             'youtube_url' => ['required', 'url'],
             'is_publish' => ['boolean'],
+            'is_trending' => ['boolean'],
         ];
     }
 
@@ -39,8 +46,9 @@ class Create extends Component
 
         $youtube_id = $this->extractYoutubeId($validated['youtube_url']);
 
-        if (!$youtube_id) {
+        if (! $youtube_id) {
             $this->addError('youtube_url', 'Invalid YouTube URL');
+
             return;
         }
 
@@ -53,13 +61,14 @@ class Create extends Component
                 'youtube_url' => $validated['youtube_url'],
                 'youtube_id' => $youtube_id,
                 'is_publish' => $validated['is_publish'] ?? false,
+                'is_trending' => $validated['is_trending'] ?? false,
             ]);
 
             DB::commit();
 
             $this->alertService->alert($this, 'Video created successfully', 'success');
 
-            $this->reset(['title', 'description', 'youtube_url', 'is_publish']);
+            $this->reset(['title', 'description', 'youtube_url', 'is_publish', 'is_trending']);
 
             return $this->redirectRoute('blogger.videos.index', navigate: true);
         } catch (\Throwable $e) {
@@ -76,6 +85,7 @@ class Create extends Component
             $url,
             $matches
         );
+
         return $matches[1] ?? null;
     }
 

@@ -57,14 +57,14 @@
             <!-- Trending Videos Sidebar -->
             <div class="lg:col-span-1" id="video-sidebar">
                 <h2 class="text-xl font-bold text-black mb-4">TRENDING NOW</h2>
-                @if ($relatedVideos->count() > 0)
+                @if ($trendingVideos->count() > 0)
                     <div class="space-y-4">
-                        @foreach ($relatedVideos as $relatedVideo)
-                            <a href="{{ route('video.show', $relatedVideo->slug) }}"
+                        @foreach ($trendingVideos as $trendingVideo)
+                            <a href="{{ route('video.show', $trendingVideo->slug) }}"
                                 class="flex gap-3 bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow group">
                                 <div class="relative w-40 h-24 flex-shrink-0 bg-gray-200 overflow-hidden">
-                                    <img src="{{ $relatedVideo->getThumbnailUrl('hqdefault') }}"
-                                        alt="{{ $relatedVideo->title }}"
+                                    <img src="{{ $trendingVideo->getThumbnailUrl('hqdefault') }}"
+                                        alt="{{ $trendingVideo->title }}"
                                         class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                                         loading="lazy">
                                     <div
@@ -78,10 +78,10 @@
                                 <div class="flex-1 p-2">
                                     <h3
                                         class="font-semibold text-sm text-black line-clamp-2 group-hover:text-red-600 transition-colors">
-                                        {{ $relatedVideo->title }}
+                                        {{ $trendingVideo->title }}
                                     </h3>
                                     <p class="text-xs text-gray-500 mt-1">
-                                        {{ $relatedVideo->created_at->diffForHumans() }}
+                                        {{ $trendingVideo->created_at->diffForHumans() }}
                                     </p>
                                 </div>
                             </a>

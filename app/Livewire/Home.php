@@ -13,6 +13,7 @@ class Home extends Component
     use WithPagination;
 
     public $featuredPosts;
+
     public $videos;
 
     public function mount()

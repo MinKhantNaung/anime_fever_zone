@@ -15,6 +15,7 @@ class Index extends Component
     use WithPagination;
 
     protected $videoService;
+
     protected $alertService;
 
     public function boot(VideoService $videoService, AlertService $alertService)
