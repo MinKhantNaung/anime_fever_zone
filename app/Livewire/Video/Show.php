@@ -22,7 +22,7 @@ class Show extends Component
         $trendingVideos = Video::where('is_publish', true)
             ->where('is_trending', true)
             ->where('id', '!=', $this->video->id)
-            ->orderBy('created_at', 'desc')
+            ->orderBy('updated_at', 'desc')
             ->take(4)
             ->get();
 
