@@ -3,7 +3,6 @@
 namespace App\Livewire\Video;
 
 use App\Models\Video;
-use Livewire\Attributes\Title;
 use Livewire\Component;
 
 class Show extends Component
@@ -19,17 +18,25 @@ class Show extends Component
 
     public function render()
     {
-        // Get related videos (excluding current video)
-        $relatedVideos = Video::where('is_publish', true)
+        // Get trending videos for sidebar (excluding current video)
+        $trendingVideos = Video::where('is_publish', true)
+            ->where('is_trending', true)
             ->where('id', '!=', $this->video->id)
             ->orderBy('created_at', 'desc')
             ->take(6)
             ->get();
 
+        // Get recommended videos to show below the video (excluding current video)
+        $recommendedVideos = Video::where('is_publish', true)
+            ->where('id', '!=', $this->video->id)
+            ->orderBy('created_at', 'desc')
+            ->take(4)
+            ->get();
+
         return view('livewire.video.show', [
-            'relatedVideos' => $relatedVideos,
+            'trendingVideos' => $trendingVideos,
+            'recommendedVideos' => $recommendedVideos,
         ])
             ->title(ucwords(str_replace('-', ' ', $this->video->title)) . ' - Anime Fever Zone');
     }
 }
-

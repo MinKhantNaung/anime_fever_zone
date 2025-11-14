@@ -14,21 +14,23 @@ final class Video extends Model
         'youtube_url',
         'youtube_id',
         'is_publish',
+        'is_trending',
     ];
 
     protected $casts = [
         'is_publish' => 'boolean',
+        'is_trending' => 'boolean',
     ];
 
     protected static function boot()
     {
         parent::boot();
 
-        static::creating(function ($video): void {
+        self::creating(function ($video): void {
             $video->slug = Str::slug($video->title);
         });
 
-        static::updating(function ($video): void {
+        self::updating(function ($video): void {
             if ($video->isDirty('title')) {
                 $video->slug = Str::slug($video->title);
             }
@@ -38,12 +40,11 @@ final class Video extends Model
     /**
      * Get YouTube thumbnail URL
      *
-     * @param string $quality - maxresdefault, hqdefault, mqdefault, sddefault
-     * @return string
+     * @param  string  $quality  - maxresdefault, hqdefault, mqdefault, sddefault
      */
     public function getThumbnailUrl($quality = 'maxresdefault'): string
     {
-        if (!$this->youtube_id) {
+        if (! $this->youtube_id) {
             return '';
         }
 

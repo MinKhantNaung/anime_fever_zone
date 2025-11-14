@@ -11,13 +11,19 @@ use Livewire\Component;
 class Edit extends Component
 {
     public $title;
+
     public $description;
+
     public $youtube_url;
+
     public $is_publish = false;
+
+    public $is_trending = false;
 
     public Video $video;
 
     protected $videoService;
+
     protected $alertService;
 
     public function boot(VideoService $videoService, AlertService $alertService)
@@ -33,6 +39,7 @@ class Edit extends Component
         $this->description = $video->description;
         $this->youtube_url = $video->youtube_url;
         $this->is_publish = $video->is_publish;
+        $this->is_trending = $video->is_trending;
     }
 
     protected function rules()
@@ -42,6 +49,7 @@ class Edit extends Component
             'description' => ['nullable', 'string'],
             'youtube_url' => ['required', 'url'],
             'is_publish' => ['boolean'],
+            'is_trending' => ['boolean'],
         ];
     }
 
@@ -51,8 +59,9 @@ class Edit extends Component
 
         $youtube_id = $this->extractYoutubeId($validated['youtube_url']);
 
-        if (!$youtube_id) {
+        if (! $youtube_id) {
             $this->addError('youtube_url', 'Invalid YouTube URL');
+
             return;
         }
 
@@ -65,6 +74,7 @@ class Edit extends Component
                 'youtube_url' => $validated['youtube_url'],
                 'youtube_id' => $youtube_id,
                 'is_publish' => $validated['is_publish'] ?? false,
+                'is_trending' => $validated['is_trending'] ?? false,
             ]);
 
             DB::commit();
@@ -86,6 +96,7 @@ class Edit extends Component
             $url,
             $matches
         );
+
         return $matches[1] ?? null;
     }
 
@@ -94,4 +105,3 @@ class Edit extends Component
         return view('livewire.video.edit');
     }
 }
-

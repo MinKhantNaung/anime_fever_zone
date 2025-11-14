@@ -35,6 +35,13 @@
                 </label>
             </div>
 
+            <div class="mb-4">
+                <label class="flex items-center gap-2 cursor-pointer">
+                    <input type="checkbox" wire:model="is_trending" class="checkbox checkbox-primary">
+                    <span class="text-black">Trending</span>
+                </label>
+            </div>
+
             <div class="flex gap-3">
                 <button type="submit" class="btn btn-primary">Save Video</button>
                 <a href="{{ route('blogger.videos.index') }}" class="btn btn-secondary">Cancel</a>

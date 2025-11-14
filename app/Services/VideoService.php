@@ -16,6 +16,7 @@ final class VideoService
             'youtube_url' => $validated['youtube_url'],
             'youtube_id' => $validated['youtube_id'],
             'is_publish' => $validated['is_publish'] ?? false,
+            'is_trending' => $validated['is_trending'] ?? false,
         ]);
 
         return $video;
@@ -29,6 +30,7 @@ final class VideoService
             'youtube_url' => $validated['youtube_url'],
             'youtube_id' => $validated['youtube_id'],
             'is_publish' => $validated['is_publish'] ?? false,
+            'is_trending' => $validated['is_trending'] ?? false,
         ]);
     }
 
@@ -40,8 +42,7 @@ final class VideoService
     public function togglePublish(Video $video)
     {
         $video->update([
-            'is_publish' => !$video->is_publish,
+            'is_publish' => ! $video->is_publish,
         ]);
     }
 }
-
