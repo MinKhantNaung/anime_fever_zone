@@ -33,7 +33,7 @@ the latest trends and discussions across a wide range of topics." />
                     <a wire:navigate.hover href="{{ route('post', $post->slug) }}">
                         <img src="{{ $post->media->url }}" alt="Image representing {{ $post->heading }}"
                             class="w-full object-cover"
-                            @if ($index === 0) fetchpriority="high" @else loading="lazy" @endif>
+                            {{ $index === 0 ? 'fetchpriority="high"' : 'loading="lazy"' }}>
                     </a>
                 </div>
 
