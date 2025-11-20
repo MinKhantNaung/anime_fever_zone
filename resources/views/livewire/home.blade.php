@@ -31,9 +31,9 @@ the latest trends and discussions across a wide range of topics." />
             <div class="grid grid-cols-12 gap-1 bg-white shadow my-4">
                 <div class="col-span-12 lg:col-span-5">
                     <a wire:navigate.hover href="{{ route('post', $post->slug) }}">
-                        <img src="{{ $post->media->url }}" alt="Image representing {{ $post->heading }}" class="w-full object-cover"
-                            @if ($index === 0) fetchpriority="high" @else loading="lazy" @endif
-                        >
+                        <img src="{{ $post->media->url }}" alt="Image representing {{ $post->heading }}"
+                            class="w-full object-cover"
+                            @if ($index === 0) fetchpriority="high" @else loading="lazy" @endif>
                     </a>
                 </div>
 
@@ -56,7 +56,8 @@ the latest trends and discussions across a wide range of topics." />
                             {!! Str::limit($post->body, 140) !!}
                         </p>
 
-                        <p class="text-xs mt-2 text-gray-500">By Anime Fever Zone | {{ $post->updated_at->diffForHumans() }}</p>
+                        <p class="text-xs mt-2 text-gray-500">By Anime Fever Zone |
+                            {{ $post->updated_at->diffForHumans() }}</p>
                     </a>
                 </div>
             </div>
