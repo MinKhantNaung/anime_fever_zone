@@ -34,15 +34,16 @@
         });" class="relative max-w-4xl mx-auto rounded-lg p-4">
             <div x-ref="swiperContainer" class="swiper">
                 <div class="swiper-wrapper">
-                    @foreach ($videos as $video)
+                    @foreach ($videos as $index => $video)
                         <div class="swiper-slide">
                             <a href="{{ route('video.show', $video->slug) }}"
                                 class="group block bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300 max-w-3xl mx-auto">
                                 <div class="relative aspect-video overflow-hidden bg-gray-200">
                                     <img src="{{ $video->getThumbnailUrl('maxresdefault') }}" alt="{{ $video->title }}"
                                         class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                                        loading="lazy"
-                                        onerror="this.onerror=null; this.src='{{ $video->getThumbnailUrl('hqdefault') }}';">
+                                        onerror="this.onerror=null; this.src='{{ $video->getThumbnailUrl('hqdefault') }}';"
+                                        @if ($index === 0 && request()->routeIs('home')) fetchpriority="high" @else loading="lazy" @endif
+                                    >
                                     <!-- Play button overlay -->
                                     <div
                                         class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-0 group-hover:bg-opacity-30 transition-all duration-300">
