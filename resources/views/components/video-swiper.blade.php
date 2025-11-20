@@ -42,7 +42,11 @@
                                     <img src="{{ $video->getThumbnailUrl('maxresdefault') }}" alt="{{ $video->title }}"
                                         class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                                         onerror="this.onerror=null; this.src='{{ $video->getThumbnailUrl('hqdefault') }}';"
-                                        @if ($index === 0 && request()->routeIs('home')) fetchpriority="high" @else loading="lazy" @endif
+                                        @if ($index === 0 && request()->routeIs('home'))
+                                            fetchpriority="high"
+                                        @else
+                                            loading="lazy"
+                                        @endif
                                     >
                                     <!-- Play button overlay -->
                                     <div
