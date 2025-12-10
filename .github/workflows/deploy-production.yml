@@ -50,10 +50,6 @@ jobs:
             echo "🔐 Setting permissions for deployment..."
             echo "$SUDO_PASS" | sudo -S chown -R $USER:$USER .
 
-            # Put application in maintenance mode
-            echo "🔧 Enabling maintenance mode..."
-            php artisan down || true
-
             # Pull latest code
             echo "📥 Pulling latest code..."
             git fetch origin main
@@ -84,10 +80,6 @@ jobs:
             # Clear and cache config (before ownership change)
             echo "🧹 Optimizing application..."
             php artisan app:optimize-all
-
-            # Bring application back online
-            echo "✅ Disabling maintenance mode..."
-            php artisan up
 
             # Change ownership back to www-data
             echo "🔐 Restoring www-data ownership..."
