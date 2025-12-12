@@ -29,6 +29,9 @@
 
     <!-- Livewire styles -->
     @livewireStyles
+
+    <script type="text/javascript"
+        src="https://pl28241596.effectivegatecpm.com/ad/ac/89/adac8918676c8f940ef5467cf4e07a92.js"></script>
 </head>
 
 <body class="bg-white">
@@ -40,6 +43,7 @@
 
     <!-- Text Header -->
     <header class="w-full container mx-auto">
+
         <div class="flex flex-col items-center py-10">
             <a wire:navigate.hover href="{{ route('home') }}"
                 class="font-bold text-gray-800 uppercase hover:text-gray-700 text-3xl sm:text-5xl">
@@ -53,6 +57,8 @@
 
     <!-- Topic Nav -->
     <livewire:components.topic-nav />
+
+    <div id="container-1f71ab145af954d903b8f041c06284fb"></div>
 
     <main class="min-h-screen">
 
@@ -100,6 +106,10 @@
 
     @yield('script')
     @stack('scripts')
+
+    <script async="async" data-cfasync="false"
+        src="https://pl28241327.effectivegatecpm.com/1f71ab145af954d903b8f041c06284fb/invoke.js"></script>
+
 </body>
 
 </html>
