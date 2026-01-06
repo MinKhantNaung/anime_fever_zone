@@ -29,9 +29,6 @@
 
     <!-- Livewire styles -->
     @livewireStyles
-
-    <script type="text/javascript"
-        src="https://pl28241596.effectivegatecpm.com/ad/ac/89/adac8918676c8f940ef5467cf4e07a92.js"></script>
 </head>
 
 <body class="bg-white">
