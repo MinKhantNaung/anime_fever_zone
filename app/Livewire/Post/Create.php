@@ -65,6 +65,8 @@ class Create extends ModalComponent
 
     public function createPost()
     {
+        $this->authorize('create', Post::class);
+
         $validated = $this->validateRequests();
 
         DB::beginTransaction();

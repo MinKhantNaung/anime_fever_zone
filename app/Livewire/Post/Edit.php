@@ -67,6 +67,8 @@ class Edit extends ModalComponent
 
     public function mount()
     {
+        $this->authorize('update', $this->post);
+
         $this->topic_id = $this->post->topic_id;
         $this->heading = $this->post->heading;
         $this->body = $this->post->body;
@@ -76,6 +78,7 @@ class Edit extends ModalComponent
 
     public function updatePost()
     {
+        $this->authorize('update', $this->post);
         // validate
         $validated = $this->validateRequests();
 
@@ -100,7 +103,7 @@ class Edit extends ModalComponent
             $this->alertService->alert($this, config('messages.post.update'), 'success');
         } catch (\Throwable $e) {
             DB::rollBack();
-
+            dd($e);
             $this->alertService->alert($this, config('messages.common.error'), 'error');
         }
     }
