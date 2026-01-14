@@ -17,7 +17,14 @@ final class CommentPresenter
 
     public function markdownBody(): HtmlString
     {
-        return new HtmlString(app('markdown')->convertToHtml($this->comment->body));
+        // Use a markdown parser that sanitizes HTML
+        $html = app('markdown')->convertToHtml($this->comment->body);
+
+        // Sanitize HTML to allow only safe tags
+        $html = strip_tags($html, '<p><strong><em><code><pre><a><ul><ol><li>');
+
+        // Or use a proper HTML sanitizer like HTMLPurifier
+        return new HtmlString($html);
     }
 
     public function relativeCreatedAt(): mixed

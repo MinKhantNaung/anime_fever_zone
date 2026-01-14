@@ -128,8 +128,12 @@ class Comment extends Component
     #[On('getUsers')]
     public function getUsers($searchTerm): void
     {
+        $this->validate(['searchTerm' => ['nullable', 'string', 'max:255']]);
+
         if (! empty($searchTerm)) {
-            $this->users = User::where('name', 'like', '%' . $searchTerm . '%')->take(5)->get();
+            $this->users = User::where('name', 'like', '%' . $searchTerm . '%')
+                ->take(5)
+                ->get();
         } else {
             $this->users = [];
         }
