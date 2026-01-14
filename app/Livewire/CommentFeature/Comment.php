@@ -67,7 +67,11 @@ class Comment extends Component
         $this->validate([
             'editState.body' => ['required', 'min:2'],
         ]);
-        $this->comment->update($this->editState);
+
+        $this->comment->update([
+            'body' => $this->editState['body'],
+        ]);
+
         $this->isEditing = false;
         $this->showOptions = false;
     }
