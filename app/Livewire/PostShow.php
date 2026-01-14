@@ -69,6 +69,10 @@ class PostShow extends Component
             ->where('slug', $this->slug)
             ->first();
 
+        if (! $this->post) {
+            abort(404);
+        }
+
         $this->featuredPosts = Post::where('id', '!=', $this->post->id)
             ->where('is_feature', true)
             ->where('is_publish', true)
