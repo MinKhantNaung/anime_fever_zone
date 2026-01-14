@@ -43,6 +43,8 @@ class Edit extends ModalComponent
 
     public function updateTag()
     {
+        $this->authorize('update', $this->tag);
+
         // validate
         $validated = $this->validateRequests();
 

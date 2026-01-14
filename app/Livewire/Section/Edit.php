@@ -52,6 +52,8 @@ class Edit extends ModalComponent
 
     public function updateSection()
     {
+        $this->authorize('update', $this->section);
+
         $validated = $this->validateRequests();
 
         DB::beginTransaction();

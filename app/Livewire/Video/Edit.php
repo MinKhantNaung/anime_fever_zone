@@ -55,6 +55,8 @@ class Edit extends Component
 
     public function updateVideo()
     {
+        $this->authorize('update', $this->video);
+
         $validated = $this->validate();
 
         $youtube_id = $this->extractYoutubeId($validated['youtube_url']);

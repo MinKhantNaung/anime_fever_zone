@@ -47,6 +47,8 @@ class Create extends ModalComponent
 
     public function addSection()
     {
+        $this->authorize('create', Section::class);
+
         $validated = $this->validateRequests();
 
         DB::beginTransaction();

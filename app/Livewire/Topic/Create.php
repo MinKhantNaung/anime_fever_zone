@@ -23,6 +23,8 @@ class Create extends Component
 
     public function createNew()
     {
+        $this->authorize('create', Topic::class);
+
         if ($this->editMode) {
             $this->validate([
                 'name' => ['required', 'string', 'max:255', 'unique:topics,name,' . $this->topic->id],
