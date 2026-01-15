@@ -67,7 +67,7 @@ new class extends Component {
     protected function validateRequests()
     {
         return $this->validate([
-            'media' => 'required|file|mimes:webp|max:5120',
+            'media' => 'required|file|image|mimes:webp|max:5120',
             'name' => 'required|string|max:225|unique:tags,name',
             'body' => 'required|string',
         ]);
