@@ -15,7 +15,31 @@ class FileService
         // Remove the '/storage' prefix from the path
         $pathWithoutStorage = str_replace('/storage', '', $prev_path);
 
-        Storage::delete('public/' . $pathWithoutStorage);
+        // Normalize and validate the path to prevent directory traversal
+        $normalizedPath = str_replace(['../', '..\\'], '', $pathWithoutStorage);
+        $normalizedPath = ltrim($normalizedPath, '/');
+
+        // Ensure path is within the public disk
+        $fullPath = 'public/' . $normalizedPath;
+
+        // Additional validation: check if file exists and is within storage
+        if (! Storage::disk('public')->exists($normalizedPath)) {
+            Logger()->warning('File not found: ' . $normalizedPath);
+
+            return $fileModel;
+        }
+
+        // Get absolute path and verify it's within storage directory
+        $absolutePath = Storage::disk('public')->path($normalizedPath);
+        $storagePath = Storage::disk('public')->path('');
+
+        if (! str_starts_with($absolutePath, $storagePath)) {
+            Logger()->warning('Invalid file path: ' . $normalizedPath);
+
+            return $fileModel;
+        }
+
+        Storage::delete($fullPath);
 
         return $fileModel;
     }

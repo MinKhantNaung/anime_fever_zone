@@ -14,6 +14,11 @@ class Create extends Component
 
     public $editMode = false;
 
+    public function boot()
+    {
+        $this->authorize('create', Topic::class);
+    }
+
     public function updateEditMode(Topic $topic)
     {
         $this->topic = $topic;
@@ -23,6 +28,8 @@ class Create extends Component
 
     public function createNew()
     {
+        $this->authorize('create', Topic::class);
+
         if ($this->editMode) {
             $this->validate([
                 'name' => ['required', 'string', 'max:255', 'unique:topics,name,' . $this->topic->id],
@@ -64,6 +71,8 @@ class Create extends Component
 
     public function deleteTopic(Topic $topic)
     {
+        $this->authorize('delete', $topic);
+
         $topic->delete();
 
         $this->topic = null;

@@ -25,6 +25,8 @@ class Index extends Component
 
     public function boot(Post $post, PostService $postService, AlertService $alertService)
     {
+        $this->authorize('create', Post::class);
+
         $this->post = $post;
         $this->postService = $postService;
         $this->alertService = $alertService;
@@ -32,6 +34,8 @@ class Index extends Component
 
     public function deletePost(Post $post)
     {
+        $this->authorize('delete', $post);
+
         DB::beginTransaction();
 
         try {
@@ -50,6 +54,7 @@ class Index extends Component
 
     public function sendMailToSubscribers(Post $post)
     {
+        $this->authorize('create', Post::class);
         // Send email
         $subject = 'Your Daily Dose of [Anime Fever Zone]: New Post Alert!';
         $new_post_link = url('/blog/' . $post->slug);
@@ -77,7 +82,9 @@ class Index extends Component
 
     public function toggleFeature(Post $post)
     {
-        defer(fn () => $this->postService->toggleIsFeature($post))->always();
+        $this->authorize('update', $post);
+
+        $this->postService->toggleIsFeature($post);
 
         $this->dispatch('post-event');
         $this->alertService->alert($this, config('messages.common.success'), 'success');

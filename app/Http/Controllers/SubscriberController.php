@@ -15,14 +15,15 @@ class SubscriberController extends Controller
             ->where('email', $email)
             ->first();
 
-        if ($subscriber) {
+        if ($subscriber && $subscriber->status === 'Pending') {
             $subscriber->token = '';
             $subscriber->status = 'Active';
             $subscriber->update();
-
-            return view('subscription_info', ['info' => 'success']);
-        } else {
-            return view('subscription_info', ['info' => 'error']);
         }
+
+        // Return generic message regardless of outcome
+        return view('subscription_info', [
+            'info' => 'If this email was subscribed, it has been verified.',
+        ]);
     }
 }

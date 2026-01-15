@@ -20,12 +20,16 @@ class Index extends Component
 
     public function boot(TagService $tagService, AlertService $alertService)
     {
+        $this->authorize('create', Tag::class);
+
         $this->tagService = $tagService;
         $this->alertService = $alertService;
     }
 
     public function deleteTag(Tag $tag)
     {
+        $this->authorize('delete', $tag);
+
         DB::beginTransaction();
 
         try {

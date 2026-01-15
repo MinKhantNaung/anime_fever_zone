@@ -38,6 +38,8 @@ class Edit extends ModalComponent
         FileService $fileService,
         AlertService $alertService
     ) {
+        $this->authorize('update', $this->section);
+
         $this->sectionService = $sectionService;
         $this->mediaService = $mediaService;
         $this->fileService = $fileService;
@@ -52,6 +54,8 @@ class Edit extends ModalComponent
 
     public function updateSection()
     {
+        $this->authorize('update', $this->section);
+
         $validated = $this->validateRequests();
 
         DB::beginTransaction();
@@ -92,7 +96,7 @@ class Edit extends ModalComponent
     {
         return $this->validate([
             'media' => ['nullable', 'array'],
-            'media.*' => ['file', 'mimes:webp,mp4', 'max:102400'],
+            'media.*' => ['file', 'mimetypes:image/webp,video/mp4', 'max:102400'],
             'heading' => ['nullable', 'string', 'max:255'],
             'body' => ['required', 'string'],
         ]);

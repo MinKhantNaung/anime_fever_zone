@@ -28,6 +28,8 @@ class Edit extends Component
 
     public function boot(VideoService $videoService, AlertService $alertService)
     {
+        $this->authorize('update', $this->video);
+
         $this->videoService = $videoService;
         $this->alertService = $alertService;
     }
@@ -55,6 +57,8 @@ class Edit extends Component
 
     public function updateVideo()
     {
+        $this->authorize('update', $this->video);
+
         $validated = $this->validate();
 
         $youtube_id = $this->extractYoutubeId($validated['youtube_url']);

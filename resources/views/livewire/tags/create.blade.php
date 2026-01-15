@@ -23,6 +23,8 @@ new class extends Component {
 
     public function boot(TagService $tagService, MediaService $mediaService, AlertService $alertService)
     {
+        $this->authorize('create', Tag::class);
+
         $this->tagService = $tagService;
         $this->mediaService = $mediaService;
         $this->alertService = $alertService;
@@ -35,6 +37,7 @@ new class extends Component {
 
     public function createTag()
     {
+        $this->authorize('create', Tag::class);
         // validate
         $validated = $this->validateRequests();
 
@@ -64,7 +67,7 @@ new class extends Component {
     protected function validateRequests()
     {
         return $this->validate([
-            'media' => 'required|file|mimes:webp|max:5120',
+            'media' => 'required|file|image|mimes:webp|max:5120',
             'name' => 'required|string|max:225|unique:tags,name',
             'body' => 'required|string',
         ]);

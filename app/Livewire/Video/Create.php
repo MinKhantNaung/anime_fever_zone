@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Video;
 
+use App\Models\Video;
 use App\Services\AlertService;
 use App\Services\VideoService;
 use Illuminate\Support\Facades\DB;
@@ -25,6 +26,8 @@ class Create extends Component
 
     public function boot(VideoService $videoService, AlertService $alertService)
     {
+        $this->authorize('create', Video::class);
+
         $this->videoService = $videoService;
         $this->alertService = $alertService;
     }
@@ -42,6 +45,8 @@ class Create extends Component
 
     public function save()
     {
+        $this->authorize('create', Video::class);
+
         $validated = $this->validate();
 
         $youtube_id = $this->extractYoutubeId($validated['youtube_url']);

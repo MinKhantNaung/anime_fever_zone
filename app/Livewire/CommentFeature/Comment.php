@@ -67,7 +67,11 @@ class Comment extends Component
         $this->validate([
             'editState.body' => ['required', 'min:2'],
         ]);
-        $this->comment->update($this->editState);
+
+        $this->comment->update([
+            'body' => $this->editState['body'],
+        ]);
+
         $this->isEditing = false;
         $this->showOptions = false;
     }
@@ -128,8 +132,12 @@ class Comment extends Component
     #[On('getUsers')]
     public function getUsers($searchTerm): void
     {
+        $this->validate(['searchTerm' => ['nullable', 'string', 'max:255']]);
+
         if (! empty($searchTerm)) {
-            $this->users = User::where('name', 'like', '%' . $searchTerm . '%')->take(5)->get();
+            $this->users = User::where('name', 'like', '%' . $searchTerm . '%')
+                ->take(5)
+                ->get();
         } else {
             $this->users = [];
         }

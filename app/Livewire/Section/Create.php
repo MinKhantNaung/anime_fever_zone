@@ -34,6 +34,8 @@ class Create extends ModalComponent
 
     public function boot(SectionService $sectionService, MediaService $mediaService, AlertService $alertService, FileService $fileService)
     {
+        $this->authorize('create', Section::class);
+
         $this->sectionService = $sectionService;
         $this->mediaService = $mediaService;
         $this->alertService = $alertService;
@@ -47,6 +49,8 @@ class Create extends ModalComponent
 
     public function addSection()
     {
+        $this->authorize('create', Section::class);
+
         $validated = $this->validateRequests();
 
         DB::beginTransaction();
@@ -79,7 +83,7 @@ class Create extends ModalComponent
     {
         return $this->validate([
             'media' => ['nullable', 'array'],
-            'media.*' => ['file', 'mimes:webp,mp4', 'max:102400'],
+            'media.*' => ['file', 'mimetypes:image/webp,video/mp4', 'max:102400'],
             'heading' => ['nullable', 'string', 'max:255'],
             'body' => ['required', 'string'],
         ]);
