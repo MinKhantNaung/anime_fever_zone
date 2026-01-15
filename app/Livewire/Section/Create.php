@@ -34,6 +34,8 @@ class Create extends ModalComponent
 
     public function boot(SectionService $sectionService, MediaService $mediaService, AlertService $alertService, FileService $fileService)
     {
+        $this->authorize('create', Section::class);
+
         $this->sectionService = $sectionService;
         $this->mediaService = $mediaService;
         $this->alertService = $alertService;

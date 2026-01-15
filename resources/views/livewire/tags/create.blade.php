@@ -23,6 +23,8 @@ new class extends Component {
 
     public function boot(TagService $tagService, MediaService $mediaService, AlertService $alertService)
     {
+        $this->authorize('create', Tag::class);
+
         $this->tagService = $tagService;
         $this->mediaService = $mediaService;
         $this->alertService = $alertService;
@@ -35,6 +37,7 @@ new class extends Component {
 
     public function createTag()
     {
+        $this->authorize('create', Tag::class);
         // validate
         $validated = $this->validateRequests();
 

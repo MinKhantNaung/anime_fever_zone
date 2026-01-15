@@ -38,6 +38,8 @@ class Edit extends ModalComponent
         FileService $fileService,
         AlertService $alertService
     ) {
+        $this->authorize('update', $this->section);
+
         $this->sectionService = $sectionService;
         $this->mediaService = $mediaService;
         $this->fileService = $fileService;

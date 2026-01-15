@@ -20,12 +20,16 @@ class Index extends Component
 
     public function boot(VideoService $videoService, AlertService $alertService)
     {
+        $this->authorize('create', Video::class);
+
         $this->videoService = $videoService;
         $this->alertService = $alertService;
     }
 
     public function deleteVideo(Video $video)
     {
+        $this->authorize('delete', $video);
+
         DB::beginTransaction();
 
         try {
@@ -45,6 +49,8 @@ class Index extends Component
 
     public function togglePublish(Video $video)
     {
+        $this->authorize('update', $video);
+
         DB::beginTransaction();
 
         try {

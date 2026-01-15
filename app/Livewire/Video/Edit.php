@@ -28,6 +28,8 @@ class Edit extends Component
 
     public function boot(VideoService $videoService, AlertService $alertService)
     {
+        $this->authorize('update', $this->video);
+
         $this->videoService = $videoService;
         $this->alertService = $alertService;
     }

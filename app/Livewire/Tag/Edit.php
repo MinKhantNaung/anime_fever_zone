@@ -30,6 +30,8 @@ class Edit extends ModalComponent
 
     public function boot(TagService $tagService, MediaService $mediaService, AlertService $alertService)
     {
+        $this->authorize('update', $this->tag);
+
         $this->tagService = $tagService;
         $this->mediaService = $mediaService;
         $this->alertService = $alertService;

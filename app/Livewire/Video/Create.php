@@ -26,6 +26,8 @@ class Create extends Component
 
     public function boot(VideoService $videoService, AlertService $alertService)
     {
+        $this->authorize('create', Video::class);
+
         $this->videoService = $videoService;
         $this->alertService = $alertService;
     }

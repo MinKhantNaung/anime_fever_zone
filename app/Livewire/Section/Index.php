@@ -20,6 +20,8 @@ class Index extends Component
 
     public function boot(SectionService $sectionService, AlertService $alertService)
     {
+        $this->authorize('create', Section::class);
+
         $this->sectionService = $sectionService;
         $this->alertService = $alertService;
     }
@@ -32,6 +34,8 @@ class Index extends Component
 
     public function removeSection(Section $section)
     {
+        $this->authorize('delete', $section);
+
         DB::beginTransaction();
 
         try {
