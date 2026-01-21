@@ -7,7 +7,7 @@ set -e
 domains=(animefeverzone.com)
 rsa_key_size=4096
 data_path="./certbot"
-email="minkhantnaungkzw@gmail.com" # Your email for Let's Encrypt notifications
+email="your-email@example.com" # Your email for Let's Encrypt notifications
 staging=0 # Set to 1 if you're testing to avoid rate limits
 
 echo "### Preparing directories ..."

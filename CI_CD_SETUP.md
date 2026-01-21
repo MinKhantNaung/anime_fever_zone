@@ -161,8 +161,8 @@ Go to: `Repository → Settings → Secrets and variables → Actions → New re
 |------------|-------------|---------------|
 | `SSH_PRIVATE_KEY` | Private key for VPS access | Contents of `~/.ssh/github_actions` |
 | `VPS_HOST` | VPS hostname or IP | `123.45.67.89` or `animefeverzone.com` |
-| `VPS_USER` | SSH username | `minkhantnaungroot` |
-| `VPS_PATH` | Project path on VPS | `/home/minkhantnaungroot/projects/animefeverzone` |
+| `VPS_USER` | SSH username | `your-username` |
+| `VPS_PATH` | Project path on VPS | `/home/your-username/projects/animefeverzone` |
 
 ### **Optional Secrets:**
 
@@ -200,8 +200,8 @@ cat ~/.ssh/github_actions
 
 Repeat for:
 - `VPS_HOST` → `your-vps-ip`
-- `VPS_USER` → `minkhantnaungroot`
-- `VPS_PATH` → `/home/minkhantnaungroot/projects/animefeverzone`
+- `VPS_USER` → `your-username`
+- `VPS_PATH` → `/home/your-username/projects/animefeverzone`
 
 ---
 
@@ -234,7 +234,7 @@ act -W .github/workflows/ci.yml
 ssh your-user@your-vps-ip
 
 # Navigate to project
-cd /home/minkhantnaungroot/projects/animefeverzone
+cd /home/your-username/projects/animefeverzone
 
 # Manually run deployment steps
 git pull origin main
@@ -273,7 +273,7 @@ GitHub Repository → Actions tab
 ssh your-user@your-vps-ip
 
 # Check last deployment
-cd /home/minkhantnaungroot/projects/animefeverzone
+cd /home/your-username/projects/animefeverzone
 git log -1
 
 # Check services
@@ -353,7 +353,7 @@ cat vite.config.js
 ```bash
 # SSH to VPS and check logs
 ssh your-user@your-vps-ip
-cd /home/minkhantnaungroot/projects/animefeverzone
+cd /home/your-username/projects/animefeverzone
 
 # Check Octane logs
 sudo journalctl -u octane -f
@@ -381,7 +381,7 @@ php artisan cache:clear
 ```bash
 # SSH to VPS
 ssh your-user@your-vps-ip
-cd /home/minkhantnaungroot/projects/animefeverzone
+cd /home/your-username/projects/animefeverzone
 
 # Disable maintenance mode
 php artisan up

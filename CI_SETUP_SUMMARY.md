@@ -113,8 +113,8 @@ Go to: `GitHub Repository → Settings → Secrets → Actions → New secret`
 ```
 SSH_PRIVATE_KEY     = Contents of ~/.ssh/github_actions (private key)
 VPS_HOST            = your-vps-ip or domain
-VPS_USER            = minkhantnaungroot
-VPS_PATH            = /home/minkhantnaungroot/projects/animefeverzone
+VPS_USER            = your-username
+VPS_PATH            = /home/your-username/projects/animefeverzone
 ```
 
 ### **3. Test SSH Connection**
@@ -172,7 +172,7 @@ git push origin main
 **Option 3: Manual SSH Deployment**
 ```bash
 ssh your-user@your-vps-ip
-cd /home/minkhantnaungroot/projects/animefeverzone
+cd /home/your-username/projects/animefeverzone
 git pull origin main
 composer install --no-dev
 npm ci --omit=dev
@@ -191,7 +191,7 @@ docker compose -f docker-compose.prod.yml restart app
 ```bash
 # GitHub Actions connects to your VPS via SSH and runs:
 
-1. cd /home/minkhantnaungroot/projects/animefeverzone
+1. cd /home/your-username/projects/animefeverzone
    ↓
 2. git pull origin main  # Pull latest code
    ↓
@@ -244,7 +244,7 @@ gh run watch
 ssh your-user@your-vps-ip
 
 # Check git log
-cd /home/minkhantnaungroot/projects/animefeverzone
+cd /home/your-username/projects/animefeverzone
 git log -1  # Should show latest commit
 
 # Check Octane service

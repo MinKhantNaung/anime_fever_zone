@@ -58,7 +58,7 @@ This creates two files:
 ssh-copy-id -i ~/.ssh/github_actions.pub your-user@your-vps-ip
 
 # Example:
-ssh-copy-id -i ~/.ssh/github_actions.pub minkhantnaungroot@123.45.67.89
+ssh-copy-id -i ~/.ssh/github_actions.pub your-username@123.45.67.89
 
 # You'll be asked for your VPS password
 # Enter it, and the key will be added
@@ -170,7 +170,7 @@ https://github.com/YOUR_USERNAME/animefeverzone/settings/secrets/actions
 2. **Name:** `VPS_USER`
 3. **Secret:** Your SSH username
    ```
-   Example: minkhantnaungroot
+   Example: your-username
    ```
 4. Click **"Add secret"**
 
@@ -184,7 +184,7 @@ https://github.com/YOUR_USERNAME/animefeverzone/settings/secrets/actions
 2. **Name:** `VPS_PATH`
 3. **Secret:** Full path to your project on VPS
    ```
-   Example: /home/minkhantnaungroot/projects/animefeverzone
+   Example: /home/your-username/projects/animefeverzone
    ```
 4. Click **"Add secret"**
 
@@ -220,7 +220,7 @@ On your local machine:
 ssh -i ~/.ssh/github_actions $VPS_USER@$VPS_HOST
 
 # Replace with your values:
-ssh -i ~/.ssh/github_actions minkhantnaungroot@123.45.67.89
+ssh -i ~/.ssh/github_actions your-username@123.45.67.89
 
 # Should connect WITHOUT asking for password ✅
 ```
@@ -440,7 +440,7 @@ Check workflow logs regularly:
 |--------|---------------|-------|
 | `SSH_PRIVATE_KEY` | `-----BEGIN OPENSSH...` | Full private key, 40+ lines |
 | `VPS_HOST` | `123.45.67.89` | IP or domain |
-| `VPS_USER` | `minkhantnaungroot` | SSH username |
+| `VPS_USER` | `your-username` | SSH username |
 | `VPS_PATH` | `/home/user/projects/app` | Absolute path |
 
 ---
