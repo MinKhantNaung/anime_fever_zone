@@ -7,6 +7,7 @@ use App\Models\Post;
 use App\Models\SiteSetting;
 use App\Models\Subscriber;
 use App\Models\Video;
+use App\Services\ElevenlabsService;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Validation\Rule;
 use Livewire\Component;
@@ -26,6 +27,10 @@ class PostShow extends Component
     public $email;
 
     public bool $emailVerifyStatus;
+
+    public ?string $audioUrl = null;
+
+    public bool $isGeneratingAudio = false;
 
     public function subscribe()
     {
@@ -88,6 +93,51 @@ class PostShow extends Component
             ->get();
 
         $this->emailVerifyStatus = SiteSetting::first()->email_verify_status;
+    }
+
+    public function generateAudio(ElevenlabsService $elevenlabsService): void
+    {
+        $this->isGeneratingAudio = true;
+
+        $text = $this->getPostText();
+
+        $this->audioUrl = $elevenlabsService->textToSpeech($text);
+
+        $this->isGeneratingAudio = false;
+
+        if ($this->audioUrl === 'limit_reached') {
+            $this->dispatch('swal', [
+                'title' => 'Sorry, we have reached our quota limit. Please try again later.',
+                'icon' => 'warning',
+                'iconColor' => 'yellow',
+            ]);
+
+            $this->audioUrl = null;
+
+            return;
+        }
+
+        if (! $this->audioUrl) {
+            $this->dispatch('swal', [
+                'title' => 'Failed to generate audio. Please check your Elevenlabs API configuration.',
+                'icon' => 'error',
+                'iconColor' => 'red',
+            ]);
+        }
+    }
+
+    protected function getPostText(): string
+    {
+        // Combine heading and body, strip HTML tags for clean text
+        $heading = strip_tags($this->post->heading);
+        $body = strip_tags($this->post->body);
+
+        // Remove extra whitespace and newlines
+        $text = $heading . '. ' . $body;
+        $text = preg_replace('/\s+/', ' ', $text);
+        $text = trim($text);
+
+        return $text;
     }
 
     public function render()
