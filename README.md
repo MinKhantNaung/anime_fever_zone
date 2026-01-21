@@ -1,66 +1,125 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Project Title
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+### Anime Fever Zone (SEO)
 
-## About Laravel
+You can visit here: [https://animefeverzone.com](https://animefeverzone.com)
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+**Status**: 🚀 **Deployed in Production**
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Project Description
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- 'Anime Fever Zone' is a dedicated blog for anime enthusiasts, featuring reviews, news, and analysis of popular and emerging anime series. The blog aims to create a vibrant community for anime fans to share insights and stay updated on the latest trends.
 
-## Learning Laravel
+## Blogger Features
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+- Topic Management:
+  - Ability to create, update and delete topics.
+  - Can upload one image.
+- Tag Management:
+  - Ability to create, update and delete tags.
+  - Can upload one image.
+- Post Management:
+  - Ability to create, update and delete posts.
+  - Can upload one post image.
+  - Can manage which posts are featured.
+  - Can send new post emails to subscribers.
+    - Section Management: 
+      - Ability to create, update and delete sections of a post.
+      - Can upload multiple images and videos.
+- Video Management:
+  - Ability to create, update and delete videos.
+  - Can add YouTube video URLs (automatically extracts YouTube ID).
+  - Can manage which videos are published.
+  - Can mark videos as trending.
+  - Videos are displayed on the home page and post pages.
+- Profile Management: 
+  - Can update or delete profile details and profile image.
+  - Can update password.
+  - Can delete own account.
+  - Can decide to enable or disable the email subscription feature on the post page.
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+## Frontend Features
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+1. **Responsive Design**: The frontend is designed to be responsive, ensuring compatibility across different devices and screen sizes. Users can access and utilize the system seamlessly from desktops, laptops, tablets, and mobile devices.
+2. **User Authentication**: The frontend includes a user authentication system that allows users to create accounts, log in, and manage their profiles. They can also reset password.
+3. **Tag Section**:  The frontend incorporates a tag section that features related posts.
+4. **Post Section**: When users click a post, they can see post with images and videos.
+5. **Video Section**: 
+   - Dedicated video pages with YouTube video integration.
+   - Video player with theater mode support.
+   - Videos displayed on home page and post pages.
+   - Trending videos section.
+6. **AI Text-to-Speech**: 
+   - Users can listen to posts using AI-powered text-to-speech technology.
+   - Powered by ElevenLabs API for natural-sounding voice synthesis.
+   - Audio files are cached for faster subsequent access.
+   - Available on all post pages with a simple "Listen" button.
+7. **Comment System**: In post page, it includes a comment system. Users can comment in posts. *Authorized users have the ability to update and delete their own comments if necessary*.
+8. **Like System**: Authenticated and non-authenticated users can like posts.
+9. **Email Subscription**: Any user can subscribe to new post notifications by verifying their email.
 
-## Laravel Sponsors
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+## Technologies Used 
 
-### Premium Partners
+- PHP 8.4.16
+- Laravel 12
+- Livewire 3 (SPA)
+- Alpine.js 3
+- HTML/CSS
+- Javascript
+- Tailwind CSS 3
+- SweetAlert 2
+- ElevenLabs API (Text-to-Speech)
+- YouTube API (Video Integration)
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+## Installation
 
-## Contributing
+- If cloning my project is complete or download is complete, open terminal in project directory.
+- Install composer dependencies
+  - **composer install** (command)
+- Install npm dependencies
+  - **npm install**
+- Create a copy of .env file
+  - **cp .env.example .env**
+- Generate an app encryption key
+  - **php artisan key:generate**
+- Create an empty database for my web project
+  - created database name must match from .env file
+- Configure environment variables:
+  - Set up your ElevenLabs API key for text-to-speech feature:
+    - `ELEVENLABS_API_KEY=your_api_key_here`
+    - `ELEVENLABS_VOICE_ID=your_voice_id` (optional, defaults provided)
+    - `ELEVENLABS_MODEL_ID=your_model_id` (optional, defaults provided)
+- Start npm 
+  - **npm run dev**
+- Migrate
+  - **php artisan migrate**
+- Seed Database
+  - **php artisan db:seed**
+- Link storage
+  - **php artisan storage:link**
+- Start 
+  - **php artisan serve**
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+## SEO  
 
-## Code of Conduct
+- I write custom command for generating site-map
+  - **php artisan sitemap:generate**
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+## Usage
 
-## Security Vulnerabilities
+- Need Internet!
+- In UserSeeder.php, I created blogger account.
+- Login as blogger,
+  - Email - blogger@gmail.com
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+## Production Deployment
 
-## License
+This application is currently deployed and running in production at [https://animefeverzone.com](https://animefeverzone.com). The production environment includes:
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+- All features mentioned above are live and functional
+- Video integration with YouTube
+- AI text-to-speech functionality for posts
+- Full SEO optimization with sitemap generation
+- Email subscription system
+- Comment and like systems
