@@ -74,6 +74,6 @@ Add these in GitHub → Settings → Secrets → Actions:
 |--------|---------|------------|
 | `SSH_PRIVATE_KEY` | `-----BEGIN OPENSSH...` | SSH private key |
 | `VPS_HOST` | `123.45.67.89` | VPS IP address |
-| `VPS_USER` | `minkhantnaungroot` | SSH username |
+| `VPS_USER` | `your-username` | SSH username |
 | `VPS_PATH` | `/home/user/projects/app` | Project path |
 

@@ -77,8 +77,11 @@
             <h3 class="text-3xl font-extrabold text-black">Your Rights</h3>
             <p class="text-lg font-medium mt-5 text-gray-700">
                 You have the right to access, update, or delete your personal information. If you would like to exercise
-                these rights or have any questions about our privacy practices, please contact us at
-                (minkhantnaungkzw@gmail.com).
+                these rights or have any questions about our privacy practices, please contact us through
+                <a wire:navigate.hover href="{{ route('contact') }}"
+                    class="text-[#9926f0] hover:text-[#d122e3] transition-colors duration-150">
+                    our contact form
+                </a>.
             </p>
         </div>
 

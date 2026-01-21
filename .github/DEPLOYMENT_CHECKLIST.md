@@ -80,7 +80,7 @@ git push origin main
 ```bash
 # SSH to VPS
 ssh your-user@your-vps-ip
-cd /home/minkhantnaungroot/projects/animefeverzone
+cd /home/your-username/projects/animefeverzone
 
 # Enable maintenance mode
 php artisan down
@@ -201,7 +201,7 @@ If something goes wrong:
 ```bash
 # SSH to VPS
 ssh your-user@your-vps-ip
-cd /home/minkhantnaungroot/projects/animefeverzone
+cd /home/your-username/projects/animefeverzone
 
 # Change ownership for rollback
 sudo chown -R $USER:$USER .

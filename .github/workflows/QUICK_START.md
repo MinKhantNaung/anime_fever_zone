@@ -39,10 +39,10 @@ Name: VPS_HOST
 Value: your-vps-ip-address (e.g., 123.45.67.89)
 
 Name: VPS_USER
-Value: minkhantnaungroot
+Value: your-username
 
 Name: VPS_PATH
-Value: /home/minkhantnaungroot/projects/animefeverzone
+Value: /home/your-username/projects/animefeverzone
 ```
 
 **Need detailed help?** See `../.github/GITHUB_SECRETS_SETUP.md` for step-by-step screenshots.
@@ -144,7 +144,7 @@ ssh -i ~/.ssh/github_actions your-user@your-vps-ip
 ```bash
 # SSH and check logs
 ssh your-user@your-vps-ip
-cd /home/minkhantnaungroot/projects/animefeverzone
+cd /home/your-username/projects/animefeverzone
 sudo journalctl -u octane -f
 tail -f storage/logs/laravel.log
 ```

@@ -11,8 +11,8 @@
 ```
 ✅ SSH_PRIVATE_KEY  →  Your SSH private key
 ✅ VPS_HOST         →  123.45.67.89
-✅ VPS_USER         →  minkhantnaungroot
-✅ VPS_PATH         →  /home/minkhantnaungroot/projects/animefeverzone
+✅ VPS_USER         →  your-username
+✅ VPS_PATH         →  /home/your-username/projects/animefeverzone
 ```
 
 ---
@@ -71,13 +71,13 @@ Secret: 123.45.67.89  (your VPS IP)
 #### **3. VPS_USER**
 ```
 Name:   VPS_USER
-Secret: minkhantnaungroot  (your SSH username)
+Secret: your-username  (your SSH username)
 ```
 
 #### **4. VPS_PATH**
 ```
 Name:   VPS_PATH
-Secret: /home/minkhantnaungroot/projects/animefeverzone
+Secret: /home/your-username/projects/animefeverzone
 ```
 
 ---
@@ -105,7 +105,7 @@ ssh -i ~/.ssh/github_actions your-user@your-vps-ip
 ```bash
 # SSH to VPS and verify path
 ssh your-user@vps-ip
-cd /home/minkhantnaungroot/projects/animefeverzone
+cd /home/your-username/projects/animefeverzone
 pwd  # Copy this path
 ```
 

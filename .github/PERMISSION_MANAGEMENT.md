@@ -10,7 +10,7 @@ Your production setup uses **two different users** for different purposes:
 
 | User | Purpose | What They Do |
 |------|---------|-------------|
-| `minkhantnaungroot` | Deployment | Run git, composer, npm commands |
+| `your-username` | Deployment | Run git, composer, npm commands |
 | `www-data` | Application | Serve web app, run Octane |
 
 **Why?** Security and proper separation of concerns.
@@ -23,7 +23,7 @@ Your production setup uses **two different users** for different purposes:
 
 ```bash
 # Ownership: www-data
-sudo chown -R www-data:www-data /home/minkhantnaungroot/projects/animefeverzone
+sudo chown -R www-data:www-data /home/your-username/projects/animefeverzone
 
 # Directories: 755 (rwxr-xr-x)
 sudo find . -type d -exec chmod 755 {} \;
@@ -89,7 +89,7 @@ php artisan down
 ### **Step 3: Change Ownership to Deploy User**
 ```bash
 sudo chown -R $USER:$USER .
-ls -la  # Shows: minkhantnaungroot minkhantnaungroot
+ls -la  # Shows: your-username your-username
 ```
 
 **Why?**
@@ -253,12 +253,12 @@ sudo -u www-data php artisan octane:reload
 
 ### **View Current Ownership**
 ```bash
-ls -la /home/minkhantnaungroot/projects/animefeverzone
+ls -la /home/your-username/projects/animefeverzone
 ```
 
 ### **Check Who Owns a File**
 ```bash
-stat -c '%U:%G' /home/minkhantnaungroot/projects/animefeverzone/artisan
+stat -c '%U:%G' /home/your-username/projects/animefeverzone/artisan
 # Output: www-data:www-data
 ```
 
@@ -270,7 +270,7 @@ ps aux | grep octane
 
 ### **Fix Permissions After Manual Changes**
 ```bash
-cd /home/minkhantnaungroot/projects/animefeverzone
+cd /home/your-username/projects/animefeverzone
 
 # Restore www-data ownership
 sudo chown -R www-data:www-data .
