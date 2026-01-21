@@ -55,8 +55,6 @@
     <!-- Topic Nav -->
     <livewire:components.topic-nav />
 
-    <div id="container-1f71ab145af954d903b8f041c06284fb"></div>
-
     <main class="min-h-screen">
 
         {{ $slot }}
@@ -103,9 +101,6 @@
 
     @yield('script')
     @stack('scripts')
-
-    <script async="async" data-cfasync="false"
-        src="https://pl28241327.effectivegatecpm.com/1f71ab145af954d903b8f041c06284fb/invoke.js"></script>
 
 </body>
 
