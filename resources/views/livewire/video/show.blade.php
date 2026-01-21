@@ -346,6 +346,12 @@
             const toggleBtn = document.getElementById('theater-mode-toggle');
             const theaterIcon = document.getElementById('theater-icon');
             const normalIcon = document.getElementById('normal-icon');
+
+            // Check if we're on a video page - if elements don't exist, return early
+            if (!container || !toggleBtn || !theaterIcon || !normalIcon) {
+                return;
+            }
+
             const isMobile = isMobileDevice();
 
             // Load theater mode state from localStorage (only for desktop)
@@ -361,14 +367,27 @@
                 container.classList.remove('theater-mode');
             }
 
-            toggleBtn.addEventListener('click', function() {
-                const isActive = container.classList.contains('theater-mode');
+            // Remove existing event listener if any (to prevent duplicates)
+            const newToggleBtn = toggleBtn.cloneNode(true);
+            toggleBtn.parentNode.replaceChild(newToggleBtn, toggleBtn);
+
+            newToggleBtn.addEventListener('click', function() {
+                // Re-check elements exist (in case DOM changed)
+                const currentContainer = document.getElementById('video-container');
+                const currentTheaterIcon = document.getElementById('theater-icon');
+                const currentNormalIcon = document.getElementById('normal-icon');
+
+                if (!currentContainer || !currentTheaterIcon || !currentNormalIcon) {
+                    return;
+                }
+
+                const isActive = currentContainer.classList.contains('theater-mode');
 
                 if (isActive) {
                     // Exit theater mode
-                    container.classList.remove('theater-mode');
-                    theaterIcon.classList.remove('hidden');
-                    normalIcon.classList.add('hidden');
+                    currentContainer.classList.remove('theater-mode');
+                    currentTheaterIcon.classList.remove('hidden');
+                    currentNormalIcon.classList.add('hidden');
                     document.body.classList.remove('theater-mode-active');
 
                     // Unlock orientation on mobile
@@ -381,9 +400,9 @@
                     }
                 } else {
                     // Enter theater mode
-                    container.classList.add('theater-mode');
-                    theaterIcon.classList.add('hidden');
-                    normalIcon.classList.remove('hidden');
+                    currentContainer.classList.add('theater-mode');
+                    currentTheaterIcon.classList.add('hidden');
+                    currentNormalIcon.classList.remove('hidden');
 
                     if (isMobile) {
                         // On mobile, lock body scroll and request landscape orientation
@@ -406,12 +425,18 @@
 
             // Handle window resize
             window.addEventListener('resize', function() {
+                // Re-check container exists
+                const currentContainer = document.getElementById('video-container');
+                if (!currentContainer) {
+                    return;
+                }
+
                 const nowMobile = isMobileDevice();
 
-                if (nowMobile && container.classList.contains('theater-mode')) {
+                if (nowMobile && currentContainer.classList.contains('theater-mode')) {
                     // Keep theater mode on mobile, just update body class
                     document.body.classList.add('theater-mode-active');
-                } else if (!nowMobile && container.classList.contains('theater-mode')) {
+                } else if (!nowMobile && currentContainer.classList.contains('theater-mode')) {
                     // On desktop, remove body class
                     document.body.classList.remove('theater-mode-active');
                 }
@@ -452,6 +477,13 @@
         // Re-initialize when Livewire updates
         document.addEventListener('livewire:init', () => {
             Livewire.hook('morph.updated', () => {
+                // Check if we're still on a video page before re-initializing
+                const container = document.getElementById('video-container');
+                if (!container) {
+                    // Not on video page, skip initialization
+                    return;
+                }
+
                 // Re-initialize theater mode
                 initTheaterMode();
 
