@@ -135,12 +135,12 @@ class PostShow extends Component
         // Remove extra whitespace and newlines
         $text = $heading . '. ' . $body;
 
-         //Include all sections
-//        foreach ($this->post->sections as $section) {
-//            $sectionHeading = $section->heading ? strip_tags($section->heading) . '. ' : '';
-//            $sectionBody = strip_tags($section->body);
-//            $text .= ' ' . $sectionHeading . $sectionBody;
-//        }
+        // Include all sections
+        //        foreach ($this->post->sections as $section) {
+        //            $sectionHeading = $section->heading ? strip_tags($section->heading) . '. ' : '';
+        //            $sectionBody = strip_tags($section->body);
+        //            $text .= ' ' . $sectionHeading . $sectionBody;
+        //        }
 
         $text = preg_replace('/\s+/', ' ', $text);
         $text = trim($text);

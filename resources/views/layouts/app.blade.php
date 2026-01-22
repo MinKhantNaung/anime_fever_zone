@@ -63,6 +63,9 @@
 
     <x-footer />
 
+    <!-- AI Chat Box -->
+    <livewire:components.ai-chat-box />
+
     @livewire('wire-elements-modal')
 
     @livewireScripts(['defer' => true])

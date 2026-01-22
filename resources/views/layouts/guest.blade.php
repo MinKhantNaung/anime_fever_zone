@@ -33,6 +33,9 @@
             </div>
         </div>
 
+        <!-- AI Chat Box -->
+        <livewire:components.ai-chat-box />
+
         @livewireScripts(['defer' => true])
     </body>
 </html>
