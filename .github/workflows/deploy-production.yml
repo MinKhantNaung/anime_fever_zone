@@ -60,18 +60,10 @@ jobs:
             echo "📦 Installing Composer dependencies..."
             composer install --no-interaction --prefer-dist --optimize-autoloader --no-dev
 
-            echo "📦 Installing npm dependencies..."
-            export NVM_DIR="$HOME/.nvm"
-            [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+            echo "🏗️ Building frontend assets..."
             npm ci
-
-            # Build frontend assets
-            echo "🏗️  Building frontend assets..."
             npm run build
-
-            echo "🧹 Cleaning up dev dependencies..."
-            rm -rf node_modules
-            npm ci --omit=dev
+            npm prune --production
 
             # Run database migrations (before ownership change)
             echo "🗄️  Running database migrations..."
