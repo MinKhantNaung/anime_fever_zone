@@ -59,20 +59,134 @@ You can visit here: [https://animefeverzone.com](https://animefeverzone.com)
 9. **Email Subscription**: Any user can subscribe to new post notifications by verifying their email.
 
 
-## Technologies Used 
+## Technologies Used
 
-- PHP 8.4.16
-- Laravel 12
-- Livewire 3 (SPA)
-- Alpine.js 3
+- PHP (always latest)
+- Laravel (always latest)
+- Livewire (SPA)
+- Alpine.js
 - HTML/CSS
 - Javascript
-- Tailwind CSS 3
+- Tailwind CSS
 - SweetAlert 2
 - ElevenLabs API (Text-to-Speech)
 - YouTube API (Video Integration)
 
+
 ## Installation
+
+### Option 1: Docker (Recommended for Local Development)
+
+**Prerequisites:**
+- Docker and Docker Compose installed on your system
+
+**Quick Start:**
+
+1. **Clone the repository:**
+   ```bash
+   git clone https://github.com/MinKhantNaung/anime_fever_zone.git
+   cd anime_fever_zone
+   ```
+
+2. **Create environment file:**
+   ```bash
+   cp .env.docker.example .env
+   ```
+
+3. **Configure environment variables in `.env`:**
+   - The `.env.docker.example` file already contains Docker-optimized settings
+   - Update the following required variables:
+     - `APP_KEY` - Will be generated in step 6
+     - `ELEVENLABS_API_KEY=your_api_key_here` - Required for text-to-speech feature
+     - `ELEVENLABS_VOICE_ID=your_voice_id` - Optional
+     - `ELEVENLABS_MODEL_ID=your_model_id` - Optional
+   - All other Docker-specific settings (database host, Redis host, etc.) are already configured
+
+4. **Build and start Docker containers:**
+   ```bash
+   # Standard build (uses cache, faster)
+   docker compose up -d --build
+   
+   # OR for a completely fresh build (slower, recommended for first-time setup)
+   docker compose build --no-cache app
+   docker compose up -d
+   ```
+   
+   > **Note:** The `--no-cache` flag is optional but recommended for first-time setup to ensure all dependencies are properly installed. For subsequent runs, `docker compose up -d --build` is sufficient.
+
+5. **Install dependencies inside the container:**
+   ```bash
+   docker compose exec app composer install
+   docker compose exec app npm install
+   ```
+
+6. **Generate application key:**
+   ```bash
+   docker compose exec app php artisan key:generate
+   ```
+
+7. **Run database migrations:**
+   ```bash
+   docker compose exec app php artisan migrate
+   ```
+
+8. **Seed the database:**
+   ```bash
+   docker compose exec app php artisan db:seed
+   ```
+
+9. **Create storage link:**
+   ```bash
+   docker compose exec app php artisan storage:link
+   ```
+
+10. **Access the application:**
+    - Open your browser and navigate to: `http://localhost:8081`
+    - The application should now be running!
+
+**Useful Docker Commands:**
+
+```bash
+# View running containers
+docker compose ps
+
+# View logs
+docker compose logs -f app
+docker compose logs -f nginx
+
+# Stop containers
+docker compose down
+
+# Stop and remove volumes (cleans database)
+docker compose down -v
+
+# Execute commands in container
+docker compose exec app php artisan [command]
+docker compose exec app composer [command]
+docker compose exec app npm [command]
+
+# Access container shell
+docker compose exec app bash
+
+# Rebuild containers after Dockerfile changes
+docker compose up -d --build
+```
+
+**Default Services:**
+- **Application:** Laravel Octane (Swoole) running on port 8000 (internal)
+- **Nginx:** Web server on port 8081 (external)
+- **MySQL:** Database on port 3307 (external)
+- **Redis:** Cache/Queue on port 6379 (external)
+
+**Default Database Credentials:**
+- Database: `anime_fever_zone`
+- Username: `animeuser`
+- Password: `secret`
+- Root Password: `secret`
+
+---
+
+### Option 2: Manual Installation (Without Docker)
 
 - If cloning my project is complete or download is complete, open terminal in project directory.
 - Install composer dependencies
