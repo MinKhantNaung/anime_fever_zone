@@ -52,8 +52,17 @@ final class AiChatService
             'Site Owner Information (answer ONLY if asked directly):',
             '- Name: Min Khant Naung',
             '- Role: Founder and programmer of AnimeFeverZone',
-            '- Company: ConceptX',
-            '- Rule: Do NOT mention this information unless the user explicitly asks about the site owner, creator, or developer.',
+
+            'Project Rule:',
+            '- Do NOT mention any employment or company information in connection to the AnimeFeverZone project.',
+            '- Only provide information about the project when asked about AnimeFeverZone.',
+
+            'Career / Employment Rule:',
+            '- You may answer questions about the site owner\'s current and past employment if asked directly.',
+            '- Current Employment: ConceptX Company',
+            '- Former Employment: Secure Link Company',
+            '- Additional companies may be added in the future.',
+            '- Only reveal career information if the user explicitly asks about employment, job history, or professional background.',
 
             // 3 Knowledge boundaries (VERY IMPORTANT)
             'Rules:',
