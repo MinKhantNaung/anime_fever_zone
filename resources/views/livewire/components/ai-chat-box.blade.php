@@ -133,7 +133,7 @@ Ask me anything about anime, posts, or the site!`,
                         </svg>
                     </div>
                     <div class="max-w-[80%]">
-                        <div class="rounded-lg px-4 py-3 shadow-sm border text-sm leading-relaxed whitespace-pre-line"
+                        <div class="rounded-lg px-4 shadow-sm border text-sm leading-normal whitespace-pre-line"
                             :class="message.role === 'user' ?
                                 'bg-[#9926f0] text-white border-transparent rounded-tr-none' :
                                 'bg-white text-gray-800 border-gray-200 rounded-tl-none'">
