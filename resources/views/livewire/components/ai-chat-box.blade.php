@@ -1,4 +1,83 @@
-<div class="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-[9999]" x-data="{ isOpen: @entangle('isOpen') }">
+<div class="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-[9999]" x-data="{
+    isOpen: @entangle('isOpen'),
+    messages: [{
+        role: 'assistant',
+        content: `Hey there! 👋
+I’m your AnimeFeverZone AI assistant.
+Ask me anything about anime, posts, or the site!`,
+    }, ],
+    input: '',
+    isStreaming: false,
+    init() {
+        this.scrollToBottom();
+    },
+    scrollToBottom() {
+        this.$nextTick(() => {
+            if (this.$refs.messages) {
+                this.$refs.messages.scrollTop = this.$refs.messages.scrollHeight;
+            }
+        });
+    },
+    async sendMessage() {
+        const message = this.input.trim();
+
+        if (message === '' || this.isStreaming) {
+            return;
+        }
+
+        this.messages.push({ role: 'user', content: message });
+        this.input = '';
+
+        const assistantIndex = this.messages.length;
+        this.messages.push({ role: 'assistant', content: '' });
+        this.scrollToBottom();
+
+        const history = this.messages.slice(0, -1).slice(-6);
+        this.isStreaming = true;
+
+        try {
+            const response = await fetch('{{ route('ai-chat.stream') }}', {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': document.head.querySelector('meta[name=csrf-token]').content,
+                },
+                body: JSON.stringify({
+                    message: message,
+                    history: history
+                }),
+            });
+
+            if (response.status === 422) {
+                const errorData = await response.json().catch(() => ({}));
+                const errorMessage = errorData?.message ?? 'Validation error occurred.';
+                this.messages[assistantIndex].content = `⚠️ ${errorMessage}`;
+                return;
+            }
+
+            if (!response.ok) {
+                throw new Error('Request failed');
+            }
+
+            const data = await response.json();
+            const rawText = data?.text ?? data?.data?.text ?? '';
+            const normalizedText = rawText
+                .replace(/\\n/g, '\n')
+                .replace(/\n{3,}/g, '\n\n')
+                .trim();
+
+            this.messages[assistantIndex].content = normalizedText !== '' ?
+                normalizedText :
+                'Sorry, I did not get a response.';
+        } catch (error) {
+            this.messages[assistantIndex].content = 'Sorry, I hit a snag. Please try again.';
+        } finally {
+            this.isStreaming = false;
+            this.scrollToBottom();
+        }
+    },
+}">
     <!-- Chat Window -->
     <div x-show="isOpen" x-transition:enter="transition ease-out duration-300"
         x-transition:enter-start="opacity-0 translate-y-4 scale-95"
@@ -35,27 +114,30 @@
         </div>
 
         <!-- Messages Area -->
-        <div class="flex-1 overflow-y-auto p-3 sm:p-4 bg-gray-50 space-y-4">
-            <!-- Welcome Message -->
-            <div class="flex items-start gap-3">
-                <div
-                    class="w-8 h-8 bg-gradient-to-r from-[#9926f0] to-[#d122e3] rounded-full flex items-center justify-center flex-shrink-0">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                        stroke="white" class="w-5 h-5">
-                        <path stroke-linecap="round" stroke-linejoin="round"
-                            d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 00-2.456 2.456zM16.894 20.567L16.5 21.75l-.394-1.183a2.25 2.25 0 00-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 001.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 001.423 1.423l1.183.394-1.183.394a2.25 2.25 0 00-1.423 1.423z" />
-                    </svg>
-                </div>
-                <div class="flex-1">
-                    <div class="bg-white rounded-lg rounded-tl-none px-4 py-3 shadow-sm border border-gray-200">
-                        <p class="text-gray-800 text-sm leading-relaxed">
-                            Hey there! 👋 <br>
-                            I’m your AnimeFeverZone AI assistant. <br>
-                            Ask me anything about anime, posts, or the site!
-                        </p>
+        <div class="flex-1 overflow-y-auto p-3 sm:p-4 bg-gray-50 space-y-4" x-ref="messages">
+            <template x-for="(message, index) in messages" :key="index">
+                <div class="flex items-start gap-3" :class="message.role === 'user' ? 'justify-end' : ''">
+                    <div x-show="message.role === 'assistant'"
+                        class="w-8 h-8 bg-gradient-to-r from-[#9926f0] to-[#d122e3] rounded-full flex items-center justify-center flex-shrink-0">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                            stroke="white" class="w-5 h-5">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 00-2.456 2.456zM16.894 20.567L16.5 21.75l-.394-1.183a2.25 2.25 0 00-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 001.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 001.423 1.423l1.183.394-1.183.394a2.25 2.25 0 00-1.423 1.423z" />
+                        </svg>
                     </div>
-                    <p class="text-xs text-gray-500 mt-1 ml-1">Just now</p>
+                    <div class="max-w-[80%] border-red-500">
+                        <div class="rounded-lg px-4 py-3 shadow-sm border text-sm leading-relaxed whitespace-pre-line"
+                            :class="message.role === 'user' ?
+                                'bg-[#9926f0] text-white border-transparent rounded-tr-none' :
+                                'bg-white text-gray-800 border-gray-200 rounded-tl-none'">
+                            <p x-html="message.content"></p>
+                        </div>
+                    </div>
                 </div>
+            </template>
+            <div x-show="isStreaming" class="text-xs text-gray-500 flex items-center gap-2">
+                <span class="inline-flex h-2 w-2 rounded-full bg-[#9926f0] animate-pulse"></span>
+                <span>AI is typing…</span>
             </div>
         </div>
 
@@ -63,12 +145,14 @@
         <div class="border-t border-gray-200 bg-white p-3 sm:p-4">
             <div class="flex items-end gap-2">
                 <div class="flex-1">
-                    <textarea placeholder="Start chatting…" rows="1"
+                    <textarea placeholder="Start chatting…" rows="1" x-model="input"
+                        @keydown.enter.prevent="if (! $event.shiftKey) { sendMessage(); }"
                         class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#9926f0] focus:border-transparent resize-none text-sm"
                         style="max-height: 120px; overflow-y: auto;"></textarea>
                 </div>
-                <button
-                    class="bg-gradient-to-r from-[#9926f0] to-[#d122e3] text-white p-3 rounded-lg hover:opacity-90 transition-opacity flex-shrink-0 shadow-sm">
+                <button @click="sendMessage()" :disabled="isStreaming"
+                    :class="isStreaming ? 'opacity-60 cursor-not-allowed' : 'hover:opacity-90'"
+                    class="bg-gradient-to-r from-[#9926f0] to-[#d122e3] text-white p-3 rounded-lg transition-opacity flex-shrink-0 shadow-sm">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
                         stroke="currentColor" class="w-5 h-5">
                         <path stroke-linecap="round" stroke-linejoin="round"
