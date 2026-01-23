@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Ai\ChatController;
 use App\Http\Controllers\SubscriberController;
 use App\Livewire\Contact;
 use App\Livewire\Home;
@@ -31,6 +32,8 @@ Route::get('/tag/{slug}', TagShow::class)->name('tag');
 Route::get('/blog/{slug}', PostShow::class)->name('post');
 Route::get('/videos', VideoPublicIndex::class)->name('videos.index');
 Route::get('/videos/{slug}', VideoShow::class)->name('video.show');
+
+Route::post('/ai/chat/stream', ChatController::class)->name('ai-chat.stream');
 
 // Email Subscribe
 Route::get('/subscriber/verify/{token}/{email}', SubscriberController::class)->name('subscriber_verify');
