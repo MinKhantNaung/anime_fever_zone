@@ -49,7 +49,9 @@
                 <div class="flex-1">
                     <div class="bg-white rounded-lg rounded-tl-none px-4 py-3 shadow-sm border border-gray-200">
                         <p class="text-gray-800 text-sm leading-relaxed">
-                            Hello! I'm your AI assistant. How can I help you today?
+                            Hey there! 👋 <br>
+                            I’m your AnimeFeverZone AI assistant. <br>
+                            Ask me anything about anime, posts, or the site!
                         </p>
                     </div>
                     <p class="text-xs text-gray-500 mt-1 ml-1">Just now</p>
@@ -60,18 +62,10 @@
         <!-- Input Area -->
         <div class="border-t border-gray-200 bg-white p-3 sm:p-4">
             <div class="flex items-end gap-2">
-                <div class="flex-1 relative">
-                    <textarea placeholder="Type your message..." rows="1"
-                        class="w-full px-4 py-3 pr-12 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#9926f0] focus:border-transparent resize-none text-sm"
+                <div class="flex-1">
+                    <textarea placeholder="Start chatting…" rows="1"
+                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#9926f0] focus:border-transparent resize-none text-sm"
                         style="max-height: 120px; overflow-y: auto;"></textarea>
-                    <button
-                        class="absolute right-2 bottom-2 text-gray-400 hover:text-[#9926f0] transition-colors p-1.5 rounded">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                            stroke="currentColor" class="w-5 h-5">
-                            <path stroke-linecap="round" stroke-linejoin="round"
-                                d="M18.375 12.739l-7.693 7.693a4.5 4.5 0 01-6.364-6.364l10.94-10.94A3 3 0 1119.5 7.372L8.552 18.32m.009-.01l-.01.01m5.699-9.941l-7.81 7.81a1.5 1.5 0 002.112 2.13" />
-                        </svg>
-                    </button>
                 </div>
                 <button
                     class="bg-gradient-to-r from-[#9926f0] to-[#d122e3] text-white p-3 rounded-lg hover:opacity-90 transition-opacity flex-shrink-0 shadow-sm">
@@ -83,7 +77,7 @@
                 </button>
             </div>
             <p class="text-xs text-gray-500 mt-2 text-center">
-                AI responses may contain errors. Verify important information.
+                AI can make mistakes. Verify important information.
             </p>
         </div>
     </div>
