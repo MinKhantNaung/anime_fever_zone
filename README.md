@@ -59,6 +59,40 @@ You can visit here: [https://animefeverzone.com](https://animefeverzone.com)
 9. **Email Subscription**: Any user can subscribe to new post notifications by verifying their email.
 
 
+## 🤖 AI Chat Assistant (Ollama Cloud AI API)
+
+- **On-site AI Assistant** powered by the **Ollama Cloud AI API**.
+- Allows users to:
+  - Ask questions about anime topics.
+  - Receive explanations, summaries, and recommendations.
+  - Chat naturally while browsing the site.
+- **Real-time AI responses**:
+  - User messages are sent to the Ollama Cloud AI API.
+  - Responses are displayed instantly in the chat interface.
+- **Formatted AI output**:
+  - Supports bold text, lists, paragraphs, and line breaks.
+  - Chat UI renders responses in a ChatGPT-like format.
+- **Seamless SPA experience**:
+  - Built with **Laravel + Livewire + Alpine.js**.
+  - Conversations update without page reloads.
+- **Extensible AI integration**:
+  - Easy to switch models or adjust prompts.
+  - Can be extended for moderation, summaries, SEO assistance, or content support.
+
+### AI Chat Technologies
+
+- Ollama Cloud AI API
+- Laravel (Backend & AI service layer)
+- Livewire (Real-time SPA chat)
+- Alpine.js (Chat UI interactions)
+- Tailwind CSS (Chat UI styling)
+
+### AI Disclaimer
+
+> **AI responses may contain errors.**  
+> Please verify important information before relying on them.
+
+
 ## Technologies Used
 
 - PHP (always latest)
@@ -69,7 +103,8 @@ You can visit here: [https://animefeverzone.com](https://animefeverzone.com)
 - Javascript
 - Tailwind CSS
 - SweetAlert 2
-- ElevenLabs API (Text-to-Speech)
+- ElevenLabs AI API (Text-to-Speech)
+- Ollama Cloud AI API
 - YouTube API (Video Integration)
 
 
