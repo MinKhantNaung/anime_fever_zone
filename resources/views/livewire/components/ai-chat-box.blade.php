@@ -10,6 +10,11 @@ Ask me anything about anime, posts, or the site!`,
     isStreaming: false,
     init() {
         this.scrollToBottom();
+        this.$watch('isOpen', (value) => {
+            if (value) {
+                this.scrollToBottom();
+            }
+        });
     },
     scrollToBottom() {
         this.$nextTick(() => {
