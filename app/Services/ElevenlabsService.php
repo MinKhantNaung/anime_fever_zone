@@ -47,7 +47,9 @@ final class ElevenlabsService
 
         // Check if audio already exists in cache
         if (Storage::disk('public')->exists($cachePath)) {
-            return url(Storage::url($cachePath));
+            $filePath = storage_path('app/public/' . $cachePath);
+
+            return url(Storage::url($cachePath)) . '?' . filemtime($filePath);
         }
 
         try {
