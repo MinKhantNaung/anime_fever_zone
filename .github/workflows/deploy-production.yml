@@ -44,9 +44,6 @@ jobs:
             cd ${{ secrets.VPS_PATH }}
 
             echo "🚀 Starting deployment..."
-
-            # Ensure correct group is active
-            newgrp www-data << 'INNER'
             
             echo "📥 Pulling latest code..."
             git fetch origin main
