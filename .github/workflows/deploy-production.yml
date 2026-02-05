@@ -70,6 +70,7 @@ jobs:
             sudo -u www-data php artisan octane:reload || sudo systemctl restart octane || true
 
             echo "🎉 Deployment completed successfully!"
+        INNER
           ENDSSH
 
       - name: Notify deployment success
