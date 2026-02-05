@@ -39,60 +39,41 @@ jobs:
           SUDO_PASSWORD: ${{ secrets.SUDO_PASSWORD }}
         run: |
           ssh $VPS_USER@$VPS_HOST << 'ENDSSH'
-            cd ${{ secrets.VPS_PATH }}
+            set -e
 
-            # Export sudo password for use in script
-            export SUDO_PASS='${{ secrets.SUDO_PASSWORD }}'
+            cd ${{ secrets.VPS_PATH }}
 
             echo "🚀 Starting deployment..."
 
-            # Change ownership to deploy user for git/composer/npm operations
-            echo "🔐 Setting permissions for deployment..."
-            echo "$SUDO_PASS" | sudo -S chown -R $USER:$USER .
-
-            # Pull latest code
+            # Ensure correct group is active
+            newgrp www-data << 'INNER'
+            
             echo "📥 Pulling latest code..."
             git fetch origin main
             git reset --hard origin/main
-            git pull origin main
 
-            # Install/Update dependencies
             echo "📦 Installing Composer dependencies..."
             composer install --no-interaction --prefer-dist --optimize-autoloader --no-dev
 
             echo "📦 Installing npm dependencies..."
             export NVM_DIR="$HOME/.nvm"
-            [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+            [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
 
-            echo "🏗️ Building frontend assets..."
             npm ci
             npm run build
             npm prune --production
 
-            # Run database migrations (before ownership change)
-            echo "🗄️  Running database migrations..."
+            echo "🗄️ Running database migrations..."
             php artisan migrate --force
 
-            # Clear and cache config (before ownership change)
             echo "🧹 Optimizing application..."
             php artisan app:optimize-all
 
-            # Change ownership back to www-data
-            echo "🔐 Restoring www-data ownership..."
-            echo "$SUDO_PASS" | sudo -S chown -R www-data:www-data .
-
-            # Set proper permissions
-            echo "🔧 Setting proper permissions..."
-            echo "$SUDO_PASS" | sudo -S find . -type d -exec chmod 755 {} \;
-            echo "$SUDO_PASS" | sudo -S find . -type f -exec chmod 644 {} \;
-            echo "$SUDO_PASS" | sudo -S chmod +x artisan
-            echo "$SUDO_PASS" | sudo -S chmod -R 775 storage bootstrap/cache
-
-            # Reload Octane as www-data user
             echo "🔄 Reloading Octane..."
-            echo "$SUDO_PASS" | sudo -S -u www-data php artisan octane:reload || echo "$SUDO_PASS" | sudo -S systemctl restart octane || true
+            sudo -u www-data php artisan octane:reload || sudo systemctl restart octane || true
 
             echo "🎉 Deployment completed successfully!"
+        INNER
           ENDSSH
 
       - name: Notify deployment success
