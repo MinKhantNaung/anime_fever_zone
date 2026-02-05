@@ -44,9 +44,6 @@ jobs:
             cd ${{ secrets.VPS_PATH }}
 
             echo "🚀 Starting deployment..."
-
-            # Ensure correct group is active
-            newgrp www-data << 'INNER'
             
             echo "📥 Pulling latest code..."
             git fetch origin main
@@ -73,7 +70,6 @@ jobs:
             sudo -u www-data php artisan octane:reload || sudo systemctl restart octane || true
 
             echo "🎉 Deployment completed successfully!"
-        INNER
           ENDSSH
 
       - name: Notify deployment success
