@@ -66,7 +66,7 @@ jobs:
             php artisan app:optimize-all
 
             echo "🔄 Reloading Octane..."
-            sudo -u www-data php artisan octane:reload || sudo systemctl restart octane || true
+            sudo -u www-data /usr/bin/php $VPS_PATH/artisan octane:reload || sudo systemctl restart octane || true
 
             echo "🎉 Deployment completed successfully!"
           ENDSSH
