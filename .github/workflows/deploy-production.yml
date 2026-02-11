@@ -57,7 +57,7 @@ jobs:
 
             npm ci
             npm run build
-            npm prune --production
+            rm -rf node_modules
 
             echo "🗄️ Running database migrations..."
             php artisan migrate --force
