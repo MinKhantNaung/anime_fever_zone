@@ -50,7 +50,6 @@ Ask me anything about anime, posts, or the site!`,
                 headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': document.head.querySelector('meta[name=csrf-token]').content,
                 },
                 body: JSON.stringify({
                     message: message,
