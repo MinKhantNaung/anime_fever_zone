@@ -92,8 +92,8 @@
     @push('scripts')
         <script type="application/ld+json">
         {
-          "@context": "https://schema.org",
-          "@type": "BlogPosting",
+          "@@context": "https://schema.org",
+          "@@type": "BlogPosting",
           "headline": "Anime Fever Zone",
           "image": "{{ asset('favicon.ico') }}",
           "description": "Explore the latest news, reviews, and discussions on anime and other popular series at Anime Fever Zone. Stay up-to-date

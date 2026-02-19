@@ -102,8 +102,8 @@
 
     <script type="application/ld+json">
     {
-      "@context": "https://schema.org",
-      "@type": "BlogPosting",
+      "@@context": "https://schema.org",
+      "@@type": "BlogPosting",
       "headline": "{{ 'Anime Fever Zone' . ucfirst($slug) }}",
       "image": "{{ asset('favicon.ico') }}",
       "description": "Explore exciting content on {{ $slug }} and more at Anime Fever Zone. Join our community and stay informed about

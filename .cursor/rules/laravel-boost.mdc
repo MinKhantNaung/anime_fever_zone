@@ -16,8 +16,7 @@ This application is a Laravel application and its main Laravel ecosystems packag
 - laravel/octane (OCTANE) - v2
 - laravel/prompts (PROMPTS) - v0
 - laravel/sanctum (SANCTUM) - v4
-- livewire/livewire (LIVEWIRE) - v3
-- livewire/volt (VOLT) - v1
+- livewire/livewire (LIVEWIRE) - v4
 - laravel/breeze (BREEZE) - v2
 - laravel/mcp (MCP) - v0
 - laravel/pint (PINT) - v1
@@ -236,9 +235,384 @@ protected function isAccessible(User $user, ?string $path = null): bool
     </code-snippet>
 
 
-=== livewire/v3 rules ===
+=== livewire/v4 rules ===
 
-## Livewire 3
+## Livewire 4
+
+### New features: component formats (v4)
+- v4 adds **single-file** and **multi-file** component formats alongside traditional class + view. **Single-file:** PHP and Blade in one file (default for `make:livewire`). **Multi-file:** PHP, Blade, JavaScript, and tests in a directory (use `--mfc`). View-based component files can be prefixed with a ⚡ emoji to distinguish them in the editor (disable via `make_command.emoji` config). Use `php artisan livewire:convert <name>` to convert between formats.
+
+<code-snippet name="Livewire v4 component commands" lang="bash">
+php artisan make:livewire create-post        # Single-file (default)
+php artisan make:livewire create-post --mfc  # Multi-file component
+php artisan livewire:convert create-post     # Convert between formats
+</code-snippet>
+
+### Slots and attribute forwarding (v4)
+- Components support **slots** and **automatic attribute bag forwarding** via `{{ $attributes }}`, making component composition and nesting more flexible. Use the documentation to learn more about nesting components.
+
+### JavaScript in view-based components (v4)
+- View-based components can include `<script>` tags without the `@script` wrapper. Scripts are served as separate cached files for better performance and get automatic `$wire` binding: `this` is bound like `$wire` inside the script (e.g. `this.count++` is equivalent to `$wire.count++`); `$wire` remains available (e.g. `$wire.save()`).
+
+<code-snippet name="View-based component script (v4)" lang="html">
+<div>
+    <!-- Your component template -->
+</div>
+
+<script>
+    // $wire is automatically bound as 'this'
+    this.count++  // Same as $wire.count++
+
+    // $wire is still available if preferred
+    $wire.save()
+</script>
+</code-snippet>
+
+### Islands (v4)
+- **Islands** are isolated regions inside a component that update on their own, improving performance without separate child components. Use `@island(name: '...', lazy: true)` / `@endisland`. See the documentation for more on islands.
+
+<code-snippet name="Island directive (v4)" lang="html">
+@island(name: 'stats', lazy: true)
+    <div>{{ $this->expensiveStats }}</div>
+@endisland
+</code-snippet>
+
+### Deferred loading (v4)
+- In addition to **lazy** (viewport-based) loading, components can be **deferred** to load right after the initial page load. Use the `defer` attribute on the tag or the `#[Defer]` attribute on the component class.
+
+<code-snippet name="Defer loading (v4)" lang="html">
+<livewire:revenue defer />
+</code-snippet>
+
+<code-snippet name="Defer attribute on component (v4)" lang="php">
+#[Defer]
+class Revenue extends Component { ... }
+</code-snippet>
+
+### Bundled loading (v4)
+- You can control whether multiple lazy or deferred components load in **parallel** or **bundled** in one request. Use the `.bundle` modifier on the tag or `bundle: true` in the attribute. See the documentation for lazy and deferred loading.
+
+<code-snippet name="Bundled loading (v4)" lang="html">
+<livewire:revenue lazy.bundle />
+<livewire:expenses defer.bundle />
+</code-snippet>
+
+<code-snippet name="Lazy bundle attribute (v4)" lang="php">
+#[Lazy(bundle: true)]
+class Revenue extends Component { ... }
+</code-snippet>
+
+### Async actions (v4)
+- Run actions in **parallel** without blocking other requests using the `.async` modifier on the wire directive or the `#[Async]` attribute on the method.
+
+<code-snippet name="Async wire:click (v4)" lang="html">
+<button wire:click.async="logActivity">Track</button>
+</code-snippet>
+
+<code-snippet name="Async method attribute (v4)" lang="php">
+#[Async]
+public function logActivity() { ... }
+</code-snippet>
+
+### wire:sort – drag-and-drop sorting (v4)
+- **wire:sort** adds built-in support for sortable lists with drag-and-drop. Put `wire:sort="methodName"` on the list and `wire:sort:item="{{ $id }}"` (plus `wire:key`) on each item. Use the documentation for full details.
+
+<code-snippet name="wire:sort (v4)" lang="html">
+<ul wire:sort="updateOrder">
+    @foreach ($items as $item)
+        <li wire:sort:item="{{ $item->id }}" wire:key="{{ $item->id }}">{{ $item->name }}</li>
+    @endforeach
+</ul>
+</code-snippet>
+
+### wire:intersect – viewport intersection (v4)
+- **wire:intersect** runs actions when elements enter or leave the viewport (similar to Alpine's x-intersect). Use the documentation for full details. **Modifiers:** `.once` (fire only once), `.half` (half visible), `.full` (fully visible), `.threshold.X` (visibility 0–100%), `.margin.Xpx` or `.margin.X%` (intersection margin). Use `:leave` to run when leaving the viewport.
+
+<code-snippet name="wire:intersect (v4)" lang="html">
+<!-- Basic -->
+<div wire:intersect="loadMore">...</div>
+
+<!-- Modifiers -->
+<div wire:intersect.once="trackView">...</div>
+<div wire:intersect:leave="pauseVideo">...</div>
+<div wire:intersect.half="loadMore">...</div>
+<div wire:intersect.full="startAnimation">...</div>
+<div wire:intersect.margin.200px="loadMore">...</div>
+<div wire:intersect.threshold.50="trackScroll">...</div>
+</code-snippet>
+
+### wire:ref – element references (v4)
+- **wire:ref** lets you reference and interact with elements from the template and JavaScript. Set `wire:ref="name"` on the element; access it as `this.$refs.name` in scripts. Use with `$js` for actions (e.g. `wire:click="$js.scrollToModal"` and `this.$js.scrollToModal = () => this.$refs.modal.scrollIntoView()`). See the documentation for more.
+
+<code-snippet name="wire:ref (v4)" lang="html">
+<div wire:ref="modal"><!-- Modal content --></div>
+<button wire:click="$js.scrollToModal">Scroll to modal</button>
+<script>
+    this.$js.scrollToModal = () => {
+        this.$refs.modal.scrollIntoView()
+    }
+</script>
+</code-snippet>
+
+### .renderless and .preserve-scroll modifiers (v4)
+- **.renderless:** Skip component re-render for an action (e.g. `wire:click.renderless="trackClick"`). Use for actions that don't need to update the UI; alternative to the `#[Renderless]` attribute.
+- **.preserve-scroll:** Keep scroll position during updates to avoid layout jumps (e.g. `wire:click.preserve-scroll="loadMore"`).
+
+<code-snippet name="renderless and preserve-scroll (v4)" lang="html">
+<button wire:click.renderless="trackClick">Track</button>
+<button wire:click.preserve-scroll="loadMore">Load More</button>
+</code-snippet>
+
+### data-loading attribute (v4)
+- Any element that triggers a network request gets a **data-loading** attribute while the request runs. Style loading state with Tailwind using `data-loading:` variants.
+
+<code-snippet name="data-loading styling (v4)" lang="html">
+<button wire:click="save" class="data-loading:opacity-50 data-loading:pointer-events-none">
+    Save Changes
+</button>
+</code-snippet>
+
+### JavaScript: $errors magic property (v4)
+- Access the component's **error bag** from JavaScript. Use `$errors.has('field')`, `$errors.first('field')`, etc. in directives like `wire:show` and `wire:text`. See the validation documentation for more.
+
+<code-snippet name="$errors in template (v4)" lang="html">
+<div wire:show="$errors.has('email')">
+    <span wire:text="$errors.first('email')"></span>
+</div>
+</code-snippet>
+
+### JavaScript: $intercept (v4)
+- **$intercept** lets you intercept and modify Livewire requests from JavaScript (e.g. before a method runs or to change payload/response). See the JavaScript interceptors documentation for more.
+
+<code-snippet name="$intercept (v4)" lang="html">
+<script>
+this.$intercept('save', ({ ... }) => {
+    // ...
+})
+</script>
+</code-snippet>
+
+### Island targeting from template (v4)
+- Trigger island updates from the template with **wire:island.*** modifiers. Use `wire:island.append="islandName"` (or similar) so an action refreshes or appends to a specific island.
+
+<code-snippet name="wire:island targeting (v4)" lang="html">
+<button wire:click="loadMore" wire:island.append="stats">
+    Load more
+</button>
+</code-snippet>
+
+### wire:model modifiers and client-side sync (v4)
+- In v3, modifiers like `.blur` and `.change` only controlled when **network** requests were sent; the input value was still synced to client-side state (`$wire.property`) as the user typed. In v4, these modifiers also control **when client-side state** syncs, enabling patterns like inputs that don't update until the user blurs or presses Enter.
+- **Migration:** If you use `.blur` or `.change` and want the old behavior, add `.live` before the modifier: `wire:model.blur` → `wire:model.live.blur`, `wire:model.change` → `wire:model.live.change`. `wire:model.lazy` is backwards compatible—no change needed.
+- **New in v4:** You can delay client-side updates without sending network requests (e.g. `wire:model.blur="width"` to update only on blur; `wire:model.blur.enter="search"` to update on Enter or blur).
+
+<code-snippet name="wire:model modifier migration (v4)" lang="html">
+<!-- v3 -->
+<input wire:model.blur="title">
+
+<!-- v4 equivalent (old behavior) -->
+<input wire:model.live.blur="title">
+
+<!-- v4 only: update $wire when user tabs away, no request until blur -->
+<input wire:model.blur="width">
+
+<!-- v4 only: update on Enter or blur -->
+<input wire:model.blur.enter="search">
+</code-snippet>
+
+### wire:model and child events (v4)
+- In v4, `wire:model` only listens for events on the element itself (like `.self`); it no longer responds to input/change events that bubble up from children. This avoids issues when `wire:model` is on a container (e.g. modal, accordion) that has form inputs inside. To capture events from child elements again, add the `.deep` modifier (e.g. `wire:model.deep="value"`). Standard bindings on inputs, selects, and textareas are unchanged; the change mainly affects `wire:model` on container elements.
+
+<code-snippet name="wire:model deep modifier (v4)" lang="html">
+<!-- Before (v3) - listened to child events by default -->
+<div wire:model="value">
+    <input type="text">
+</div>
+
+<!-- After (v4) - add .deep to restore old behavior -->
+<div wire:model.deep="value">
+    <input type="text">
+</div>
+</code-snippet>
+
+### Routing (v4)
+- For full-page components, use `Route::livewire()` instead of `Route::get()`. The old style still works but is not recommended; `Route::livewire()` is required for single-file and multi-file components to work correctly as full-page components.
+
+<code-snippet name="Livewire 4 routing" lang="php">
+// Before (v3) - still works but not recommended
+Route::get('/dashboard', Dashboard::class);
+
+// After (v4) - recommended for all component types
+Route::livewire('/dashboard', Dashboard::class);
+
+// View-based components: use the component name
+Route::livewire('/dashboard', 'pages::dashboard');
+</code-snippet>
+
+### wire:navigate:scroll (v4)
+- When preserving scroll in a scrollable container across `wire:navigate` requests, use `wire:navigate:scroll` in v4 instead of `wire:scroll`.
+
+<code-snippet name="wire:navigate:scroll (v4)" lang="html">
+@persist('sidebar')
+    <div class="overflow-y-scroll" wire:navigate:scroll>
+        <!-- ... -->
+    </div>
+@endpersist
+</code-snippet>
+
+### Component tags must be closed (v4)
+- In v4, Livewire component tags must be properly closed. With slot support, an unclosed tag causes Livewire to treat following content as slot content and the component may not render. Use a self-closing tag or an explicit closing tag.
+
+<code-snippet name="Livewire component tag (v4)" lang="html">
+<!-- Before (v3) - unclosed tag -->
+<livewire:component-name>
+
+<!-- After (v4) - self-closing -->
+<livewire:component-name />
+</code-snippet>
+
+### wire:transition uses View Transitions API (v4)
+- In v3, `wire:transition` wrapped Alpine's `x-transition` and supported modifiers such as `.opacity`, `.scale`, `.duration.200ms`, and `.origin.top`. In v4, `wire:transition` uses the browser's native View Transitions API. Plain `wire:transition` still works (elements fade in and out); all modifiers have been removed and are no longer supported.
+
+<code-snippet name="wire:transition (v4)" lang="html">
+<!-- Still works in v4 -->
+<div wire:transition>...</div>
+
+<!-- No longer supported in v4 -->
+<div wire:transition.opacity>...</div>
+<div wire:transition.scale.origin.top>...</div>
+<div wire:transition.duration.500ms>...</div>
+</code-snippet>
+
+### Update hooks consolidate array/object changes (v4)
+- When the frontend replaces an entire array or object (e.g. `$wire.items = ['new', 'values']`), Livewire v4 sends a **single consolidated update** instead of granular per-index updates. `updatingItems` / `updatedItems` (and equivalent hooks) fire **once** with the full new value, matching v2 behavior. In v3, the same operation could fire hooks multiple times (once per index change plus `__rm__` removals). If your code depends on per-index hooks when replacing whole arrays, it may need to be updated. Single-item changes (e.g. `wire:model="items.0"`) still trigger granular hooks as before.
+
+### Method signature changes (v4)
+- If you extend Livewire or call these methods directly, update for v4. **Streaming:** The `stream()` method parameter order changed and the `to` parameter was renamed to `el`. **Component mounting (internal):** If you extend `LivewireManager` or call `mount()` directly, v4 adds a fourth parameter `$slots = []` for slot support; most applications are unaffected.
+
+<code-snippet name="stream() signature (v4)" lang="php">
+// Before (v3) - named parameters
+$this->stream(to: '#container', content: 'Hello', replace: true);
+
+// After (v4) - named parameters (to → el, content first)
+$this->stream(content: 'Hello', replace: true, el: '#container');
+
+// Before (v3) - positional parameters
+$this->stream('#container', 'Hello');
+
+// After (v4) - positional then named
+$this->stream('Hello', el: '#container');
+</code-snippet>
+
+<code-snippet name="mount() signature (v4 internal)" lang="php">
+// Before (v3)
+public function mount($name, $params = [], $key = null)
+
+// After (v4) - adds $slots for slot support
+public function mount($name, $params = [], $key = null, $slots = [])
+</code-snippet>
+
+### Livewire asset and endpoint URL changes (v4, low-impact)
+- All Livewire URLs now include a unique hash derived from `APP_KEY`. The prefix changed from `/livewire/` to `/livewire-{hash}/`. If firewall rules, CDN config, or middleware reference `/livewire/` paths, update them to use or allow the new prefix (e.g. pattern like `/livewire-*/` or read the hash at runtime).
+
+| v3 | v4 |
+|----|-----|
+| `/livewire/update` | `/livewire-{hash}/update` |
+| `/livewire/upload-file` | `/livewire-{hash}/upload-file` |
+| `/livewire/livewire.js` | `/livewire-{hash}/livewire.js` |
+
+### JavaScript deprecations (v4)
+- **$wire.$js() / $js():** The `$wire.$js('name', fn)` and bare `$js('name', fn)` forms are deprecated. Use property assignment: `$wire.$js.bookmark = () => { ... }` or `this.$js.bookmark = () => { ... }`. Old syntax still works in v4 but should be migrated when convenient.
+- **commit and request hooks:** `Livewire.hook('commit', ...)` and `Livewire.hook('request', ...)` are deprecated in favor of the interceptor API. Use `Livewire.interceptMessage(...)` instead of `commit`, and `Livewire.interceptRequest(...)` instead of `request`. The new system gives more granular error handling (e.g. `onError` vs `onFailure`), better lifecycle hooks, cancellation support, and component-scoped interceptors via `$wire.intercept(...)`. Deprecated hooks still work in v4; migrate when convenient.
+
+<code-snippet name="$js new syntax (v4)" lang="js">
+// Deprecated (v3)
+$wire.$js('bookmark', () => { /* ... */ });
+$js('bookmark', () => { /* ... */ });
+
+// New (v4)
+$wire.$js.bookmark = () => { /* ... */ };
+// Or: this.$js.bookmark = () => { /* ... */ };
+</code-snippet>
+
+<code-snippet name="commit hook → interceptMessage (v4)" lang="js">
+// OLD - Deprecated
+Livewire.hook('commit', ({ component, commit, respond, succeed, fail }) => {
+    respond(() => { /* after response, before processing */ });
+    succeed(({ snapshot, effects }) => { /* ... */ });
+    fail(() => { /* ... */ });
+});
+
+// NEW - Recommended
+Livewire.interceptMessage(({ component, message, onFinish, onSuccess, onError, onFailure }) => {
+    onFinish(() => { /* like respond() */ });
+    onSuccess(({ payload }) => { /* snapshot: payload.snapshot, effects: payload.effects */ });
+    onError(() => { /* server errors */ });
+    onFailure(() => { /* network errors */ });
+});
+</code-snippet>
+
+<code-snippet name="request hook → interceptRequest (v4)" lang="js">
+// OLD - Deprecated
+Livewire.hook('request', ({ url, options, payload, respond, succeed, fail }) => { ... });
+
+// NEW - Recommended (see Lifecycle Hooks in this rule for full example)
+Livewire.interceptRequest(({ request, onResponse, onSuccess, onError, onFailure }) => {
+    // request.uri, request.options, request.payload
+    onResponse(({ response }) => { /* like respond(); status: response.status */ });
+    onSuccess(({ response, responseJson }) => { /* like succeed() */ });
+    onError(({ response, responseBody, preventDefault }) => { /* server errors */ });
+    onFailure(({ error }) => { /* network errors */ });
+});
+</code-snippet>
+
+### Upgrading from Volt to Livewire v4 single-file components
+- Livewire v4 supports single-file components with the same style as Volt class-based components. You can migrate from Volt by updating imports, routes, and tests as below. **Component imports:** Use `Livewire\Component` instead of `Livewire\Volt\Component`. **Routes:** Use `Route::livewire()` instead of `Volt::route()`. **Tests:** Use `Livewire::test()` and `use Livewire\Livewire` instead of `Volt::test()` and `use Livewire\Volt\Volt`.
+
+<code-snippet name="Volt → Livewire v4 component import" lang="php">
+// Before (Volt)
+use Livewire\Volt\Component;
+new class extends Component { ... }
+
+// After (Livewire v4)
+use Livewire\Component;
+new class extends Component { ... }
+</code-snippet>
+
+<code-snippet name="Volt → Livewire v4 routes" lang="php">
+// Before (Volt)
+use Livewire\Volt\Volt;
+Volt::route('/dashboard', 'dashboard');
+
+// After (Livewire v4)
+use Illuminate\Support\Facades\Route;
+Route::livewire('/dashboard', 'dashboard');
+</code-snippet>
+
+<code-snippet name="Volt → Livewire v4 tests" lang="php">
+// Before (Volt)
+use Livewire\Volt\Volt;
+Volt::test('counter')
+
+// After (Livewire v4)
+use Livewire\Livewire;
+Livewire::test('counter')
+</code-snippet>
+
+- **Remove Volt service provider:** Delete `app/Providers/VoltServiceProvider.php`, then remove its entry from the `providers` array in `bootstrap/providers.php` (e.g. remove `App\Providers\VoltServiceProvider::class`). **Remove Volt package:** Run `composer remove livewire/volt`.
+
+<code-snippet name="Volt provider removal (bootstrap/providers.php)" lang="php">
+// Before
+return [
+    App\Providers\AppServiceProvider::class,
+    App\Providers\VoltServiceProvider::class,
+];
+
+// After
+return [
+    App\Providers\AppServiceProvider::class,
+];
+</code-snippet>
 
 ### Key Changes From Livewire 2
 - These things changed in Livewire 2, but may not have been updated in this application. Verify this application's setup to ensure you conform with application conventions.
@@ -255,41 +629,42 @@ protected function isAccessible(User $user, ?string $path = null): bool
 - Plugins included with Alpine: persist, intersect, collapse, and focus.
 
 ### Lifecycle Hooks
-- You can listen for `livewire:init` to hook into Livewire initialization, and `fail.status === 419` for the page expiring:
+- You can listen for `livewire:init` to hook into Livewire initialization. For v4, use the interceptor API instead of deprecated `Livewire.hook('request', ...)` and `Livewire.hook('commit', ...)`; see **JavaScript deprecations (v4)** in this rule for migration. Example using `Livewire.interceptRequest` (e.g. session expiry / errors):
 
-<code-snippet name="livewire:load example" lang="js">
+<code-snippet name="livewire:init with interceptRequest (v4)" lang="js">
 document.addEventListener('livewire:init', function () {
-    Livewire.hook('request', ({ fail }) => {
-        if (fail && fail.status === 419) {
-            alert('Your session expired');
-        }
-    });
-
-    Livewire.hook('message.failed', (message, component) => {
-        console.error(message);
+    Livewire.interceptRequest(({ onResponse, onSuccess, onError, onFailure }) => {
+        onResponse(({ response }) => {
+            // Runs when response received
+        });
+        onSuccess(({ response, responseJson }) => {
+            // Runs on successful response
+        });
+        onError(({ response, responseBody, preventDefault }) => {
+            if (response?.status === 419) {
+                alert('Your session expired');
+            }
+            console.error(responseBody);
+        });
+        onFailure(({ error }) => {
+            console.error('Livewire request failed', error);
+        });
     });
 });
 </code-snippet>
 
 
-=== volt/core rules ===
+=== single-file components (livewire v4) ===
 
-## Livewire Volt
+## Single-file components (Livewire v4)
 
-- This project uses Livewire Volt for interactivity within its pages. New pages requiring interactivity must also use Livewire Volt. There is documentation available for it.
-- Make new Volt components using `php artisan make:volt [name] [--test] [--pest]`
-- Volt is a **class-based** and **functional** API for Livewire that supports single-file components, allowing a component's PHP logic and Blade templates to co-exist in the same file
-- Livewire Volt allows PHP logic and Blade templates in one file. Components use the `@livewire("volt-anonymous-fragment-eyJuYW1lIjoidm9sdC1hbm9ueW1vdXMtZnJhZ21lbnQtYmQ5YWJiNTE3YWMyMTgwOTA1ZmUxMzAxODk0MGJiZmIiLCJwYXRoIjoic3RvcmFnZVwvZnJhbWV3b3JrXC92aWV3c1wvMTUxYWRjZWRjMzBhMzllOWIxNzQ0ZDRiMWRjY2FjYWIuYmxhZGUucGhwIn0=", Livewire\Volt\Precompilers\ExtractFragments::componentArguments([...get_defined_vars(), ...array (
-)]))
-</code-snippet>
+- With Livewire v4, **Volt is not required**. Use Livewire's built-in single-file components: same class-based style (PHP logic and Blade in one file), but extend `Livewire\Component` and use `Route::livewire()` and `Livewire::test()`. See **Upgrading from Volt to Livewire v4 single-file components** in the Livewire 4 rules for migration from Volt.
+- For new interactivity, create single-file Livewire components (e.g. `php artisan make:livewire ComponentName` and use one file, or the same pattern as below with `Livewire\Component`).
 
+### Single-file component example (Livewire v4)
 
-### Volt Class Based Component Example
-To get started, define an anonymous class that extends Livewire\Volt\Component. Within the class, you may utilize all of the features of Livewire using traditional Livewire syntax:
-
-
-<code-snippet name="Volt Class-based Volt Component Example" lang="php">
-use Livewire\Volt\Component;
+<code-snippet name="Livewire v4 single-file component" lang="php">
+use Livewire\Component;
 
 new class extends Component {
     public $count = 0;
@@ -307,14 +682,14 @@ new class extends Component {
 </code-snippet>
 
 
-### Testing Volt & Volt Components
-- Use the existing directory for tests if it already exists. Otherwise, fallback to `tests/Feature/Volt`.
+### Testing single-file components
+- Use the existing directory for tests if it already exists. Otherwise, fallback to `tests/Feature/Livewire` or similar.
 
-<code-snippet name="Livewire Test Example" lang="php">
-use Livewire\Volt\Volt;
+<code-snippet name="Livewire single-file test example" lang="php">
+use Livewire\Livewire;
 
 test('counter increments', function () {
-    Volt::test('counter')
+    Livewire::test('counter')
         ->assertSee('Count: 0')
         ->call('increment')
         ->assertSee('Count: 1');
@@ -322,16 +697,16 @@ test('counter increments', function () {
 </code-snippet>
 
 
-<code-snippet name="Volt Component Test Using Pest" lang="php">
+<code-snippet name="Single-file component test with auth" lang="php">
 declare(strict_types=1);
 
 use App\Models\{User, Product};
-use Livewire\Volt\Volt;
+use Livewire\Livewire;
 
 test('product form creates product', function () {
     $user = User::factory()->create();
 
-    Volt::test('pages.products.create')
+    Livewire::test('pages.products.create')
         ->actingAs($user)
         ->set('form.name', 'Test Product')
         ->set('form.description', 'Test Description')
@@ -347,34 +722,36 @@ test('product form creates product', function () {
 ### Common Patterns
 
 
-<code-snippet name="CRUD With Volt" lang="php">
+<code-snippet name="CRUD with single-file component" lang="php">
 <?php
 
 use App\Models\Product;
-use function Livewire\Volt\{state, computed};
+use Livewire\Component;
 
-state(['editing' => null, 'search' => '']);
+new class extends Component {
+    public $editing = null;
+    public $search = '';
 
-$products = computed(fn() => Product::when($this->search,
-    fn($q) => $q->where('name', 'like', "%{$this->search}%")
-)->get());
+    public function getProductsProperty()
+    {
+        return Product::when($this->search, fn($q) => $q->where('name', 'like', "%{$this->search}%"))->get();
+    }
 
-$edit = fn(Product $product) => $this->editing = $product->id;
-$delete = fn(Product $product) => $product->delete();
-
-?>
+    public function edit(Product $product) { $this->editing = $product->id; }
+    public function delete(Product $product) { $product->delete(); }
+} ?>
 
 <!-- HTML / UI Here -->
 </code-snippet>
 
-<code-snippet name="Real-Time Search With Volt" lang="php">
+<code-snippet name="Real-Time Search" lang="php">
     <flux:input
         wire:model.live.debounce.300ms="search"
         placeholder="Search..."
     />
 </code-snippet>
 
-<code-snippet name="Loading States With Volt" lang="php">
+<code-snippet name="Loading states" lang="php">
     <flux:button wire:click="save" wire:loading.attr="disabled">
         <span wire:loading.remove>Save</span>
         <span wire:loading>Saving...</span>

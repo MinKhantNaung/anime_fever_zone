@@ -11,11 +11,10 @@
         "laravel/octane": "^2.12",
         "laravel/sanctum": "^4.0",
         "laravel/tinker": "^2.8",
-        "livewire/livewire": "^3.6",
-        "livewire/volt": "^1.7",
+        "livewire/livewire": "^4.0",
         "prism-php/prism": "^0.99.13",
         "spatie/laravel-sitemap": "^7.0",
-        "wire-elements/modal": "^2.0"
+        "wire-elements/modal": "^3.0"
     },
     "require-dev": {
         "brianium/paratest": "^7.8",

@@ -28,8 +28,8 @@
                 <h1 class="text-3xl sm:text-5xl font-black leading-tight text-black pb-2 flex-1">{{ $post->heading }}
                 </h1>
                 <div class="ml-4 flex items-center gap-2">
-                    <button wire:click="generateAudio" wire:loading.attr="disabled" wire:target="generateAudio"
-                        class="flex items-center gap-2 px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                    <button wire:click.async="generateAudio" wire:loading.attr="disabled" wire:target="generateAudio"
+                        class="flex items-center gap-2 px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed data-loading:opacity-50 data-loading:pointer-events-none"
                         title="Listen to this article">
                         <svg wire:loading.remove wire:target="generateAudio" class="w-5 h-5" fill="none"
                             stroke="currentColor" viewBox="0 0 24 24">
@@ -99,7 +99,7 @@
                 </div>
             </div>
 
-            <livewire:comments :model="$post" />
+            <livewire:comments :model="$post" lazy />
 
             {{-- Subscriber Form --}}
             @if ($emailVerifyStatus)
@@ -115,7 +115,7 @@
                             <x-input-error messages="{{ $message }}" />
                         @enderror
                         <button wire:loading.attr='disabled' wire:click.prevent='subscribe'
-                            class="btn btn-secondary text-lg mt-5">
+                            class="btn btn-secondary text-lg mt-5 data-loading:opacity-50 data-loading:pointer-events-none">
                             Subscribe
                         </button>
                     </form>
@@ -138,8 +138,8 @@
 
     <script type="application/ld+json">
     {
-      "@context": "https://schema.org",
-      "@type": "BlogPosting",
+      "@@context": "https://schema.org",
+      "@@type": "BlogPosting",
       "headline": "{{ ucwords(str_replace('-', ' ', $slug)) }}",
       "image": "{{ $post->media->url }}",
       "description": "{{ substr($post->body, 0, 150) }}",

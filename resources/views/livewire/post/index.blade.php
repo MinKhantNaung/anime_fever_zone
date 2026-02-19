@@ -47,8 +47,8 @@
                         <td class="anime-content">{!! limitString($post->body) !!}</td>
                         <td>
                             @if ($post->is_publish == 1)
-                                <button wire:loading.attr="disabled" wire:click.prevent='sendMailToSubscribers({{ $post->id }})'
-                                    class="btn btn-sm btn-primary">
+                                <button wire:loading.attr="disabled" wire:click.async.prevent='sendMailToSubscribers({{ $post->id }})'
+                                    class="btn btn-sm btn-primary data-loading:opacity-50 data-loading:pointer-events-none">
                                     Send Mail
                                 </button>
                             @else
