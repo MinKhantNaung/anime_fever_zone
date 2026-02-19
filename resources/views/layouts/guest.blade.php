@@ -21,7 +21,7 @@
 
     <livewire:components.nav-bar />
 
-    <livewire:offline />
+    <livewire:offline defer />
 
     <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-5 bg-gray-100">
         <div>
@@ -35,8 +35,8 @@
         </div>
     </div>
 
-    <!-- AI Chat Box -->
-    <livewire:components.ai-chat-box />
+    <!-- AI Chat Box (defer: load after initial page) -->
+    <livewire:components.ai-chat-box defer />
 
     @livewireScripts(['defer' => true])
 </body>
