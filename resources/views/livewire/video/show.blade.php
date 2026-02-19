@@ -525,8 +525,8 @@
 @section('meta-jsonld')
     <script type="application/ld+json">
 {
-  "@context": "https://schema.org",
-  "@type": "VideoObject",
+  "@@context": "https://schema.org",
+  "@@type": "VideoObject",
   "name": "{{ $video->title }}",
   "description": "{{ Str::limit(strip_tags($video->description), 150) }}",
   "thumbnailUrl": [

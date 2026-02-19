@@ -4,7 +4,7 @@ namespace Tests\Feature;
 
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Livewire\Volt\Volt;
+use Livewire\Livewire;
 use Tests\TestCase;
 
 class ProfileTest extends TestCase
@@ -17,7 +17,7 @@ class ProfileTest extends TestCase
 
         $this->actingAs($user);
 
-        $component = Volt::test('profile.delete-user-form')
+        $component = Livewire::test('profile.delete-user-form')
             ->set('password', 'password')
             ->call('deleteUser');
 
@@ -35,7 +35,7 @@ class ProfileTest extends TestCase
 
         $this->actingAs($user);
 
-        $component = Volt::test('profile.delete-user-form')
+        $component = Livewire::test('profile.delete-user-form')
             ->set('password', 'wrong-password')
             ->call('deleteUser');
 

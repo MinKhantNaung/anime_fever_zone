@@ -120,8 +120,8 @@
 @section('meta-jsonld')
     <script type="application/ld+json">
         {
-          "@context": "https://schema.org",
-          "@type": "BlogPosting",
+          "@@context": "https://schema.org",
+          "@@type": "BlogPosting",
           "headline": "Anime Fever Zone",
           "image": "{{ asset('favicon.ico') }}",
           "description": "Privacy Policy",

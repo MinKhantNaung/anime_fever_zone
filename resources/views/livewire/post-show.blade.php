@@ -138,8 +138,8 @@
 
     <script type="application/ld+json">
     {
-      "@context": "https://schema.org",
-      "@type": "BlogPosting",
+      "@@context": "https://schema.org",
+      "@@type": "BlogPosting",
       "headline": "{{ ucwords(str_replace('-', ' ', $slug)) }}",
       "image": "{{ $post->media->url }}",
       "description": "{{ substr($post->body, 0, 150) }}",
