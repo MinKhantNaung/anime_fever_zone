@@ -16,6 +16,8 @@
     <meta property="og:url" content="{{ url()->current() }}" />
     <meta property="article:author" content="Anime Fever Zone" />
 
+    @stack('head')
+
     @yield('meta-og')
 
     @yield('meta-jsonld')
@@ -36,7 +38,7 @@
     <!-- Top Bar Nav -->
     <livewire:components.nav-bar />
 
-    <livewire:offline />
+    <livewire:offline defer />
 
     <!-- Text Header -->
     <header class="w-full container mx-auto">
@@ -63,8 +65,8 @@
 
     <x-footer />
 
-    <!-- AI Chat Box -->
-    <livewire:components.ai-chat-box />
+    <!-- AI Chat Box (defer: load after initial page for faster LCP) -->
+    <livewire:components.ai-chat-box defer />
 
     @livewire('wire-elements-modal')
 

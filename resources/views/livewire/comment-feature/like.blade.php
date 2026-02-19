@@ -1,5 +1,5 @@
 <span class="inline-flex items-center text-sm">
-    <button wire:click="like"
+    <button wire:click.async="like"
         class="inline-flex space-x-2 {{ $comment->isLiked()
             ? 'text-green-400
                     hover:text-green-500'
