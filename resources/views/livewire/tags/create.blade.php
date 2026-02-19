@@ -1,82 +1,5 @@
-<?php
-
-use Livewire\Volt\Component;
-use App\Models\Tag;
-use App\Models\Media;
-use App\Services\FileService;
-use App\Services\TagService;
-use App\Services\MediaService;
-use App\Services\AlertService;
-use Livewire\WithFileUploads;
-use Illuminate\Support\Facades\DB;
-
-new class extends Component {
-    use WithFileUploads;
-
-    public $media;
-    public $name;
-    public $body;
-
-    protected $tagService;
-    protected $mediaService;
-    protected $alertService;
-
-    public function boot(TagService $tagService, MediaService $mediaService, AlertService $alertService)
-    {
-        $this->authorize('create', Tag::class);
-
-        $this->tagService = $tagService;
-        $this->mediaService = $mediaService;
-        $this->alertService = $alertService;
-    }
-
-    public function mount()
-    {
-        $this->body = '';
-    }
-
-    public function createTag()
-    {
-        $this->authorize('create', Tag::class);
-        // validate
-        $validated = $this->validateRequests();
-
-        DB::beginTransaction();
-
-        try {
-            $tag = $this->tagService->store($validated);
-
-            // add media
-            $this->mediaService->store(Tag::class, $tag, $this->media, 'image');
-
-            DB::commit();
-
-            $this->alertService->alert($this, config('messages.tag.create'), 'success');
-
-            $this->reset();
-            $this->dispatch('tag-reload');
-
-            return $this->redirectRoute('tags.index', navigate: true);
-        } catch (\Exception $e) {
-            DB::rollback();
-
-            $this->alertService->alert($this, config('messages.common.error'), 'error');
-        }
-    }
-
-    protected function validateRequests()
-    {
-        return $this->validate([
-            'media' => 'required|file|image|mimes:webp|max:5120',
-            'name' => 'required|string|max:225|unique:tags,name',
-            'body' => 'required|string',
-        ]);
-    }
-}; ?>
-
 @section('meta-og')
     <link rel="stylesheet" href="{{ asset('assets/trix/trix.min.css') }}">
-    <script src="{{ asset('assets/trix/trix.umd.min.js') }}"></script>
 @endsection
 
 <div class="bg-white flex flex-col border gap-y-4 px-5 max-w-5xl mx-auto">
@@ -151,10 +74,13 @@ new class extends Component {
                     <div class="label mt-5">
                         <span class="label-text text-lg text-[#9926f0]">Body (Description)</span>
                     </div>
-                    <livewire:trix-editor wire:model='body'>
-                        @error('body')
-                            <x-input-error messages="{{ $message }}" />
-                        @enderror
+                    <div wire:ignore>
+                        <input id="trix-editor-content" type="hidden" name="body" value="{{ $body }}">
+                        <trix-editor input="trix-editor-content" placeholder="Enter description"></trix-editor>
+                    </div>
+                    @error('body')
+                        <x-input-error messages="{{ $message }}" />
+                    @enderror
                 </div>
             </aside>
 
@@ -173,3 +99,21 @@ new class extends Component {
     </form>
 
 </div>
+
+@push('scripts')
+    <script src="{{ asset('assets/trix/trix.umd.min.js') }}"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const trixEditor = document.getElementById('trix-editor-content');
+            if (trixEditor) {
+                document.addEventListener('trix-blur', function(event) {
+                    @this.set('body', trixEditor.value)
+                });
+
+                document.addEventListener('trix-change', function(event) {
+                    @this.set('body', trixEditor.value)
+                });
+            }
+        });
+    </script>
+@endpush
