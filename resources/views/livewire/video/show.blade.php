@@ -451,7 +451,7 @@
             const videoElement = document.getElementById(videoId);
 
             if (window.videojs && videoElement) {
-                const player = window.videojs(videoId, {
+                const player = window.videojs(videoElement, {
                     techOrder: ['youtube'],
                     width: '100%',
                     height: '100%',
@@ -474,29 +474,31 @@
             }
         });
 
-        // Re-initialize when Livewire updates
+        // Re-initialize only when Livewire morphs in a *new* video element (e.g. navigation to this page).
+        // Skip when the element is not in the DOM or already has a valid player (avoids "element not in DOM" and black screen).
         document.addEventListener('livewire:init', () => {
             Livewire.hook('morph.updated', () => {
-                // Check if we're still on a video page before re-initializing
                 const container = document.getElementById('video-container');
-                if (!container) {
-                    // Not on video page, skip initialization
-                    return;
-                }
-
-                // Re-initialize theater mode
-                initTheaterMode();
+                if (!container) return;
 
                 const videoId = 'video-player-{{ $video->id }}';
-                const videoElement = document.getElementById(videoId);
 
-                if (window.videojs && videoElement) {
-                    const existingPlayer = window.videojs.getPlayer(videoId);
-                    if (existingPlayer) {
+                const runAfterMorph = () => {
+                    initTheaterMode();
+
+                    const videoElement = document.getElementById(videoId);
+                    if (!window.videojs || !videoElement) return;
+                    if (!document.body.contains(videoElement)) return;
+
+                    const existingPlayer = window.videojs.getPlayer(videoElement);
+                    if (existingPlayer && typeof existingPlayer.isDisposed === 'function' && !existingPlayer.isDisposed()) {
+                        return;
+                    }
+                    if (existingPlayer && typeof existingPlayer.dispose === 'function') {
                         existingPlayer.dispose();
                     }
 
-                    const player = window.videojs(videoId, {
+                    window.videojs(videoElement, {
                         techOrder: ['youtube'],
                         width: '100%',
                         height: '100%',
@@ -508,15 +510,19 @@
                         youtube: {
                             modestbranding: 1,
                             rel: 0,
-                            controls: 0, // hide YouTube controls
+                            controls: 0,
                             showinfo: 0,
-                            iv_load_policy: 3, // hide annotations
+                            iv_load_policy: 3,
                             fs: 1,
                             cc_load_policy: 1,
                             cc_lang_pref: 'en'
                         }
                     });
-                }
+                };
+
+                requestAnimationFrame(() => {
+                    requestAnimationFrame(runAfterMorph);
+                });
             });
         });
     </script>
