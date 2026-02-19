@@ -1,6 +1,5 @@
 @section('meta-og')
     <link rel="stylesheet" href="{{ asset('assets/trix/trix.min.css') }}">
-    <script src="{{ asset('assets/trix/trix.umd.min.js') }}"></script>
 @endsection
 
 <div class="bg-white flex flex-col border gap-y-4 px-5 max-w-5xl mx-auto">
@@ -70,10 +69,13 @@
                 <div class="label mt-5">
                     <span class="label-text text-lg text-[#9926f0]">Body (Description)</span>
                 </div>
-                <livewire:trix-editor wire:model='body'>
-                    @error('body')
-                        <x-input-error messages="{{ $message }}" />
-                    @enderror
+                <div wire:ignore>
+                    <input id="trix-editor-content-section" type="hidden" name="body" value="{{ $body }}">
+                    <trix-editor input="trix-editor-content-section" placeholder="Enter description"></trix-editor>
+                </div>
+                @error('body')
+                    <x-input-error messages="{{ $message }}" />
+                @enderror
             </aside>
 
             <div class="col-span-12 text-center my-4">
@@ -91,3 +93,21 @@
     </form>
 
 </div>
+
+@push('scripts')
+    <script src="{{ asset('assets/trix/trix.umd.min.js') }}"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const trixEditor = document.getElementById('trix-editor-content-section');
+            if (trixEditor) {
+                document.addEventListener('trix-blur', function(event) {
+                    @this.set('body', trixEditor.getAttribute('value'))
+                });
+
+                document.addEventListener('trix-change', function(event) {
+                    @this.set('body', trixEditor.getAttribute('value'))
+                });
+            }
+        });
+    </script>
+@endpush
