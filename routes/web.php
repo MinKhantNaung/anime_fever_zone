@@ -11,6 +11,7 @@ use App\Livewire\Profile\Edit;
 use App\Livewire\Section\Create as SectionCreate;
 use App\Livewire\Section\Edit as SectionEdit;
 use App\Livewire\Section\Index as SectionIndex;
+use App\Livewire\Tag\Create as TagCreate;
 use App\Livewire\Tag\Edit as TagEdit;
 use App\Livewire\Tag\Index;
 use App\Livewire\TagShow;
@@ -23,45 +24,44 @@ use App\Livewire\Video\Index as VideoIndex;
 use App\Livewire\Video\PublicIndex as VideoPublicIndex;
 use App\Livewire\Video\Show as VideoShow;
 use Illuminate\Support\Facades\Route;
-use Livewire\Volt\Volt;
 
-Route::get('/', Home::class)->name('home');
-Route::get('/topic/{slug}', Topic::class)->name('topic');
-Route::get('/tag/{slug}', TagShow::class)->name('tag');
-Route::get('/blog/{slug}', PostShow::class)->name('post');
-Route::get('/videos', VideoPublicIndex::class)->name('videos.index');
-Route::get('/videos/{slug}', VideoShow::class)->name('video.show');
+Route::livewire('/', Home::class)->name('home');
+Route::livewire('/topic/{slug}', Topic::class)->name('topic');
+Route::livewire('/tag/{slug}', TagShow::class)->name('tag');
+Route::livewire('/blog/{slug}', PostShow::class)->name('post');
+Route::livewire('/videos', VideoPublicIndex::class)->name('videos.index');
+Route::livewire('/videos/{slug}', VideoShow::class)->name('video.show');
 
 // Email Subscribe
 Route::get('/subscriber/verify/{token}/{email}', SubscriberController::class)->name('subscriber_verify');
 
 // info
 Route::middleware('cache.headers:public;max_age=2628000;etag')->group(function (): void {
-    Route::get('/about', About::class)->name('about');
-    Route::get('/privacy-policy', Privacy::class)->name('privacy');
-    Route::get('/terms', Term::class)->name('term');
-    Route::get('/contact/us', Contact::class)->name('contact');
+    Route::livewire('/about', About::class)->name('about');
+    Route::livewire('/privacy-policy', Privacy::class)->name('privacy');
+    Route::livewire('/terms', Term::class)->name('term');
+    Route::livewire('/contact/us', Contact::class)->name('contact');
 });
 
 Route::middleware('auth')->group(function (): void {
-    Route::get('/profile', Edit::class)->name('profile.edit');
+    Route::livewire('/profile', Edit::class)->name('profile.edit');
 
     Route::middleware('isBlogger')->group(function (): void {
-        Route::get('/topics', Create::class)->name('topics.create');
+        Route::livewire('/topics', Create::class)->name('topics.create');
 
         Route::prefix('/blogger')->group(function (): void {
-            Route::get('/tags', Index::class)->name('tags.index');
-            Volt::route('/tags/create', 'tags.create')->name('tags.create');
-            Route::get('/tags/{tag}/edit', TagEdit::class)->name('tags.edit');
+            Route::livewire('/tags', Index::class)->name('tags.index');
+            Route::livewire('/tags/create', TagCreate::class)->name('tags.create');
+            Route::livewire('/tags/{tag}/edit', TagEdit::class)->name('tags.edit');
 
-            Route::get('/posts', PostIndex::class)->name('posts.index');
-            Route::get('/posts/{post}/sections', SectionIndex::class)->name('sections.index');
-            Route::get('/posts/{post}/sections/create', SectionCreate::class)->name('sections.create');
-            Route::get('/posts/sections/{section}/edit', SectionEdit::class)->name('sections.edit');
+            Route::livewire('/posts', PostIndex::class)->name('posts.index');
+            Route::livewire('/posts/{post}/sections', SectionIndex::class)->name('sections.index');
+            Route::livewire('/posts/{post}/sections/create', SectionCreate::class)->name('sections.create');
+            Route::livewire('/posts/sections/{section}/edit', SectionEdit::class)->name('sections.edit');
 
-            Route::get('/videos', VideoIndex::class)->name('blogger.videos.index');
-            Route::get('/videos/create', VideoCreate::class)->name('blogger.videos.create');
-            Route::get('/videos/{video}/edit', VideoEdit::class)->name('blogger.videos.edit');
+            Route::livewire('/videos', VideoIndex::class)->name('blogger.videos.index');
+            Route::livewire('/videos/create', VideoCreate::class)->name('blogger.videos.create');
+            Route::livewire('/videos/{video}/edit', VideoEdit::class)->name('blogger.videos.edit');
         });
     });
 });
