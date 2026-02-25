@@ -42,7 +42,15 @@ jobs:
         run: |
           mkdir -p bootstrap/cache
           mkdir -p storage/framework/{sessions,views,cache}
-          chmod -R 775 storage bootstrap/cache
+          chmod -R 777 storage bootstrap/cache
+
+      - name: Clear Laravel caches
+        run: |
+          php artisan config:clear
+          php artisan route:clear
+          php artisan view:clear
+          php artisan cache:clear
+          php artisan optimize:clear
 
       - name: Install Composer dependencies
         run: composer install --prefer-dist --no-interaction --no-progress
