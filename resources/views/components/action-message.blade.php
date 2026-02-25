@@ -1,5 +1,3 @@
-@blaze
-
 @props(['on'])
 
 <div x-data="{ shown: false, timeout: null }" x-init="@this.on('{{ $on }}', () => { clearTimeout(timeout);

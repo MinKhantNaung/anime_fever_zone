@@ -1,5 +1,3 @@
-@blaze
-
 @props([
     'name',
     'show' => false,

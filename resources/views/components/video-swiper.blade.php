@@ -1,5 +1,3 @@
-@blaze(memo: true)
-
 @props([
     'videos' => [],
     'title' => 'Videos',
