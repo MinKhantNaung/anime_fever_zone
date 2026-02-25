@@ -44,16 +44,16 @@ jobs:
           mkdir -p storage/framework/{sessions,views,cache}
           chmod -R 777 storage bootstrap/cache
 
+      - name: Install Composer dependencies
+        run: composer install --prefer-dist --no-interaction --no-progress
+
       - name: Clear Laravel caches
         run: |
           php artisan config:clear
           php artisan route:clear
           php artisan view:clear
-          php artisan cache:clear
+          php artisan cache:clear || true
           php artisan optimize:clear
-
-      - name: Install Composer dependencies
-        run: composer install --prefer-dist --no-interaction --no-progress
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -83,7 +83,7 @@ jobs:
         run: php artisan migrate --force
 
       - name: Run tests
-        run: php artisan test --parallel
+        run: php artisan test
 
       - name: Upload coverage reports
         if: success()
