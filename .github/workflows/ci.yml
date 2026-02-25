@@ -82,8 +82,11 @@ jobs:
       - name: Run migrations
         run: php artisan migrate --force
 
-      - name: Run tests
-        run: php artisan test --parallel
+      - name: Run Livewire feature tests sequentially
+        run: php artisan test --testsuite=Feature
+
+      - name: Run unit tests in parallel
+        run: php artisan test --testsuite=Unit --parallel
 
       - name: Upload coverage reports
         if: success()
