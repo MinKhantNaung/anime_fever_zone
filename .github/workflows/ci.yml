@@ -44,6 +44,9 @@ jobs:
           mkdir -p storage/framework/{sessions,views,cache}
           chmod -R 777 storage bootstrap/cache
 
+      - name: Install Composer dependencies
+        run: composer install --prefer-dist --no-interaction --no-progress
+
       - name: Clear Laravel caches
         run: |
           php artisan config:clear
@@ -51,9 +54,6 @@ jobs:
           php artisan view:clear
           php artisan cache:clear
           php artisan optimize:clear
-
-      - name: Install Composer dependencies
-        run: composer install --prefer-dist --no-interaction --no-progress
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
