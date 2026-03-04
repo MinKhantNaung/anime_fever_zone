@@ -5,6 +5,7 @@ namespace App\Livewire;
 use App\Models\Post;
 use App\Models\Tag;
 use App\Models\Video;
+use Illuminate\Support\Collection;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -12,13 +13,13 @@ class TagShow extends Component
 {
     use WithPagination;
 
-    public $slug;
+    public string $slug;
 
-    public $tag;
+    public Tag $tag;
 
-    public $featuredPosts;
+    public Collection $featuredPosts;
 
-    public $videos;
+    public Collection $videos;
 
     public function mount()
     {
@@ -54,6 +55,6 @@ class TagShow extends Component
 
         return view('livewire.tag-show', [
             'posts' => $posts,
-        ])->title(ucfirst($this->slug) . ' | Anime Fever Zone');
+        ])->title(ucfirst((string) $this->slug) . ' | Anime Fever Zone');
     }
 }

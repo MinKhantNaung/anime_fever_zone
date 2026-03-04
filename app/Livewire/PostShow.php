@@ -8,6 +8,7 @@ use App\Models\SiteSetting;
 use App\Models\Subscriber;
 use App\Models\Video;
 use App\Services\ElevenlabsService;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Validation\Rule;
 use Livewire\Component;
@@ -16,15 +17,15 @@ use function Illuminate\Support\defer;
 
 class PostShow extends Component
 {
-    public $slug;
+    public string $slug;
 
-    public $post;
+    public Post $post;
 
-    public $featuredPosts;
+    public Collection $featuredPosts;
 
-    public $videos;
+    public Collection $videos;
 
-    public $email;
+    public string $email;
 
     public bool $emailVerifyStatus;
 
@@ -147,6 +148,6 @@ class PostShow extends Component
     public function render()
     {
         return view('livewire.post-show')
-            ->title(ucwords(str_replace('-', ' ', $this->slug)) . ' - Anime Fever Zone');
+            ->title(ucwords(str_replace('-', ' ', (string) $this->slug)) . ' - Anime Fever Zone');
     }
 }
