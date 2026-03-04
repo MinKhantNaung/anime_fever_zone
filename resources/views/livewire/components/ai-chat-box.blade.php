@@ -1,5 +1,5 @@
 <div class="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-[9999]" x-data="{
-    isOpen: @entangle('isOpen'),
+    isOpen: false,
     messages: [{
         role: 'assistant',
         content: `Hey there! 👋
