@@ -25,7 +25,7 @@ class TagShow extends Component
         $this->tag = Tag::with('media')
             ->select('id', 'name', 'body')
             ->where('slug', $this->slug)
-            ->first();
+            ->firstOrFail();
 
         $this->featuredPosts = Post::with('media')
             ->select('id', 'heading', 'slug')

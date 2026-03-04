@@ -72,11 +72,7 @@ class PostShow extends Component
         $this->post = Post::with('media', 'topic', 'tags', 'sections')
             ->select('id', 'topic_id', 'heading', 'body', 'created_at', 'updated_at')
             ->where('slug', $this->slug)
-            ->first();
-
-        if (! $this->post) {
-            abort(404);
-        }
+            ->firstOrFail();
 
         $this->featuredPosts = Post::where('id', '!=', $this->post->id)
             ->where('is_feature', true)
