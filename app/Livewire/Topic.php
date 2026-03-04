@@ -3,6 +3,7 @@
 namespace App\Livewire;
 
 use App\Models\Post;
+use Illuminate\Support\Collection;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -10,9 +11,9 @@ class Topic extends Component
 {
     use WithPagination;
 
-    public $slug;
+    public string $slug;
 
-    public $featuredPosts;
+    public Collection $featuredPosts;
 
     public function mount()
     {
@@ -38,6 +39,6 @@ class Topic extends Component
 
         return view('livewire.topic', [
             'posts' => $posts,
-        ])->title('Anime Fever Zone-' . ucfirst($this->slug));
+        ])->title('Anime Fever Zone-' . ucfirst((string) $this->slug));
     }
 }
