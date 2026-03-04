@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
+    <title>{{ $title ?? 'Anime Fever Zone' }}</title>
+
+    <meta name="description" content="@yield('description')">
+    <meta name="robots" content="index, follow">
+
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:site_name" content="Anime Fever Zone" />
+    <meta property="og:url" content="{{ url()->current() }}" />
+    <meta property="article:author" content="Anime Fever Zone" />
+
+    @stack('head')
+
+    @yield('meta-og')
+
+    @yield('meta-jsonld')
+
+    <link rel="canonical" href="{{ url()->current() }}">
+
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+
+    <!-- Scripts -->
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
+
+    <!-- Livewire styles -->
+    @livewireStyles
+</head>
+
+<body class="bg-white">
+
+    <nav class="w-full py-4 shadow bg-gradient-to-r from-[#9926f0] to-[#d122e3]">
+        <div class="w-full container mx-auto flex flex-nowrap items-center justify-between">
+
+            <nav>
+                <ul
+                    class="flex items-center justify-between font-bold text-sm text-white pl-2 sm:pl-6 uppercase no-underline">
+                    <li>
+                        <a wire:navigate.hover href="{{ route('home') }}"
+                            class="hover:text-gray-200 hover:underline px-4">
+                            <img src="{{ asset('favicon.ico') }}" alt="anime fever zone logo" class="w-9">
+                        </a>
+                    </li>
+                    <li><a wire:navigate.hover href="{{ route('home') }}"
+                            class="text-gray-100 hover:text-gray-200 hover:underline px-4">Home</a></li>
+                </ul>
+            </nav>
+
+            <div class="flex items-center text-lg no-underline text-white pr-0 sm:pr-6 pl-5 sm:pl-0">
+
+                @guest
+                    <a wire:navigate.hover href="{{ route('login') }}" class="px-2 hover:text-gray-200 hover:underline">
+                        Log in
+                    </a>
+                    <a wire:navigate.hover href="{{ route('register') }}" class="px-2 hover:text-gray-200 hover:underline">
+                        Register
+                    </a>
+                @endguest
+
+                <!-- Profile -->
+                @auth
+                    <button wire:click.prevent="logout" class="px-2 hover:text-gray-200 hover:underline">
+                        Log out
+                    </button>
+                    {{-- Profile --}}
+                    <a wire:navigate.hover href="{{ route('profile.edit') }}"
+                        class="px-2 hover:text-gray-200 hover:underline">
+                        @if (auth()->user()->media)
+                            <img src="{{ auth()->user()->media->url }}" alt="profile-image"
+                                class="w-[36px] h-[36px] rounded-full object-cover">
+                        @else
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                stroke="currentColor" class="w-9 h-9">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+                            </svg>
+                        @endif
+                    </a>
+                @endauth
+            </div>
+        </div>
+
+    </nav>
+
+    <!-- Text Header -->
+    <header class="w-full container mx-auto">
+
+        <div class="flex flex-col items-center py-10">
+            <a wire:navigate.hover href="{{ route('home') }}"
+                class="font-bold text-gray-800 uppercase hover:text-gray-700 text-3xl sm:text-5xl">
+                Anime Fever Zone
+            </a>
+            <p class="text-lg text-gray-600 px-2">
+                Embark on a Journey through the Anime Universe and Beyond! Dive into a World of Anime and More.
+            </p>
+        </div>
+    </header>
+
+    <main class="min-h-screen">
+
+        @yield('content')
+
+    </main>
+
+    <x-footer />
+
+    @livewireScripts(['defer' => true])
+
+</body>
+
+</html>
