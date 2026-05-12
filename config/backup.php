@@ -242,7 +242,7 @@ return [
             'to' => env('BACKUP_MAIL_TO'),
 
             'from' => [
-                'address' => env('MAIL_FROM_ADDRESS', 'animefeverzone@email.com'),
+                'address' => env('MAIL_FROM_ADDRESS', 'test@example.com'),
                 'name' => env('MAIL_FROM_NAME', 'Anime Fever Zone'),
             ],
         ],
