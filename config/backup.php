@@ -239,7 +239,7 @@ return [
         'notifiable' => Notifiable::class,
 
         'mail' => [
-            'to' => env('BACKUP_MAIL_TO'),
+            'to' => env('BACKUP_MAIL_TO', 'test@example.com'),
 
             'from' => [
                 'address' => env('MAIL_FROM_ADDRESS', 'test@example.com'),
