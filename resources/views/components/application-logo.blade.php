@@ -1,1 +1,1 @@
-<img src="{{ asset('favicon.ico') }}" alt="logo image" {{ $attributes }}>
+<img src="{{ asset('favicon.ico') }}" alt="logo image" {{ $attributes }} decoding="async">

@@ -66,7 +66,7 @@
                                     <img src="{{ $trendingVideo->getThumbnailUrl('hqdefault') }}"
                                         alt="{{ $trendingVideo->title }}"
                                         class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                                        loading="lazy">
+                                        loading="lazy" decoding="async">
                                     <div
                                         class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-0 group-hover:bg-opacity-20 transition-all">
                                         <svg class="w-6 h-6 text-white opacity-0 group-hover:opacity-100 transition-opacity"

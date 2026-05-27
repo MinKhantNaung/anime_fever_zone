@@ -6,7 +6,7 @@
                 class="flex items-center justify-between font-bold text-sm text-white pl-2 sm:pl-6 uppercase no-underline">
                 <li>
                     <a wire:navigate.hover href="{{ route('home') }}" class="hover:text-gray-200 hover:underline px-4">
-                        <img src="{{ asset('favicon.ico') }}" alt="anime fever zone logo" class="w-9">
+                        <img src="{{ asset('favicon.ico') }}" alt="anime fever zone logo" class="w-9" decoding="async">
                     </a>
                 </li>
                 <li><a wire:navigate.hover href="{{ route('home') }}"
@@ -34,7 +34,7 @@
                 <a wire:navigate.hover href="{{ route('profile.edit') }}" class="px-2 hover:text-gray-200 hover:underline">
                     @if (auth()->user()->media)
                         <img src="{{ auth()->user()->media->url }}" alt="profile-image"
-                            class="w-[36px] h-[36px] rounded-full object-cover">
+                            class="w-[36px] h-[36px] rounded-full object-cover" decoding="async">
                     @else
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                             stroke="currentColor" class="w-9 h-9">

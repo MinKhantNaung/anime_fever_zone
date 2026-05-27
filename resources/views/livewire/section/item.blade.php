@@ -34,7 +34,7 @@
 
                             @case('image')
                                 <img src="{{ $file->url }}" alt="image"
-                                    class="w-full block object-scale-down" loading="lazy">
+                                    class="w-full block object-scale-down" loading="lazy" decoding="async">
                             @break
 
                             @default
