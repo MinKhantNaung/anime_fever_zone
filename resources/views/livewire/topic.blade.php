@@ -53,7 +53,7 @@
                 <div class="col-span-12 lg:col-span-5">
                     <a wire:navigate.hover href="{{ route('post', $post->slug) }}">
                         <img src="{{ $post->media->url }}" alt="Image representing {{ $post->heading }}" class="w-full object-cover"
-                            @if ($index === 0) fetchpriority="high" @else loading="lazy" @endif
+                            @if ($index === 0) fetchpriority="high" @else loading="lazy" @endif decoding="async"
                         >
                     </a>
                 </div>

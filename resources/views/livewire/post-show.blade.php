@@ -66,7 +66,7 @@
             @endif
             <!-- Article Image -->
             <img src="{{ $post->media->url }}" alt="Image representing {{ $post->heading }}" class="w-full"
-                fetchpriority="high">
+                fetchpriority="high" decoding="async">
             <!-- Post Description -->
             <p class="pb-3 pt-6 text-lg font-medium text-gray-700 leading-9 anime-content">{!! $post->body !!}</p>
 

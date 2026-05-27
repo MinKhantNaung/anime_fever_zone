@@ -17,7 +17,7 @@
             <div class="grid grid-cols-12 bg-white shadow my-4 p-6">
                 <div class="col-span-12 xl:col-span-4">
                     <img src="{{ $post->media->url }}" class="w-full object-cover" alt="Image representing {{ $post->heading }}"
-                        loading="lazy"
+                        loading="lazy" decoding="async"
                     >
                 </div>
                 <div class="col-span-12 xl:col-span-8">

@@ -16,12 +16,12 @@
                         @if (auth()->user()->media && !$media)
                             <div class="rounded-full overflow-hidden w-[200px] h-[200px]">
                                 <img src="{{ auth()->user()->media->url }}" alt="profile-image"
-                                    class="w-full h-full object-cover">
+                                    class="w-full h-full object-cover" decoding="async">
                             </div>
                         @elseif ((auth()->user()->media && $media) || (!auth()->user()->media && $media))
                             <div class="rounded-full overflow-hidden w-[200px] h-[200px]">
                                 <img src="{{ $media->temporaryUrl() }}" alt="tag image"
-                                    class="w-full h-full object-cover">
+                                    class="w-full h-full object-cover" decoding="async">
                             </div>
                         @else
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"

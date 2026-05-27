@@ -45,7 +45,7 @@
                     <div class="flex overflow-x-scroll w-[500px] h-96 snap-x snap-mandatory gap-2 px-2">
                         <div class="w-full h-full shrink-0 snap-always snap-center">
                             <img src="{{ $media->temporaryUrl() }}" alt="tag image"
-                                class="w-full h-full object-contain">
+                                class="w-full h-full object-contain" decoding="async">
                         </div>
                     </div>
 

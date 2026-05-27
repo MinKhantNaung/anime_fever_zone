@@ -41,6 +41,7 @@
                                 <div class="relative aspect-video overflow-hidden bg-gray-200">
                                     <img src="{{ $video->getThumbnailUrl('maxresdefault') }}" alt="{{ $video->title }}"
                                         class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                                        decoding="async"
                                         onerror="this.onerror=null; this.src='{{ $video->getThumbnailUrl('hqdefault') }}';"
                                         @if ($index === 0 && request()->routeIs('home'))
                                             fetchpriority="high"

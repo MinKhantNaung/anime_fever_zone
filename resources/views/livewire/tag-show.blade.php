@@ -24,6 +24,7 @@
             <div class="col-span-12 lg:col-span-4">
                 <img src="{{ $tag->media->url }}" alt="{{ $tag->name }}" class="w-[100%]"
                     fetchpriority="high"
+                    decoding="async"
                 >
             </div>
 
@@ -49,7 +50,7 @@
                 <div class="col-span-12 lg:col-span-5">
                     <a wire:navigate.hover href="{{ route('post', $post->slug) }}">
                         <img src="{{ $post->media->url }}" class="w-full object-cover"
-                            loading="lazy"
+                            loading="lazy" decoding="async"
                         >
                     </a>
                 </div>

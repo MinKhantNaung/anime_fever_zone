@@ -42,7 +42,7 @@
                             <div class="w-full h-full shrink-0 snap-always snap-center">
                                 @if (strpos($file->getMimeType(), 'image') !== false)
                                     <img src="{{ $file->temporaryUrl() }}" alt=""
-                                        class="w-full h-full object-contain">
+                                        class="w-full h-full object-contain" decoding="async">
                                 @elseif (strpos($file->getMimeType(), 'video') !== false)
                                     <x-video :source="$file->temporaryUrl()" />
                                 @endif

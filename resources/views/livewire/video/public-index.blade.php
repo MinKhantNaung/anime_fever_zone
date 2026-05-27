@@ -25,6 +25,7 @@
                             class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                             loading="lazy"
                             onerror="this.onerror=null; this.src='{{ $video->getThumbnailUrl('hqdefault') }}';"
+                            decoding="async"
                         >
                         <!-- Play button overlay -->
                         <div class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-0 group-hover:bg-opacity-30 transition-all duration-300">

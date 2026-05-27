@@ -26,7 +26,7 @@
                     <tr>
                         <td>{{ $index + $videos->firstItem() }}</td>
                         <td class="w-[200px]">
-                            <img src="{{ $video->getThumbnailUrl('hqdefault') }}" alt="{{ $video->title }}" class="w-full">
+                            <img src="{{ $video->getThumbnailUrl('hqdefault') }}" alt="{{ $video->title }}" class="w-full" decoding="async">
                         </td>
                         <td class="text-wrap">{{ $video->title }}</td>
                         <td class="text-wrap max-w-xs">

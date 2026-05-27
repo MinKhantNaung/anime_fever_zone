@@ -13,7 +13,7 @@
 <body>
     <div class="grid grid-cols-12 mt-5">
         <div class="col-span-12 mb-2">
-            <img src="{{ asset('favicon.ico') }}" alt="anime_fever_zone_logo" class="w-[200px] h-[200px] mx-auto">
+            <img src="{{ asset('favicon.ico') }}" alt="anime_fever_zone_logo" class="w-[200px] h-[200px] mx-auto" fetchpriority="high" decoding="async">
         </div>
         <div class="col-span-12 md:col-span-4"></div>
         <div class="col-span-12 md:col-span-4">
