@@ -13,6 +13,7 @@ final class AiChatService
 
         $response = Prism::text()
             ->using('ollama', 'gpt-oss:120b')
+            ->withSystemPrompt($this->buildSystemPrompt())
             ->withPrompt($prompt)
             ->asText();
 
@@ -41,9 +42,9 @@ final class AiChatService
         return $lines;
     }
 
-    public function buildPrompt(string $message, array $contextLines = []): string
+    private function buildSystemPrompt(): string
     {
-        return implode("\n", array_filter([
+        return implode("\n", [
             // 1 Identity + tone
             'You are the AnimeFeverZone AI assistant.',
             'Be friendly, concise, and helpful.',
@@ -80,13 +81,18 @@ final class AiChatService
             // 5 Behavior guidance
             'When a question is unclear, ask a short clarification question.',
             'Use simple formatting and short paragraphs.',
+        ]);
+    }
 
-            // 6 Conversation memory (optional but good)
+    public function buildPrompt(string $message, array $contextLines = []): string
+    {
+        return implode("\n", array_filter([
+            // 1 Conversation memory (optional)
             $contextLines
                 ? "Conversation so far:\n" . implode("\n", $contextLines)
                 : null,
 
-            // 7 Current user message
+            // 2 Current user message
             'User: ' . $message,
             'Assistant:',
         ]));
