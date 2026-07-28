@@ -42,4 +42,27 @@ class UserFactory extends Factory
             'email_verified_at' => null,
         ]);
     }
+
+    /**
+     * A user who may manage posts, tags, topics, sections and videos.
+     */
+    public function blogger(): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'role' => 'blogger',
+        ]);
+    }
+
+    /**
+     * Give the user an avatar, which the nav bar and profile page render.
+     */
+    public function withMedia(): static
+    {
+        return $this->afterCreating(function (User $user): void {
+            $user->media()->create([
+                'url' => 'media/' . fake()->uuid() . '.webp',
+                'mime' => 'image',
+            ]);
+        });
+    }
 }

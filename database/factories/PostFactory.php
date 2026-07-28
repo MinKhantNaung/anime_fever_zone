@@ -49,4 +49,19 @@ class PostFactory extends Factory
             'is_feature' => true,
         ]);
     }
+
+    /**
+     * Attach a cover image. Every view that lists posts dereferences
+     * `$post->media->url` without a null check, so listing components must be
+     * given posts that have media.
+     */
+    public function withMedia(): static
+    {
+        return $this->afterCreating(function (Post $post): void {
+            $post->media()->create([
+                'url' => 'media/' . fake()->uuid() . '.webp',
+                'mime' => 'image',
+            ]);
+        });
+    }
 }

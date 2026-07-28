@@ -24,4 +24,17 @@ class TagFactory extends Factory
             'body' => fake()->paragraph(),
         ];
     }
+
+    /**
+     * Attach a banner image, which the tag show page dereferences directly.
+     */
+    public function withMedia(): static
+    {
+        return $this->afterCreating(function (Tag $tag): void {
+            $tag->media()->create([
+                'url' => 'media/' . fake()->uuid() . '.webp',
+                'mime' => 'image',
+            ]);
+        });
+    }
 }
