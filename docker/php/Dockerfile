@@ -1,4 +1,4 @@
-FROM php:8.3-cli
+FROM php:8.4-cli
 
 # -----------------------------------------------------
 # 1. System dependencies
@@ -44,7 +44,7 @@ RUN pecl channel-update pecl.php.net \
     && pecl clear-cache \
     && pecl install --force memcached-3.3.0 \
     && pecl clear-cache \
-    && pecl install --force swoole-5.1.5 \
+    && pecl install --force swoole-6.2.2 \
     && pecl clear-cache \
     && docker-php-ext-enable redis memcached swoole
 
