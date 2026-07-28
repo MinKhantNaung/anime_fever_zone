@@ -68,6 +68,10 @@ jobs:
             echo "🔄 Reloading Octane..."
             sudo -u www-data /usr/bin/php $(pwd)/artisan octane:reload || sudo systemctl restart octane || true
 
+            echo "🔄 Restarting Octane supervisor program..."
+            sudo supervisorctl restart animefeverzone-octane
+
+
             echo "🎉 Deployment completed successfully!"
           ENDSSH
 
