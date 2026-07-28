@@ -2,6 +2,7 @@
     "agents": [
         "cursor"
     ],
+    "cloud": false,
     "guidelines": true,
     "herd_mcp": false,
     "mcp": true,
@@ -11,7 +12,10 @@
     ],
     "sail": true,
     "skills": [
+        "laravel-best-practices",
+        "octane-development",
         "livewire-development",
-        "tailwindcss-development"
+        "tailwindcss-development",
+        "developing-with-prism"
     ]
 }
