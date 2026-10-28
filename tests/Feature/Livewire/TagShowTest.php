@@ -6,7 +6,6 @@ use App\Livewire\TagShow;
 use App\Models\Post;
 use App\Models\Tag;
 use Database\Factories\VideoFactory;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Livewire\Livewire;
 use Tests\TestCase;
@@ -26,9 +25,7 @@ final class TagShowTest extends TestCase
 
     public function test_it_aborts_when_the_tag_does_not_exist(): void
     {
-        $this->expectException(ModelNotFoundException::class);
-
-        Livewire::test(TagShow::class, ['slug' => 'no-such-tag']);
+        Livewire::test(TagShow::class, ['slug' => 'no-such-tag'])->assertNotFound();
     }
 
     public function test_it_lists_published_posts_carrying_the_tag(): void

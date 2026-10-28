@@ -4,7 +4,6 @@ namespace Tests\Feature\Livewire\Video;
 
 use App\Livewire\Video\Show;
 use Database\Factories\VideoFactory;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Livewire\Livewire;
 use Tests\TestCase;
@@ -27,16 +26,12 @@ final class ShowTest extends TestCase
     {
         $video = VideoFactory::new()->create();
 
-        $this->expectException(ModelNotFoundException::class);
-
-        Livewire::test(Show::class, ['slug' => $video->slug]);
+        Livewire::test(Show::class, ['slug' => $video->slug])->assertNotFound();
     }
 
     public function test_it_aborts_for_an_unknown_slug(): void
     {
-        $this->expectException(ModelNotFoundException::class);
-
-        Livewire::test(Show::class, ['slug' => 'no-such-video']);
+        Livewire::test(Show::class, ['slug' => 'no-such-video'])->assertNotFound();
     }
 
     /** Sidebar */
