@@ -9,7 +9,6 @@ use App\Models\SiteSetting;
 use App\Models\Subscriber;
 use Database\Factories\VideoFactory;
 use GuzzleHttp\Promise\PromiseInterface;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Mail;
@@ -42,9 +41,7 @@ final class PostShowTest extends TestCase
 
     public function test_it_aborts_when_the_slug_is_unknown(): void
     {
-        $this->expectException(ModelNotFoundException::class);
-
-        Livewire::test(PostShow::class, ['slug' => 'no-such-post']);
+        Livewire::test(PostShow::class, ['slug' => 'no-such-post'])->assertNotFound();
     }
 
     public function test_it_loads_sidebar_featured_posts_excluding_the_current_one(): void
